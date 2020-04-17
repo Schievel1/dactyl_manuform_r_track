@@ -2,7 +2,7 @@ This is a dactyl manuform with a tracing ball in the right thumbcluster.
 If you want the final stl its the boolean/right.stl
 
 For bearings and other parts see: https://github.com/ploopyco/mouse/wiki/Ploopy-Trackball-Kit-Assembly
-The Motion sensor: https://github.com/ploopyco/mouse/wiki/Ploopy-Trackball-Kit-Assembly
+The Motion sensor: https://www.tindie.com/products/jkicklighter/pmw3360-motion-sensor/
 
 The state of the project is work-in-progress
 
