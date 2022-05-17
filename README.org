@@ -6,8 +6,8 @@ This is a Dactyl Manuform with a tracking ball in its right thumb cluster, a Tra
 
 * TODO Things that are still to TODO in the building guide:
 - [ ] Wiring of the reset switch
+- [ ] Insert photo of the wiring of the matrix to the Arduino
 - [ ] Flashing of the right side
-- [ ] Gluing in the insert nuts
 
 * Table of contents :toc:
 - [[#things-that-are-still-to-todo-in-the-building-guide][Things that are still to TODO in the building guide:]]
@@ -127,6 +127,11 @@ Just kidding, just don't put them in the vice and don't put a force on the inner
 Once you have the pins in the right length, just press them into the recesses. PLA is rather soft, so they stick in there, make some room with the soldering iron in case they don't go in.
 [[file:images/bearings-in.jpg]]
 
+*** Mount the insert nuts
+Mounting those nuts is easy if you found nuts that are big enough for the holes. You put them on your soldering iron, heat them up, then press them into the 3D print. Just make sure your soldering iron is clean from solder, otherwise solder will block the thread and screws wont go in easily.
+If you could find nuts that are big enough, glue them in. Try to only put glue on the outside and use glue that is somewhat viscous so the glue wont flow into the inside from the bottom up.
+[[file:images/inserts.jpg]]
+
 * Flashing the firmware
 
 ** For the left side.
@@ -149,13 +154,18 @@ find /dev -name '*ttyACM*' # or
 find /dev -name '*ttyUSB*'.
 #+end_src
 
-It could be that the device is only accessible by root, so to get user access you can use ~sudo chmod 777 /dev/ttyACM0~.
+It could be that the device is only accessible by root, so to get user access you can use ~sudo chmod 777 /dev/ttyACM0~, but this will only last until you reconnect the Arduino.
+You could also find the group of the ttyACM* file with ~ls -la /dev | grep ttyACM~, which should output something like this:
+~crw-rw-r-- 1 root dialout ... /dev/ttyACM~. Add yourself to the group dialout in this case to get rw permissions with ~sudo adduser myUserName dialout~.
+However the groupname dialout me depend on the distro. This will last forever.
+
 *** Flashing the .hex
 Now with all that information, use the command
 #+begin_src sh
 avrdude -v -patmega32u4 -cavr109 -P/dev/ttyACM0 -b57600 -Uflash:w:"handwired_dactyl_manuform_5x6_yourfilenamehere.hex":i
 #+end_src
 Where ~/dev/ttyACM0~ depends on the device name you obtained before and the filename of the .hex file is your own filename obviously.
+Flashing some Arduinos is a bit tricky. If they already have a program flashed to them, you put them into flashing mode by pressing the reset switch. Then they are in flashing mode for a few seconds before they start running in their normal mode again. So you have to press that reset switch then run that command fast. In case you did not add yourself to the group that owns /dev/ttyACM*, it could me that you have to find the name of that device (/dev/ttyACMsomething), change its permissions and run the command, all that in a few seconds. However you can chain commands together with ~&&~, but I recommend adding yourself to that group.
 
 ** TODO For the right side
 TODO
