@@ -1,0 +1,161 @@
+#+title: Readme
+#+Author: Pascal Jaeger
+#+ATTR_ORG: :width 800
+
+This is a Dactyl Manuform with a tracking ball in its right thumb cluster, a Tractyl Manuform so to speak.
+
+* TODO Things that are still to TODO in the building guide:
+- [ ] Wiring of the reset switch
+- [ ] Flashing of the right side
+- [ ] Gluing in the insert nuts
+
+* Table of contents :toc:
+- [[#things-that-are-still-to-todo-in-the-building-guide][Things that are still to TODO in the building guide:]]
+- [[#about-this-repository][About this Repository]]
+  - [[#license][License]]
+- [[#building-guide-note-wip][Building guide NOTE: WIP]]
+  - [[#needed-items][Needed items]]
+  - [[#optional-enhance-the-3d-printed-case][(optional) Enhance the 3D printed case]]
+  - [[#wiring--mounting][Wiring & Mounting]]
+- [[#flashing-the-firmware][Flashing the firmware]]
+  - [[#for-the-left-side][For the left side.]]
+  - [[#for-the-right-side][For the right side]]
+
+* About this Repository
+The idea and all the models come from Reddit user [[https://www.reddit.com/user/qqurn/][u/qqurn]]. Check out his Gitlab repository [[https://gitlab.com/keyboards1][here.]]
+I only changed his models in Openscad to use a different USB-C to micro-USB adapter cable and a TRRS socket instead of RJ9.
+
+The folder [[file:STLs/][STLs]] contains the .stl files ready to print. The folder [[file:models/][models]] contains the [[https://openscad.org/][OpenSCAD]] and [[https://www.freecadweb.org/][FreeCAD]] files to change the models to your liking in those programs.
+I added some more images that are not included in the build guide into the folder [[file:images/more_images/][more_images]].
+
+** License
+Please note that the [[file:images/more_images/Pinout-Micro_latest.png][Arduino Micro pinout image]] and the part that is used in the image of the [[file:images/wiring_right.png][right sides wiring diagram]] is [[https://creativecommons.org/licenses/by-sa/4.0/][CC-BY-SA]] licensed. The image is work of [[https://www.arduino.cc/][Arduino]].
+All other images are [[https://creativecommons.org/licenses/by-sa/4.0/][CC-BY-SA]] licensed as well.
+
+* Building guide NOTE: WIP
+
+** Needed items
+
+I apologize if most of these parts are from German ebay vendors, but this is where I got them from. I am sure you can find them from somewhere else. I list the exact amount of parts needed, for some things it makes sense to have some spare, like switches, diodes, jumper wires. Many of the parts come in packages of a 100 or so, so you have so spares anyway.
+
+*** Parts
+- 3D printed case. Because of the Kailh hot swap sockets we are using make sure that the print quality is not too bad. If they don't fit properly it gets very hard to hit the sockets with the pins from the switches.
+- 62 keyboard switches. Any of the usual Cherry style switches will work. Cherry, Kailh, Gateron, you name it.
+- 62 1N4148 Diodes, if you buy some that are neatly packaged [[https://www.aliexpress.com/item/1934432186.html?spm=a2g0o.order_list.0.0.7cfc5c5f0jf1KF&gatewayAdapt=glo2deu][like this]] you can bend their pins in the shape you need easier.
+- [[https://kprepublic.com/products/kailh-hot-swapping-pcb-sockets-for-mx-cherry-gateron-outemu-kailh-switches-for-xd75-series-smd-socket][62 Kailh hot swap sockets]]
+- [[https://www.aliexpress.com/item/1005001486831290.html?spm=a2g0o.order_list.0.0.7cfc5c5f0jf1KF][2 USB-C to Micro-USB cable adapter.]] I edited the holes in the cases to fit these adapters, change the [[file:models/][models]] if you are using a different one. Not that you can also change the .stl files is OpenSCAD, which is sometimes easier if you only change a minor thing.
+- 1 USB-C to USB-A cable. Or USB-C to USB-C. Or however you want to connect the keyboard to your computer.
+- [[https://store.arduino.cc/products/arduino-micro][1 Arduino Micro]] with Micro-USB.
+- [[https://www.aliexpress.com/item/32768308647.html?spm=a2g0o.order_list.0.0.7cfc5c5f0jf1KF][1 Arduino Pro Micro]] with Micro-USB.
+- [[https://www.aliexpress.com/item/1005003415667083.html?spm=a2g0o.order_list.0.0.7cfc5c5f0jf1KF][1 TRRS 3.5mm cable.]]
+- [[https://www.reichelt.de/klinkeneinbaubuchse-3-5-mm-stereo-4-pol-lum-1502-02-p116189.html?PROVID=2788&r=1][2 TRRS 3.5mm sockets.]] This fourth pin is important. TRS wont do.
+- [[https://www.ebay.de/itm/125233269308?var=426269832926][46 Jumper wires.]] Female-Male. In most cases 10cm is sufficient, but buy some 20cm, too.
+- [[https://www.ebay.de/itm/173779404364?var=472450338468][10 M3x4 insert nuts.]]
+- [[https://www.ebay.de/itm/173779404364?var=473397195689][4 M2x3 insert nuts.]]
+- [[https://www.ebay.de/itm/165427883523?var=464984918399][10 screws M3x6]]
+- [[https://www.ebay.de/itm/261298209327?var=560230293992][4 screws M2x6]]
+- [[https://www.ebay.de/itm/160834871787?var=460084672768][Some bumper pads to prevent the keyboard from slipping all over the place.]]
+- [[https://www.tindie.com/products/jkicklighter/pmw3360-motion-sensor/][1 PMW3360 Motion Sensor.]]
+- [[https://www.ebay.de/itm/261317712140][3 MR63ZZ ball bearings]]
+- [[https://www.ebay.de/itm/303970479238][3 3mm pins.]] I bought them in 10mm length and cut them off.
+- [[https://de.perixx.com/products/18028][1 34mm trackball.]]
+- [[https://www.aliexpress.com/item/32960657626.html?spm=a2g0o.productlist.0.0.1a0e284567qEMN&algo_pvid=23baa503-3c28-4c0c-a758-077bc9ae08db&algo_exp_id=23baa503-3c28-4c0c-a758-077bc9ae08db-2&pdp_ext_f=%7B%22sku_id%22%3A%2266505501610%22%7D&pdp_npi=2%40dis%21EUR%21%211.04%21%21%211.51%21%21%402100bdd816527763187435940eca76%2166505501610%21sea][1 6x6x4.3mm reset button.]] Anything in a different size you have lying around will probably do, too.
+- Some key caps you like with cherry mount. (nearly all of them have cherry mounts) I personally prefer SA sculpted key caps with dactyls although for someone who uses Dvorak a set that has everything (Dvorak and dactyl special keys) is hard to get.
+
+*** Consumables
+- solder
+- hot glue
+- roll of insulated wire
+- (optional) [[https://www.ebay.de/itm/284658986388?epid=11017008009&hash=item4246ff6d94:g:J6oAAOSw9KFie1tU][filler]]
+- (optional) some paint you like
+- (optional) multi meter (to check for continuity)
+
+*** Tools
+- soldering iron
+- hot glue gun
+- maybe 3D printer if you print yourself
+- small screwdriver
+- nose pliers
+- wire cutters
+- metal saw
+
+** (optional) Enhance the 3D printed case
+
+This step i completely optional and there a many ways of enhancing a 3D print out there, but I wanted to share this regardless. Just in case you are not that much into 3D printing there is maybe some new stuff here for you.
+So what I found very effective to increase the surfaces of 3D prints is filler that is spray able. (not filler paint, it is even thicker than that.)
+I sand the 3D print with approx. 120 grit sandpaper before, just to make the surface a little bit smoother. Then I spray the primer on for the first time. Spray it very think, it should not be soaking wet, because then in takes ages to dry. If it is thin enough it will be dry in 5 minutes.
+Then I sand the surface with 120 grit again. I don't sand it too much and against the 'grain', so that the 'hills' are sanded off but the filler stays in the valley.
+Then I spray on some filler again, wait 5 minutes and sand again. I do this for 3-4 times, after that I spray filler again, but this time a bit thicker and then let it dry over night.
+This will give you a flat surface, where you can not the the 3D print grain anymore. To get an ever better really shiny flat surface additional steps are needed of course, but this is a plastic casing of a keyboard, not a piano after all.
+After that procure I paint the case with normal paint from the hardware store. I think there are enough videos and tutorial an how to use spraying cans, so I won't get into that.
+[[file:images/after-prime.jpg]]  [[file:images/after-paint.jpg]]
+
+** Wiring & Mounting
+
+*** Try mounting the USB-C to micro-USB cable and the TRRS socket.
+It could be that they don't fit, especially if you primed and painted the case. If they don't fit, use a file to widen the holes a bit.
+Do this first because it could be that the file ruins your paint and you want to paint that particular part again. You don't want to paint this again when everything is mounted.
+
+*** Wiring diagrams:
+[[file:images/wiring_right.png]] [[file:images/wiring_left.png]]
+
+*** Put the hot swap sockets in place.
+I learned that it is easier to put the switches in now instead of doing it later. When putting in the switches, make sure that the pins of the switches hit the sockets. If they don't, they will bend to the side and you wont have a connection. If you look at the hot swap sockets closely, you can see the little pins from the switches sticking out a bit on the other side.
+Don't be confused, the photos I have here are from before I learned that.
+[[file:images/sockets-in.jpg]]
+
+*** Solder the diodes on.
+Now if you spend the few extra cents and bought diodes that are nicely packed in a row, this will pay off. Instead of bending and cutting the diodes one by one, you can bend them all at once using the edge of something. Then go berserk with the wire cutters.
+[[file:images/diodes-in.jpg]]
+
+You can alter the position of the diode, but not the direction. The black ring on the diode must point towards the horizontal line in the circuit. So either the diode is on the side of the switch with the horizontal line and the black ring pointing away from the switch, or it is on the side of the vertical line and the black ring pointing towards the switch. If you don't know what you are doing, just stick to the images an the wiring diagram. Luckily the 3D print has some recesses where the diodes should go, so it guides you a bit.
+*** Solder the horizontal lines.
+
+Now solder the horizontal lines in places. If you have bought normal (non fire resistant) wire, the insulation will melt away pretty easily. I prefer to melt it away with the soldering iron, then solder the wire onto the diode. However, this has some downsides. First of all, you can easily have soldered something that sticks to each other, but has no electrical connection. I check all of these connection with the multi meter to see if they are really connected to mitigate this and to save me the hassle of debugging this later on. Then there is the fumes, that are coming off the wire when it's melted. They don't smell very healthy, so be sure to open a window when  doing this or have a fume hood. You can also remove the insulation here with a razor or something, which is probably the better and much nicer looking way, but then again it takes time.
+[[file:images/horizontal-lines.jpg]]
+
+*** Solder the vertical lines in.
+This is basically the same thing like the horizontal lines.
+[[file:images/vertical-lines.jpg]]
+
+*** Solder the jumper wires between the matrix and the Arduino and between the TRRS socket and the Arduino.
+TODO
+
+*** Mount the ball bearing for the trackball.
+If you bought pins for the bearings that are too long, put the bearing on the pin *before* sawing it off. Otherwise you could have problems putting the puns in when the are serrated from the vice or saw. Those small bearings are very sensible part, don't make loud noises and let them sniff your hand before touching them.
+Just kidding, just don't put them in the vice and don't put a force on the inner ring without putting the same force on the outer ring.
+Once you have the pins in the right length, just press them into the recesses. PLA is rather soft, so they stick in there, make some room with the soldering iron in case they don't go in.
+[[file:images/bearings-in.jpg]]
+
+* Flashing the firmware
+
+** For the left side.
+Flashing the firmware is the usual flashing of a QMK firmware. You can either compile it yourself on your computer, with somewhat finicky setup of the key map and compilation of the keymap.c, or with the rather comfortable [[https://config.qmk.fm/][QMK Configurator]]. Either way you are going to end up with a .hex file that is either flashed by the QMK firmware automatically after compilation or you downloaded that firmware and need to flash it manually.
+I have never flashed a QMK firmware onto an Arduino in Windows, but I guess it's rather easy using [[https://github.com/qmk/qmk_toolbox/releases][QMK Toolbox.]]
+To flash a .hex in Linux you need to do the following:
+*** Install avrdude
+On Gentoo this is ~sudo emerge avrdude~, on Ubuntu ~sudo apt install avrdude~ and I am confident someone who wants to use such a keyboard knows how to install software on his/ her distro.
+*** Get your device name
+To get your device name in Linux you use the command ~dmesg | tail~. This shows you kernel messages, so plug in the left side of the keyboard into your USB and run ~dmesg | tail~.
+This will give you some output similar to
+#+begin_src sh
+~[26768.779976] cdc_acm 1-12:1.0: ttyACM0: USB ACM device~
+#+end_src
+
+Which is telling you that ~/dev/ttyACM0~ is the device name of your Arduino. Be aware that device these names are dynamic in Linux, so it could be ~/dev/ttyACM1~ next time, because you already have another Arduino plugged (or some other USB/Serial device) in which already occupies ~/dev/ttyACM0~. Depending on your distro this could also be called ~/dev/ttyUSB~ instead.
+If you can not find your device with ~dmesg | tail~, try finding it with
+#+begin_src sh
+find /dev -name '*ttyACM*' # or
+find /dev -name '*ttyUSB*'.
+#+end_src
+
+It could be that the device is only accessible by root, so to get user access you can use ~sudo chmod 777 /dev/ttyACM0~.
+*** Flashing the .hex
+Now with all that information, use the command
+#+begin_src sh
+avrdude -v -patmega32u4 -cavr109 -P/dev/ttyACM0 -b57600 -Uflash:w:"handwired_dactyl_manuform_5x6_yourfilenamehere.hex":i
+#+end_src
+Where ~/dev/ttyACM0~ depends on the device name you obtained before and the filename of the .hex file is your own filename obviously.
+
+** TODO For the right side
+TODO
