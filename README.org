@@ -51,9 +51,9 @@ I apologize if most of these parts are from German ebay vendors, but this is whe
 - [[https://www.reichelt.de/klinkeneinbaubuchse-3-5-mm-stereo-4-pol-lum-1502-02-p116189.html?PROVID=2788&r=1][2 TRRS 3.5mm sockets.]] This fourth pin is important. TRS wont do.
 - [[https://www.ebay.de/itm/125233269308?var=426269832926][46 Jumper wires.]] Female-Male. In most cases 10cm is sufficient, but buy some 20cm, too.
 - [[https://www.ebay.de/itm/173779404364?var=472450338468][10 M3x4 insert nuts.]]
-- [[https://www.ebay.de/itm/173779404364?var=473397195689][4 M2x3 insert nuts.]]
+- [[https://www.ebay.de/itm/173779404364?var=473397195689][2 M2x3 insert nuts.]]
 - [[https://www.ebay.de/itm/165427883523?var=464984918399][10 screws M3x6]]
-- [[https://www.ebay.de/itm/261298209327?var=560230293992][4 screws M2x6]]
+- [[https://www.ebay.de/itm/261298209327?var=560230293992][2 screws M2x6]]
 - [[https://www.ebay.de/itm/160834871787?var=460084672768][Some bumper pads to prevent the keyboard from slipping all over the place.]]
 - [[https://www.tindie.com/products/jkicklighter/pmw3360-motion-sensor/][1 PMW3360 Motion Sensor.]]
 - [[https://www.ebay.de/itm/261317712140][3 MR63ZZ ball bearings]]
@@ -64,6 +64,7 @@ I apologize if most of these parts are from German ebay vendors, but this is whe
 
 *** Consumables
 - solder
+- some viscous glue
 - hot glue
 - roll of insulated wire
 - (optional) [[https://www.ebay.de/itm/284658986388?epid=11017008009&hash=item4246ff6d94:g:J6oAAOSw9KFie1tU][filler]]
@@ -109,9 +110,9 @@ Now if you spend the few extra cents and bought diodes that are nicely packed in
 [[file:images/diodes-in.jpg]]
 
 You can alter the position of the diode, but not the direction. The black ring on the diode must point towards the horizontal line in the circuit. So either the diode is on the side of the switch with the horizontal line and the black ring pointing away from the switch, or it is on the side of the vertical line and the black ring pointing towards the switch. If you don't know what you are doing, just stick to the images an the wiring diagram. Luckily the 3D print has some recesses where the diodes should go, so it guides you a bit.
-*** Solder the horizontal lines.
 
-Now solder the horizontal lines in places. If you have bought normal (non fire resistant) wire, the insulation will melt away pretty easily. I prefer to melt it away with the soldering iron, then solder the wire onto the diode. However, this has some downsides. First of all, you can easily have soldered something that sticks to each other, but has no electrical connection. I check all of these connection with the multi meter to see if they are really connected to mitigate this and to save me the hassle of debugging this later on. Then there is the fumes, that are coming off the wire when it's melted. They don't smell very healthy, so be sure to open a window when  doing this or have a fume hood. You can also remove the insulation here with a razor or something, which is probably the better and much nicer looking way, but then again it takes time.
+*** Solder the horizontal lines.
+Now solder the horizontal lines into their places. If you have bought normal (non fire resistant) wire, the insulation will melt away pretty easily. I prefer to melt it away with the soldering iron, then solder the wire onto the diode. However, this has some downsides. First of all, you can easily have soldered something that sticks to each other, but has no electrical connection. I check all of these connection with the multi meter to see if they are really connected to mitigate this and to save me the hassle of debugging this later on. Then there is the fumes, that are coming off the wire when it's melted. They don't smell very healthy, so be sure to open a window when  doing this or have a fume hood. You can also remove the insulation here with a razor or something, which is probably the better and much nicer looking way, but then again it takes time.
 [[file:images/horizontal-lines.jpg]]
 
 *** Solder the vertical lines in.
@@ -127,25 +128,70 @@ Just kidding, just don't put them in the vice and don't put a force on the inner
 Once you have the pins in the right length, just press them into the recesses. PLA is rather soft, so they stick in there, make some room with the soldering iron in case they don't go in.
 [[file:images/bearings-in.jpg]]
 
-*** Mount the insert nuts
+*** Mount the M3 insert nuts
 Mounting those nuts is easy if you found nuts that are big enough for the holes. You put them on your soldering iron, heat them up, then press them into the 3D print. Just make sure your soldering iron is clean from solder, otherwise solder will block the thread and screws wont go in easily.
-If you could find nuts that are big enough, glue them in. Try to only put glue on the outside and use glue that is somewhat viscous so the glue wont flow into the inside from the bottom up.
+If you could find nuts that are big enough, glue them in. Here is a trick how to get them in the right position: Pre-mount them on the bottom plate with a screw, like this:[[file:images/insert_prepare.jpg]]
+
+Then put some glue on the insert nuts. Then mount the bottom plate into place, wait until the glue has dried and them remove the screws. Try to only put glue on the outside and use glue that is somewhat viscous so the glue wont flow into the inside from the bottom up.
 [[file:images/inserts.jpg]]
+
+*** Mount the M2 insert nuts
+The M2 inserts and screws are for the PMW3360 sensor. Here you can mount them again to the PMW3360: [[file:images/pmw_prepare.jpg]]
+Then you can glue them in. Note that the PMW must be mounted with the soldering holes to up. (Down in this picture sinc the keyboard is upside down)
+[[file:images/pmw_in.jpg]]
+Again, let the glue dry and then remove the screw and the sensor.
 
 * Flashing the firmware
 
 ** DRAFT: Preparing the QMK firmware
 
 *** Setting up QMK
-Set up QMK for your operating system. Here is the [[https://docs.qmk.fm/#/getting_started_build_tools][offical instructions]] .
-For Linux, download the [[file:qmk-firmware/][qmk_firmware]] folder from this repository, then run
-#+begin_src sh
-sudo emerge dev-vcs/git dev-python/pip # for gentoo or
-sudo apt install -y git python3-pip # for ubuntu
-python3 -m pip install --user qmk
-cd /path/to/the/folder/qmk_firmware/
-./bin/qmk setup
+Set up QMK for your operating system. Here is the [[https://docs.qmk.fm/#/getting_started_build_tools][offical instructions]].
+
+**** Gentoo
+For Gentoo Linux, make sure your kernel has [[https://wiki.gentoo.org/wiki/Arduino#Arduino_MEGA.2C_Atmega8U2.2C_Atmega16U2.2C_Atmega32U4.2C_Zero_.28CDC_ACM.29][support for Atmega32U]] enabled. (gentoo-kernel-bin and unmodified gentoo-kernel have it enabled)
+To install the gcc for building avr programs, put
+#+begin_src sh /etc/portage/package.accept_keywords
+# for crossdev/ gcc-8.5 for qmk firmware
+cross-avr/gcc **
 #+end_src
+into ~/etc/portage/package.accept_keywords~ or ~/etc/portage/package.accept_keywords/cross-avr-gcc~ respectively, depending on how you set up your system.
+And
+#+begin_src sh /etc/portage/package.mask
+# for crossdev/ gcc-8.5 for qmk firmware
+>cross-avr/gcc-8.5.0-r1
+#+end_src
+into ~/etc/portage/package.mask~ or ~/etc/portage/package.mask/cross-avr-gcc~ respectively.
+
+Then run:
+#+begin_src sh
+sudo emerge dev-vcs/git dev-python/pip # install dependencies
+python3.x -m pip install --user qmk # on gentoo the python command depends on which python version has pip installed (your $PYTHON_TARGET). Run the command like this: python3.9 -m ... if your PYTHON_TARGET is 3.9
+sudo crossdev --stable --g '=8.5' --portage --target avr # to build the toolchain for compiling for the Arduino (Micro). Anything higher than GCC 8.x is not recommended by qmk. (And you WILL have errors)
+git clone https://github.com/qmk/qmk_firmware.git # clone the QMK-Firmware repo
+cd qmk_firmware/
+make git-submodule
+# to test if your toolchain works, compile something:
+qmk compile -kb handwired/dactyl_manuform/5x6 -km default
+#+end_src
+
+If the compilation suceeds it will output
+#+begin_src sh
+Linking: .build/handwired_dactyl_manuform_5x6_default.elf                                           [OK]
+Creating load file for flashing: .build/handwired_dactyl_manuform_5x6_default.hex                   [OK]
+Copying handwired_dactyl_manuform_5x6_default.hex to qmk_firmware folder                            [OK]
+Checking file size of handwired_dactyl_manuform_5x6_default.hex                                     [OK]
+ * The firmware size is fine - 19456/28672 (67%, 9216 bytes free)
+#+end_src
+And you will now have the file ~handwired_dactyl_manuform_5x6_default.hex~ in the qmk_firmware folder. Delete it.
+#+begin_src sh
+rm handwired_dactyl_manuform_5x6_default.hex
+#+end_src
+
+Don't bother to run ~qmk setup~. It would complain because our install is missing some toolchains for other microcontrollers, but we only need the avr-tools for the Atmega32U.
+
+*** Install the keyboard into QMK
+Put the [[file:dactyl_manuform_r_track/][dactyl_manuform_r_track]] folder into qmk_firmware/keyboards/handwired/
 
 *** Customizing your key map
 You can use the standard layouts, currently there is Colemak, Dvorak and Qwerty for the r_track.
@@ -204,6 +250,7 @@ KC_TILD, KC_EXLM , KC_AT   , KC_HASH , KC_DLR  ,KC_PERC,                 KC_CIRC
 
 This represents the layout of the keys. In order to change a key, you have to exchange the keycode of that key with the one you want. Say you want to have escape on the first key in the second row. Then you would exchange ~KC_TAB~ there with ~KC_ESC~. If you do not know the keycode of a key, you could use [[https://config.qmk.fm/#/handwired/dactyl_manuform/5x6/LAYOUT_5x6][QMK Configurator]]. When you hover your mouse over a key in the keyboard image on the bottom of a page, it shows you the keys keycode in a bar a the bottom.
 To get special key funtions like ~RALT(KC_Y)~ you can see them in the same way on the bottom in the "Quantum" tab.
+Here is also a reference for the [[https://github.com/qmk/qmk_firmware/blob/master/docs/keycodes.md][keycodes used by QMK.]] There are a few.
 
 The keys ~TD(SFT_TM), TD(CTL_M) ...~ are special functions of the firmware for this trackball dactyl. They modify the behavior of the trackball, when only hold. When they are hold and a key is pressed, they behave like the normal key would. E.g. TD(SFT_TM) together with 'g' behaves like the shift-key together with 'g' and prints a G.
 Be aware that ~TD(RAI_TM)~ and ~TD(LOW_TM)~ are modifier keys to activate the _RAISE and _LOWER layer.
@@ -218,7 +265,7 @@ To add another layer, copy and past one of the existing layer, rename it to what
 You bind your layer to a key with the keycode ~MO(_MYLAYER)~. MO switches a layer on like the shift, ctrl etc. keys. So when you hold that key, the layer is active. When you let go, the layer is not active. Again there are several other layer functions like ~TG()~ which toggles a layer. Look them up in QMK Configurator.
 
 
-**** OPTION 2: Using QMK Configurator for same parts
+**** OPTION 2: Using QMK Configurator for similar keyboard
 Because editing the keycodes is somewhat tedious, I came up with a way to utilize QMK Configurator a bit for it.
 Go to [[https://config.qmk.fm/#/handwired/dactyl_manuform/5x6/LAYOUT_5x6][QMK Configurator]] and select the handwired/dactyl_manuform/5x6 keyboard. Rename the keyboard to whatever you like and edit your keyboard to your liking.
 You can also put functions on the keys that do not really exist because of the trackball, the just wont work.
@@ -266,7 +313,7 @@ into an existing r_track layouts ~keymap.c~. So you will not mess up the names o
 *** Compiling your firmware
 Once you are done with setting up the keymap to your liking, you can generate a .hex file with the command
 #+begin_src sh
-./bin/qmk compile -kb handwired/dactyl_manuform_r_track -km <your-keymap>
+qmk compile -kb handwired/dactyl_manuform_r_track -km <your-keymap>
 #+end_src
 while being inside the qmk_firmware folder. If you haven't screwed up your keymap.c from before, this will generate a .hex-file in the qmk_firmware folder.
 
@@ -276,7 +323,7 @@ I have never flashed a QMK firmware onto an Arduino in Windows or Mac, but I gue
 
 To flash a .hex in Linux you need to do the following:
 *** Install avrdude
-On Gentoo this is ~sudo emerge avrdude~, on Ubuntu ~sudo apt install avrdude~ and I am confident someone nerdy enough to want to use such a keyboard knows how to install software on his/ her distro.
+On Gentoo this is ~sudo emerge dev-embedded/avrdude~, on Ubuntu ~sudo apt install avrdude~ and I am confident someone nerdy enough to want to use such a keyboard knows how to install software on his/ her distro.
 *** Get your device name
 To get your device name in Linux you use the command ~dmesg | tail~. This shows you the end of the log of the kernel messages, so plug in the left side of the keyboard into your USB without the right side connected to it and run ~dmesg | tail~.
 This will give you some output similar to
