@@ -2,7 +2,7 @@
 #+Author: Pascal Jaeger
 #+ATTR_ORG: :width 800
 
-This is a Dactyl Manuform with a tracking ball in its right thumb cluster, a Tractyl Manuform so to speak.
+This is a Dactyl Manuform with a tracking ball in its right thumb cluster, a Tractyl Manuform so to speak, but since the is a Tractyl out there already, we rather refer to this trackball dactyl as the r_track.
 
 * TODO Things that are still to TODO in the building guide:
 - [ ] Wiring of the reset switch
@@ -18,8 +18,8 @@ This is a Dactyl Manuform with a tracking ball in its right thumb cluster, a Tra
   - [[#optional-enhance-the-3d-printed-case][(optional) Enhance the 3D printed case]]
   - [[#wiring--mounting][Wiring & Mounting]]
 - [[#flashing-the-firmware][Flashing the firmware]]
-  - [[#for-the-left-side][For the left side.]]
-  - [[#for-the-right-side][For the right side]]
+  - [[#draft-preparing-the-qmk-firmware][DRAFT: Preparing the QMK firmware]]
+  - [[#draft-flashing-the-compiled-hex-file][DRAFT: Flashing the compiled .hex file.]]
 
 * About this Repository
 The idea and all the models come from Reddit user [[https://www.reddit.com/user/qqurn/][u/qqurn]]. Check out his Gitlab repository [[https://gitlab.com/keyboards1][here.]]
@@ -134,20 +134,157 @@ If you could find nuts that are big enough, glue them in. Try to only put glue o
 
 * Flashing the firmware
 
-** For the left side.
-Flashing the firmware is the usual flashing of a QMK firmware. You can either compile it yourself on your computer, with somewhat finicky setup of the key map and compilation of the keymap.c, or with the rather comfortable [[https://config.qmk.fm/][QMK Configurator]]. Either way you are going to end up with a .hex file that is either flashed by the QMK firmware automatically after compilation or you downloaded that firmware and need to flash it manually.
-I have never flashed a QMK firmware onto an Arduino in Windows, but I guess it's rather easy using [[https://github.com/qmk/qmk_toolbox/releases][QMK Toolbox.]]
+** DRAFT: Preparing the QMK firmware
+
+*** Setting up QMK
+Set up QMK for your operating system. Here is the [[https://docs.qmk.fm/#/getting_started_build_tools][offical instructions]] .
+For Linux, download the [[file:qmk-firmware/][qmk_firmware]] folder from this repository, then run
+#+begin_src sh
+sudo emerge dev-vcs/git dev-python/pip # for gentoo or
+sudo apt install -y git python3-pip # for ubuntu
+python3 -m pip install --user qmk
+cd /path/to/the/folder/qmk_firmware/
+./bin/qmk setup
+#+end_src
+
+*** Customizing your key map
+You can use the standard layouts, currently there is Colemak, Dvorak and Qwerty for the r_track.
+For Dvorak and Qwerty the base layer is very similar to the standard US layout of the alphanumeric keys.
+Here is the Dvorak base layer, the positions for the non-alphanumeric keys is the same for Qwerty base layer:
+[[file:images/layer0.jpg]]
+
+The Layer 1 and Layer 2 for Dvorak and Qwerty are the same. The MO(2) key will activate the second layer, when the MO(1) key from the base layer is pressed simultaneously.
+[[file:images/layer1.jpg]] [[file:images/layer2.jpg]]
+
+Inside your qmk_firmware folder there is a folder with the key maps for the r_track under ~keymaps/handwired/dactyl_manuform_r_track/keymaps~.
+This folder contains sub folders with custom sets of key maps. Now you have two choices:
+- Edit one of the existing key maps
+- To make your own key map, copy a folder and rename it to your liking. Copy the folder with a key map that is closest to what you want to make. (If you want to make a Dvorak layout, it is easier to start with a anorak draft)
+
+**** OPTION 1: the hardcore way with a text editor
+***** Key layout
+Either way you will find a ~keymap.c~ file inside of those folders. This file is compiled into the actual part of the firmware that determines the keymap. Inside there is a part that looks something like this:
+#+begin_src c
+const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+[_COLEMAKDHM] = LAYOUT_5x6(
+DM_REC1,    DM_REC1, DM_PLY1, DM_REC2 , DM_PLY2 , DM_RSTP,               KC_CPI_DOWN, KC_CPI_STD , KC_CPI_UP , KC_SMO_SC , KC_0        ,KC_QUOT_MY,
+KC_TAB,     KC_Q ,   KC_W   , KC_F    , KC_P    , KC_B   ,               KC_J    ,    KC_L       , KC_U      , KC_Y      , KC_SCLN_INV ,KC_QUOT_MY,
+KC_ESC,     KC_A ,   KC_R   , KC_S    , KC_T    , KC_G   ,               KC_M    ,    KC_N       , KC_E      , KC_I      , KC_O        ,KC_MINS,
+KC_TILD_MY, KC_Z ,   KC_X   , KC_C    , KC_D    , KC_V   ,               KC_K    ,    KC_H       , KC_COMM   , KC_DOT    , KC_SLSH     ,KC_BSLASH,
+                           _______, _______,                                         _______, KC_LGUI,
+                                       TD(SFT_TM),    TD(RAI_TM),          _______, KC_SPC,
+                                       TD(CTL_TM),    TD(GUI_TM),          _______, KC_ENT,
+                                       TD(ALT_TM),    TD(LOW_TM),          KC_BSPC, KC_DEL
+),
+
+[_LOWER] = LAYOUT_5x6(
+
+KC_TILD, KC_EXLM     , KC_AT   , KC_HASH   , KC_DLR  ,KC_PERC,           KC_CIRC, KC_AMPR , KC_ASTR    , KC_LPRN  , KC_RPRN   ,           _______,
+_______, KC_PGDN     , KC_HOME , KC_END    , KC_PGUP ,_______,           _______, _______ , RALT(KC_Y) , _______  , RALT(LSFT(KC_SCLN)) , _______,
+_______, RALT(KC_Q)  , _______ ,RALT(KC_S) , KC_RBRC ,_______,           KC_BTN3, KC_BTN1 , RALT(KC_5) , KC_BTN2  , RALT(KC_P),           _______,
+KC_F12 , KC_F1       , KC_F2   , KC_F3     , KC_F4   , KC_F5 ,           KC_F6  , KC_F7   , KC_F8      , KC_F9    , KC_F10    ,           KC_F11 ,
+                            _______,_______,                             _______,_______,
+                                        _______,_______,             _______,_______,
+                                        _______,_______,             _______,_______,
+                                        _______,_______,             _______,_______
+),
+
+[_RAISE] = LAYOUT_5x6(
+_______, _______ , _______ , _______ , _______ ,_______,                 _______, _______      , _______      , _______     , _______     , _______,
+_______,  KC_1   , KC_2    , KC_3    , KC_4    , KC_5  ,                 KC_6   , KC_7         , KC_8         , KC_9        , KC_0        , KC_QUOT,
+_______, KC_LPRN , KC_RPRN , KC_LBRC , KC_RBRC ,KC_LBRC,                 KC_RBRC, LSFT(KC_LBRC),LSFT(KC_RBRC) ,LSFT(KC_COMM),LSFT(KC_DOT) ,KC_MS_BTN3,
+KC_TILD, KC_EXLM , KC_AT   , KC_HASH , KC_DLR  ,KC_PERC,                 KC_CIRC, KC_AMPR      , KC_ASTR      , KC_PLUS     , KC_EQL      , KC_DEL,
+                             _______,_______,                                _______,_______,
+                                        _______,_______,             _______,_______,
+                                        _______,_______,             _______,_______,
+                                        _______,_______,             _______,_______
+),
+};
+#+end_src
+
+This represents the layout of the keys. In order to change a key, you have to exchange the keycode of that key with the one you want. Say you want to have escape on the first key in the second row. Then you would exchange ~KC_TAB~ there with ~KC_ESC~. If you do not know the keycode of a key, you could use [[https://config.qmk.fm/#/handwired/dactyl_manuform/5x6/LAYOUT_5x6][QMK Configurator]]. When you hover your mouse over a key in the keyboard image on the bottom of a page, it shows you the keys keycode in a bar a the bottom.
+To get special key funtions like ~RALT(KC_Y)~ you can see them in the same way on the bottom in the "Quantum" tab.
+
+The keys ~TD(SFT_TM), TD(CTL_M) ...~ are special functions of the firmware for this trackball dactyl. They modify the behavior of the trackball, when only hold. When they are hold and a key is pressed, they behave like the normal key would. E.g. TD(SFT_TM) together with 'g' behaves like the shift-key together with 'g' and prints a G.
+Be aware that ~TD(RAI_TM)~ and ~TD(LOW_TM)~ are modifier keys to activate the _RAISE and _LOWER layer.
+a
+***** Layers
+In the above example [_COLEMAKDHM], [_LOWER] and [_RAISE] are the names of the layers. You can put in any name for the COLEMAKDHM, but you have to change the ~#define~ lines at the beginning of the line accordingly.
+#+begin_src c
+#define _COLEMAKDHM 0
+#+end_src
+You better leave the RAISE and LOWER name like they are. You could change them, but you would have to change them everywhere in the file.
+To add another layer, copy and past one of the existing layer, rename it to whatever you like, e.g. _MYLAYER. Then add a new ~#define _MYLAYER 3~ to the befinning of the file. Count the number up with every layer you add.
+You bind your layer to a key with the keycode ~MO(_MYLAYER)~. MO switches a layer on like the shift, ctrl etc. keys. So when you hold that key, the layer is active. When you let go, the layer is not active. Again there are several other layer functions like ~TG()~ which toggles a layer. Look them up in QMK Configurator.
+
+
+**** OPTION 2: Using QMK Configurator for same parts
+Because editing the keycodes is somewhat tedious, I came up with a way to utilize QMK Configurator a bit for it.
+Go to [[https://config.qmk.fm/#/handwired/dactyl_manuform/5x6/LAYOUT_5x6][QMK Configurator]] and select the handwired/dactyl_manuform/5x6 keyboard. Rename the keyboard to whatever you like and edit your keyboard to your liking.
+You can also put functions on the keys that do not really exist because of the trackball, the just wont work.
+When you are done, export the key map as JSON and put it into the qmk_firmware folder. Then run the command
+#+begin_src sh
+./bin/qmk json-keymap handwired-dactyl_manuform-5x6-yourfilename.json >> mykeymap.c
+#+end_src
+With "yourfilename" changed to your actual filename of course. This will generate a C source file out of the JSON file. It will look something like this:
+#+begin_src c
+#include QMK_KEYBOARD_H
+
+/* THIS FILE WAS GENERATED!
+ *
+ * This file was generated by qmk-compile-json. You may or may not want to
+ * edit it directly.
+ */
+
+const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+	[0] = LAYOUT_5x6(KC_GRV, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_EQL, KC_TAB, KC_QUOT, KC_COMM, KC_DOT, KC_P, KC_Y, KC_F, KC_G, KC_C, KC_R, KC_L, KC_SLSH, KC_ESC, KC_A, KC_O, KC_E, KC_U, KC_I, KC_D, KC_H, KC_T, KC_N, KC_S, KC_MINS, KC_NO, KC_SCLN, KC_Q, KC_J, KC_K, KC_X, KC_B, KC_M, KC_W, KC_V, KC_Z, KC_BSLS, KC_LBRC, KC_RBRC, KC_PGUP, KC_PGDN, KC_LSFT, KC_NO, KC_NO, KC_RSFT, KC_LCTL, KC_SPC, KC_BSPC, KC_RALT, KC_LALT, MO(1), KC_ENT, LGUI_T(KC_RGUI)),
+	[1] = LAYOUT_5x6(KC_TILD, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_DEL, RCS(KC_2), KC_F9, KC_F10, LSFT(KC_F7), LCTL(KC_R), KC_LCBR, KC_RCBR, KC_HOME, KC_INS, KC_F11, KC_F12, KC_PLUS, KC_TRNS, RCS(KC_3), RCS(KC_4), MO(2), KC_DEL, KC_LPRN, KC_RPRN, KC_LEFT, KC_UP, KC_DOWN, KC_RGHT, KC_PIPE, KC_CAPS, LSFT(KC_F8), LSFT(KC_F9), LCTL(KC_X), LCTL(KC_C), LCTL(KC_V), KC_EQL, RCS(KC_3), RCS(KC_4), LSFT(KC_F8), LSFT(KC_F9), RCS(KC_2), LCTL(KC_F2), LCTL(KC_F3), KC_PSCR, KC_END, KC_LSFT, KC_TRNS, KC_TRNS, KC_RSFT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS),
+	[2] = LAYOUT_5x6(KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NLCK, KC_PSLS, KC_PAST, KC_PMNS, KC_CALC, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_LBRC, KC_RBRC, KC_P7, KC_P8, KC_P9, KC_PPLS, KC_MUTE, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_LPRN, KC_RPRN, KC_P4, KC_P5, KC_P6, KC_TRNS, KC_VOLU, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_P0, KC_P1, KC_P2, KC_P3, KC_PEQL, KC_VOLD, KC_TRNS, KC_TRNS, KC_PDOT, KC_COMM, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS)
+};
+#+end_src
+
+Where 0, 1 and 2 are the different layers.
+While this is horrible to read of course, these layouts are perfectly valid key maps. But you have to make some changes first before you can use it in the r_tracks firmware.
+First of all, copy only the part that says
+#+begin_src c
+	LAYOUT_5x6(KC_GRV, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_EQL, KC_TAB, KC_QUOT, KC_COMM, KC_DOT, KC_P, KC_Y, KC_F, KC_G, KC_C, KC_R, KC_L, KC_SLSH, KC_ESC, KC_A, KC_O, KC_E, KC_U, KC_I, KC_D, KC_H, KC_T, KC_N, KC_S, KC_MINS, KC_NO, KC_SCLN, KC_Q, KC_J, KC_K, KC_X, KC_B, KC_M, KC_W, KC_V, KC_Z, KC_BSLS, KC_LBRC, KC_RBRC, KC_PGUP, KC_PGDN, KC_LSFT, KC_NO, KC_NO, KC_RSFT, KC_LCTL, KC_SPC, KC_BSPC, KC_RALT, KC_LALT, MO(1), KC_ENT, LGUI_T(KC_RGUI)),
+#+end_src
+
+into an existing r_track layouts ~keymap.c~. So you will not mess up the names of the layers. Then replace
+
+| replace | with       |
+|---------+------------|
+| KC_LSFT | TD(SFT_TM) |
+| KC_LGUI | TD(GUI_TM) |
+| KC_LCTL | TD(CTL_TM) |
+| KC_LALT | TD(ALT_TM) |
+| MD(1)   | TD(LOW_TM) |
+| MD(2)   | TD(RAI_TM) |
+|---------+------------|
+
+
+*** Compiling your firmware
+Once you are done with setting up the keymap to your liking, you can generate a .hex file with the command
+#+begin_src sh
+./bin/qmk compile -kb handwired/dactyl_manuform_r_track -km <your-keymap>
+#+end_src
+while being inside the qmk_firmware folder. If you haven't screwed up your keymap.c from before, this will generate a .hex-file in the qmk_firmware folder.
+
+** DRAFT: Flashing the compiled .hex file.
+Flashing the firmware is the usual flashing of a QMK firmware. You either compiled it yourself on your computer, with somewhat finicky setup of the key map and compilation of the keymap.c, or with the rather comfortable [[https://config.qmk.fm/][QMK Configurator]]. Either way you are going to end up with a .hex file.
+I have never flashed a QMK firmware onto an Arduino in Windows or Mac, but I guess it's rather easy using [[https://github.com/qmk/qmk_toolbox/releases][QMK Toolbox.]]
+
 To flash a .hex in Linux you need to do the following:
 *** Install avrdude
-On Gentoo this is ~sudo emerge avrdude~, on Ubuntu ~sudo apt install avrdude~ and I am confident someone who wants to use such a keyboard knows how to install software on his/ her distro.
+On Gentoo this is ~sudo emerge avrdude~, on Ubuntu ~sudo apt install avrdude~ and I am confident someone nerdy enough to want to use such a keyboard knows how to install software on his/ her distro.
 *** Get your device name
-To get your device name in Linux you use the command ~dmesg | tail~. This shows you kernel messages, so plug in the left side of the keyboard into your USB and run ~dmesg | tail~.
+To get your device name in Linux you use the command ~dmesg | tail~. This shows you the end of the log of the kernel messages, so plug in the left side of the keyboard into your USB without the right side connected to it and run ~dmesg | tail~.
 This will give you some output similar to
 #+begin_src sh
 ~[26768.779976] cdc_acm 1-12:1.0: ttyACM0: USB ACM device~
 #+end_src
 
-Which is telling you that ~/dev/ttyACM0~ is the device name of your Arduino. Be aware that device these names are dynamic in Linux, so it could be ~/dev/ttyACM1~ next time, because you already have another Arduino plugged (or some other USB/Serial device) in which already occupies ~/dev/ttyACM0~. Depending on your distro this could also be called ~/dev/ttyUSB~ instead.
+Which is telling you that ~/dev/ttyACM0~ is the device name of your Arduino. Be aware that these device names are dynamic in Linux, so it could be ~/dev/ttyACM1~ next time, because you already have another Arduino (or some other USB/Serial device) plugged in, which already occupies ~/dev/ttyACM0~. Depending on your distro this could also be called ~/dev/ttyUSB~ instead.
 If you can not find your device with ~dmesg | tail~, try finding it with
 #+begin_src sh
 find /dev -name '*ttyACM*' # or
@@ -156,16 +293,14 @@ find /dev -name '*ttyUSB*'.
 
 It could be that the device is only accessible by root, so to get user access you can use ~sudo chmod 777 /dev/ttyACM0~, but this will only last until you reconnect the Arduino.
 You could also find the group of the ttyACM* file with ~ls -la /dev | grep ttyACM~, which should output something like this:
-~crw-rw-r-- 1 root dialout ... /dev/ttyACM~. Add yourself to the group dialout in this case to get rw permissions with ~sudo adduser myUserName dialout~.
-However the groupname dialout me depend on the distro. This will last forever.
+~crw-rw-r-- 1 root dialout ... /dev/ttyACM~. Add yourself to the group dialout in this case to get read/write permissions with ~sudo adduser myUserName dialout~.
+However, the group name dialout could depend on the distro. This change will be permanent.
 
 *** Flashing the .hex
 Now with all that information, use the command
 #+begin_src sh
 avrdude -v -patmega32u4 -cavr109 -P/dev/ttyACM0 -b57600 -Uflash:w:"handwired_dactyl_manuform_5x6_yourfilenamehere.hex":i
 #+end_src
+inside the folder where your .hex file is.
 Where ~/dev/ttyACM0~ depends on the device name you obtained before and the filename of the .hex file is your own filename obviously.
-Flashing some Arduinos is a bit tricky. If they already have a program flashed to them, you put them into flashing mode by pressing the reset switch. Then they are in flashing mode for a few seconds before they start running in their normal mode again. So you have to press that reset switch then run that command fast. In case you did not add yourself to the group that owns /dev/ttyACM*, it could me that you have to find the name of that device (/dev/ttyACMsomething), change its permissions and run the command, all that in a few seconds. However you can chain commands together with ~&&~, but I recommend adding yourself to that group.
-
-** TODO For the right side
-TODO
+Sometimes flashing Arduinos is a bit tricky. If they already have a program flashed to them, you put them into flashing mode by pressing the reset switch. Then they are in flashing mode for a few seconds before they start running in their normal mode again. So you have to press that reset switch then run that command fast. In case you did not add yourself to the group that owns /dev/ttyACM*, it could be that you have to find the name of that device (/dev/ttyACMsomething), change its permissions and run the command. All that in a few seconds. You could chain commands together with ~&&~, but I recommend adding yourself to that group instead.
