@@ -57,16 +57,16 @@ I apologize if most of these parts are from German ebay vendors, but this is whe
 - [[https://www.ebay.de/itm/160834871787?var=460084672768][Some bumper pads to prevent the keyboard from slipping all over the place.]]
 - [[https://www.tindie.com/products/jkicklighter/pmw3360-motion-sensor/][1 PMW3360 Motion Sensor.]]
 - [[https://www.ebay.de/itm/261317712140][3 MR63ZZ ball bearings]]
-- [[https://www.ebay.de/itm/303970479238][3 3mm pins.]] I bought them in 10mm length and cut them off.
+- [[https://www.ebay.de/itm/303970479238][3 3mm pins.]] I bought them in 10mm length and cut them off, because I could not find anything shorter. You need about 7mm long ones actually.
 - [[https://de.perixx.com/products/18028][1 34mm trackball.]]
 - [[https://www.aliexpress.com/item/32960657626.html?spm=a2g0o.productlist.0.0.1a0e284567qEMN&algo_pvid=23baa503-3c28-4c0c-a758-077bc9ae08db&algo_exp_id=23baa503-3c28-4c0c-a758-077bc9ae08db-2&pdp_ext_f=%7B%22sku_id%22%3A%2266505501610%22%7D&pdp_npi=2%40dis%21EUR%21%211.04%21%21%211.51%21%21%402100bdd816527763187435940eca76%2166505501610%21sea][1 6x6x4.3mm reset button.]] Anything in a different size you have lying around will probably do, too.
 - Some key caps you like with cherry mount. (nearly all of them have cherry mounts) I personally prefer SA sculpted key caps with dactyls although for someone who uses Dvorak a set that has everything (Dvorak and dactyl special keys) is hard to get.
 
 *** Consumables
-- solder
+- wire, you can wire this however you like. I use insulated wire with 0.5mm diameter, but I have another Dactyl which I wired with 1mm thick uninsulated wire bent into shape so the wires do not touch. (like they wired old radios in the 50s.) It is very reliable.
+- solder, it depends on personal preference, but I used solder with 1mm diameter
 - some viscous glue
 - hot glue
-- roll of insulated wire
 - (optional) [[https://www.ebay.de/itm/284658986388?epid=11017008009&hash=item4246ff6d94:g:J6oAAOSw9KFie1tU][filler]]
 - (optional) some paint you like
 - (optional) multi meter (to check for continuity)
@@ -79,40 +79,42 @@ I apologize if most of these parts are from German ebay vendors, but this is whe
 - nose pliers
 - wire cutters
 - metal saw
+- (maybe) a round file
 
 ** (optional) Enhance the 3D printed case
 
-This step i completely optional and there a many ways of enhancing a 3D print out there, but I wanted to share this regardless. Just in case you are not that much into 3D printing there is maybe some new stuff here for you.
+This step is completely optional and there a many ways of enhancing a 3D print out there, but I wanted to share this regardless. Just in case you are not that much into 3D printing there is maybe some new stuff here for you.
 So what I found very effective to increase the surfaces of 3D prints is filler that is spray able. (not filler paint, it is even thicker than that.)
-I sand the 3D print with approx. 120 grit sandpaper before, just to make the surface a little bit smoother. Then I spray the primer on for the first time. Spray it very think, it should not be soaking wet, because then in takes ages to dry. If it is thin enough it will be dry in 5 minutes.
-Then I sand the surface with 120 grit again. I don't sand it too much and against the 'grain', so that the 'hills' are sanded off but the filler stays in the valley.
+I sand the 3D print with approx. 120 grit sandpaper before, just to make the surface a little bit smoother. Then I spray the primer on for the first time. Spray it very thin. It should not be soaking wet, because then in takes ages to dry. If it is thin enough it will be dry in 5 minutes.
+Then I sand the surface with 120 grit again. I don't sand it too much but against the 'grain', so that the 'hills' are sanded off but the filler stays in the 'valleys'.
 Then I spray on some filler again, wait 5 minutes and sand again. I do this for 3-4 times, after that I spray filler again, but this time a bit thicker and then let it dry over night.
-This will give you a flat surface, where you can not the the 3D print grain anymore. To get an ever better really shiny flat surface additional steps are needed of course, but this is a plastic casing of a keyboard, not a piano after all.
-After that procure I paint the case with normal paint from the hardware store. I think there are enough videos and tutorial an how to use spraying cans, so I won't get into that.
+This will give you a flat surface, where you can not see the the 3D print layers anymore. To get an ever better really shiny flat surface additional steps are needed of course, but this is a plastic casing of a keyboard, not a piano after all.
+After that procedure I paint the case with normal paint from the hardware store. I think there are enough videos and tutorials on how to use spraying cans, so I won't get into that.
 [[file:images/after-prime.jpg]]  [[file:images/after-paint.jpg]]
 
 ** Wiring & Mounting
 
 *** Try mounting the USB-C to micro-USB cable and the TRRS socket.
-It could be that they don't fit, especially if you primed and painted the case. If they don't fit, use a file to widen the holes a bit.
-Do this first because it could be that the file ruins your paint and you want to paint that particular part again. You don't want to paint this again when everything is mounted.
+It could be that they don't fit, especially if you primed and painted the case. If they don't fit, use a round file to widen the holes a bit.
+Do this first because it could be that the file ruins your paint and you want to paint that particular part again. You don't want to paint this again when the switches and everything is mounted.
 
 *** Wiring diagrams:
 [[file:images/wiring_right.png]] [[file:images/wiring_left.png]]
 
 *** Put the hot swap sockets in place.
-I learned that it is easier to put the switches in now instead of doing it later. When putting in the switches, make sure that the pins of the switches hit the sockets. If they don't, they will bend to the side and you wont have a connection. If you look at the hot swap sockets closely, you can see the little pins from the switches sticking out a bit on the other side.
+I learned that it is easier to put the switches in now instead of doing it later. When putting in the switches, make sure that the pins of the switches hit the sockets. If they don't, they will bend to the side and you won't have a connection. If you look at the hot swap sockets closely, you can see the little pins from the switches sticking out a bit on the other side.
 Don't be confused, the photos I have here are from before I learned that.
 [[file:images/sockets-in.jpg]]
 
 *** Solder the diodes on.
-Now if you spend the few extra cents and bought diodes that are nicely packed in a row, this will pay off. Instead of bending and cutting the diodes one by one, you can bend them all at once using the edge of something. Then go berserk with the wire cutters.
+Now if you spend the few extra cents and bought diodes that are nicely packed in a row, this will pay off. Instead of bending and cutting the diodes one by one, you can bend them all at once using the edge of something. Then go berserk with the wire cutters. Cut only one side off, then it will be easier to hold them while soldering.
 [[file:images/diodes-in.jpg]]
 
-You can alter the position of the diode, but not the direction. The black ring on the diode must point towards the horizontal line in the circuit. So either the diode is on the side of the switch with the horizontal line and the black ring pointing away from the switch, or it is on the side of the vertical line and the black ring pointing towards the switch. If you don't know what you are doing, just stick to the images an the wiring diagram. Luckily the 3D print has some recesses where the diodes should go, so it guides you a bit.
+You can alter the position of the diodes, but not the direction. The black ring on the diode must point towards the horizontal line in the circuit. So either the diode is on the side of the switch with the horizontal line and the black ring pointing away from the switch, or it is on the side of the vertical line and the black ring pointing towards the switch. If you don't know what you are doing, just stick to the images and the wiring diagram. Luckily the 3D print has some recesses where the diodes should go, so it guides you a bit.
+Cut the other side off when you are done soldering them.
 
 *** Solder the horizontal lines.
-Now solder the horizontal lines into their places. If you have bought normal (non fire resistant) wire, the insulation will melt away pretty easily. I prefer to melt it away with the soldering iron, then solder the wire onto the diode. However, this has some downsides. First of all, you can easily have soldered something that sticks to each other, but has no electrical connection. I check all of these connection with the multi meter to see if they are really connected to mitigate this and to save me the hassle of debugging this later on. Then there is the fumes, that are coming off the wire when it's melted. They don't smell very healthy, so be sure to open a window when  doing this or have a fume hood. You can also remove the insulation here with a razor or something, which is probably the better and much nicer looking way, but then again it takes time.
+Now solder the horizontal lines into their places. If you have bought normal (non fire resistant) wire, the insulation will melt away pretty easily. I prefer to melt it away with the soldering iron, then solder the wire onto the diode. However, this has some downsides. First of all, you can easily have soldered something that sticks to each other, but has no electrical connection. I check all of these connection with the multi meter to see if they are really connected to mitigate this and to save me the hassle of debugging this later on. Then there is the fumes, that are coming off the wire when it's melted. They don't smell very healthy, so be sure to open a window when doing this or have a fume hood. You can also remove the insulation here with a razor or something, which is probably the better and much nicer looking way, but then again this takes time.
 [[file:images/horizontal-lines.jpg]]
 
 *** Solder the vertical lines in.
@@ -123,23 +125,27 @@ This is basically the same thing like the horizontal lines.
 TODO
 
 *** Mount the ball bearing for the trackball.
-If you bought pins for the bearings that are too long, put the bearing on the pin *before* sawing it off. Otherwise you could have problems putting the puns in when the are serrated from the vice or saw. Those small bearings are very sensible part, don't make loud noises and let them sniff your hand before touching them.
+If you bought pins for the bearings that are too long, put the bearing on the pin *before* sawing it off. Otherwise you could have problems putting the pins in when they are serrated from the vice or saw. Those small bearings are a very sensible part, don't make loud noises and let them sniff your hand before touching them.
 Just kidding, just don't put them in the vice and don't put a force on the inner ring without putting the same force on the outer ring.
 Once you have the pins in the right length, just press them into the recesses. PLA is rather soft, so they stick in there, make some room with the soldering iron in case they don't go in.
 [[file:images/bearings-in.jpg]]
 
 *** Mount the M3 insert nuts
 Mounting those nuts is easy if you found nuts that are big enough for the holes. You put them on your soldering iron, heat them up, then press them into the 3D print. Just make sure your soldering iron is clean from solder, otherwise solder will block the thread and screws wont go in easily.
-If you could find nuts that are big enough, glue them in. Here is a trick how to get them in the right position: Pre-mount them on the bottom plate with a screw, like this:[[file:images/insert_prepare.jpg]]
+If you couldn't find nuts that are big enough, glue them in. Here is a trick how to get them in the right position: Pre-mount them on the bottom plate with a screw, like this:[[file:images/insert_prepare.jpg]]
 
 Then put some glue on the insert nuts. Then mount the bottom plate into place, wait until the glue has dried and them remove the screws. Try to only put glue on the outside and use glue that is somewhat viscous so the glue wont flow into the inside from the bottom up.
 [[file:images/inserts.jpg]]
 
 *** Mount the M2 insert nuts
 The M2 inserts and screws are for the PMW3360 sensor. Here you can mount them again to the PMW3360: [[file:images/pmw_prepare.jpg]]
-Then you can glue them in. Note that the PMW must be mounted with the soldering holes to up. (Down in this picture sinc the keyboard is upside down)
+
+Then you can glue them in. Note that the PMW must be mounted with the terminal holes up. (Down in this picture since the keyboard is upside down)
 [[file:images/pmw_in.jpg]]
-Again, let the glue dry and then remove the screw and the sensor.
+Again, let the glue dry and then remove the screws and the sensor again.
+
+*** Mounting the Arduino
+The Arduino Micro has some pins on the top, which are in the way when mounting it. We do not need them, cut them off.
 
 * Flashing the firmware
 
@@ -148,34 +154,55 @@ Again, let the glue dry and then remove the screw and the sensor.
 *** Setting up QMK
 Set up QMK for your operating system. Here is the [[https://docs.qmk.fm/#/getting_started_build_tools][offical instructions]].
 
-**** Gentoo
-For Gentoo Linux, make sure your kernel has [[https://wiki.gentoo.org/wiki/Arduino#Arduino_MEGA.2C_Atmega8U2.2C_Atmega16U2.2C_Atmega32U4.2C_Zero_.28CDC_ACM.29][support for Atmega32U]] enabled. (gentoo-kernel-bin and unmodified gentoo-kernel have it enabled)
+***** Gentoo
+
+For Gentoo Linux I made a little guide, since the official instructions do not work very well. Skip this part and stick to the official instructions above if you do not run Gentoo.
+
+Make sure your kernel has [[https://wiki.gentoo.org/wiki/Arduino#Arduino_MEGA.2C_Atmega8U2.2C_Atmega16U2.2C_Atmega32U4.2C_Zero_.28CDC_ACM.29][support for Atmega32U]] enabled. (gentoo-kernel-bin and unmodified gentoo-kernel have it enabled)
 To install the gcc for building avr programs, put
 #+begin_src sh /etc/portage/package.accept_keywords
 # for crossdev/ gcc-8.5 for qmk firmware
 cross-avr/gcc **
 #+end_src
 into ~/etc/portage/package.accept_keywords~ or ~/etc/portage/package.accept_keywords/cross-avr-gcc~ respectively, depending on how you set up your system.
-And
+
+And put
 #+begin_src sh /etc/portage/package.mask
 # for crossdev/ gcc-8.5 for qmk firmware
 >cross-avr/gcc-8.5.0-r1
 #+end_src
 into ~/etc/portage/package.mask~ or ~/etc/portage/package.mask/cross-avr-gcc~ respectively.
+I do not know why this is necessary, because will will order crossdev to install GCC 8.5 later, but if I do not mask the newer version, it installs the newest version regardless.
 
-Then run:
+Then run these commands:
 #+begin_src sh
-sudo emerge dev-vcs/git dev-python/pip # install dependencies
-python3.x -m pip install --user qmk # on gentoo the python command depends on which python version has pip installed (your $PYTHON_TARGET). Run the command like this: python3.9 -m ... if your PYTHON_TARGET is 3.9
-sudo crossdev --stable --g '=8.5' --portage --target avr # to build the toolchain for compiling for the Arduino (Micro). Anything higher than GCC 8.x is not recommended by qmk. (And you WILL have errors)
-git clone https://github.com/qmk/qmk_firmware.git # clone the QMK-Firmware repo
+# install dependencies
+sudo emerge dev-vcs/git dev-python/pip
+# on gentoo the python command depends on which python version has pip installed (your $PYTHON_TARGET). Run the command like this: python3.9 -m ... if your PYTHON_TARGET is 3.9
+python3.x -m pip install --user qmk
+# to build the toolchain for compiling for the Arduino (Micro). Anything higher than GCC 8.x is not recommended by qmk. (And you WILL have errors)
+sudo crossdev --stable --g '=8.5' --portage --target avr
+#+end_src
+
+Don't bother to run ~qmk setup~. It would complain because our install is missing some toolchains for other microcontrollers, but we only need the avr-tools for the Atmega32U.
+If you are done with crossdev, you can check with ~avr-gcc -v~ if you really have version 8.5.0 installed.
+Continue with the guide with topic Linux below.
+
+**** Linux
+This probably works well for Windows and Mac, too. I do not know as I haven't tried.
+
+#+begin_src sh
+# clone and prepare the QMK-Firmware repo
+git clone https://github.com/qmk/qmk_firmware.git
 cd qmk_firmware/
+# the custom trackball firmware probably works with many other commits, but checkout this particular one, because I am sure it works with this one
+git checkout 89e0fba75db52ee37bfae98fbae3e038496b75df
 make git-submodule
 # to test if your toolchain works, compile something:
 qmk compile -kb handwired/dactyl_manuform/5x6 -km default
 #+end_src
 
-If the compilation suceeds it will output
+If the compilation succeeds it will output
 #+begin_src sh
 Linking: .build/handwired_dactyl_manuform_5x6_default.elf                                           [OK]
 Creating load file for flashing: .build/handwired_dactyl_manuform_5x6_default.hex                   [OK]
@@ -188,15 +215,13 @@ And you will now have the file ~handwired_dactyl_manuform_5x6_default.hex~ in th
 rm handwired_dactyl_manuform_5x6_default.hex
 #+end_src
 
-Don't bother to run ~qmk setup~. It would complain because our install is missing some toolchains for other microcontrollers, but we only need the avr-tools for the Atmega32U.
-
 *** Install the keyboard into QMK
-Put the [[file:dactyl_manuform_r_track/][dactyl_manuform_r_track]] folder into qmk_firmware/keyboards/handwired/
+Put the [[file:dactyl_manuform_r_track/][dactyl_manuform_r_track]] folder from this repository into qmk_firmware/keyboards/handwired/
 
 *** Customizing your key map
 You can use the standard layouts, currently there is Colemak, Dvorak and Qwerty for the r_track.
 For Dvorak and Qwerty the base layer is very similar to the standard US layout of the alphanumeric keys.
-Here is the Dvorak base layer, the positions for the non-alphanumeric keys is the same for Qwerty base layer:
+Here is the Dvorak base layer, the positions for the non-alphanumeric keys is the same for the Qwerty base layer:
 [[file:images/layer0.jpg]]
 
 The Layer 1 and Layer 2 for Dvorak and Qwerty are the same. The MO(2) key will activate the second layer, when the MO(1) key from the base layer is pressed simultaneously.
@@ -205,7 +230,7 @@ The Layer 1 and Layer 2 for Dvorak and Qwerty are the same. The MO(2) key will a
 Inside your qmk_firmware folder there is a folder with the key maps for the r_track under ~keymaps/handwired/dactyl_manuform_r_track/keymaps~.
 This folder contains sub folders with custom sets of key maps. Now you have two choices:
 - Edit one of the existing key maps
-- To make your own key map, copy a folder and rename it to your liking. Copy the folder with a key map that is closest to what you want to make. (If you want to make a Dvorak layout, it is easier to start with a anorak draft)
+- Make your own key map. Copy one of the folders in ~keymaps/handwired/dactyl_manuform_r_track/keymaps~ in place and rename it to your liking. Copy the folder with a key map that is closest to what you want to make. (If you want to make a Dvorak layout, it is easier to start with Dvorak as draft)
 
 **** OPTION 1: the hardcore way with a text editor
 ***** Key layout
@@ -252,26 +277,26 @@ This represents the layout of the keys. In order to change a key, you have to ex
 To get special key funtions like ~RALT(KC_Y)~ you can see them in the same way on the bottom in the "Quantum" tab.
 Here is also a reference for the [[https://github.com/qmk/qmk_firmware/blob/master/docs/keycodes.md][keycodes used by QMK.]] There are a few.
 
-The keys ~TD(SFT_TM), TD(CTL_M) ...~ are special functions of the firmware for this trackball dactyl. They modify the behavior of the trackball, when only hold. When they are hold and a key is pressed, they behave like the normal key would. E.g. TD(SFT_TM) together with 'g' behaves like the shift-key together with 'g' and prints a G.
+The keys ~TD(SFT_TM), TD(CTL_M) ...~ are special functions of the firmware for this r_tracks dactyl. They modify the behavior of the trackball, when only hold. When they are hold and a key is pressed, they behave like the normal key would. E.g. TD(SFT_TM) together with 'g' behaves like the normal shift-key together with 'g' and prints a G.
 Be aware that ~TD(RAI_TM)~ and ~TD(LOW_TM)~ are modifier keys to activate the _RAISE and _LOWER layer.
-a
+
 ***** Layers
-In the above example [_COLEMAKDHM], [_LOWER] and [_RAISE] are the names of the layers. You can put in any name for the COLEMAKDHM, but you have to change the ~#define~ lines at the beginning of the line accordingly.
+In the above example [_COLEMAKDHM], [_LOWER] and [_RAISE] are the names of the layers. You can put in any name for the _COLEMAKDHM layer, but you have to change the ~#define~ lines at the beginning of the file accordingly.
 #+begin_src c
 #define _COLEMAKDHM 0
 #+end_src
 You better leave the RAISE and LOWER name like they are. You could change them, but you would have to change them everywhere in the file.
-To add another layer, copy and past one of the existing layer, rename it to whatever you like, e.g. _MYLAYER. Then add a new ~#define _MYLAYER 3~ to the befinning of the file. Count the number up with every layer you add.
-You bind your layer to a key with the keycode ~MO(_MYLAYER)~. MO switches a layer on like the shift, ctrl etc. keys. So when you hold that key, the layer is active. When you let go, the layer is not active. Again there are several other layer functions like ~TG()~ which toggles a layer. Look them up in QMK Configurator.
+To add another layer, copy and past one of the existing layers, rename it to whatever you like, e.g. _MYLAYER. Then add a new ~#define _MYLAYER 3~ to the befinning of the file. Count the number up with every layer you add.
+You bind your layer to a key with the keycode ~MO(_MYLAYER)~. MO switches a layer on like the shift, ctrl etc. keys. So when you hold that key down, the layer is active. When you let go, the layer is not active. Again there are several other layer functions like ~TG()~ which toggles a layer. Look them up in QMK Configurator.
 
 
 **** OPTION 2: Using QMK Configurator for similar keyboard
 Because editing the keycodes is somewhat tedious, I came up with a way to utilize QMK Configurator a bit for it.
 Go to [[https://config.qmk.fm/#/handwired/dactyl_manuform/5x6/LAYOUT_5x6][QMK Configurator]] and select the handwired/dactyl_manuform/5x6 keyboard. Rename the keyboard to whatever you like and edit your keyboard to your liking.
-You can also put functions on the keys that do not really exist because of the trackball, the just wont work.
+You can also put functions on the keys that do not really exist because of the trackball, they just wont work.
 When you are done, export the key map as JSON and put it into the qmk_firmware folder. Then run the command
 #+begin_src sh
-./bin/qmk json-keymap handwired-dactyl_manuform-5x6-yourfilename.json >> mykeymap.c
+qmk json-keymap handwired-dactyl_manuform-5x6-yourfilename.json >> mykeymap.c
 #+end_src
 With "yourfilename" changed to your actual filename of course. This will generate a C source file out of the JSON file. It will look something like this:
 #+begin_src c
@@ -291,13 +316,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #+end_src
 
 Where 0, 1 and 2 are the different layers.
-While this is horrible to read of course, these layouts are perfectly valid key maps. But you have to make some changes first before you can use it in the r_tracks firmware.
+While this is horrible to read of course, these layers are perfectly valid key maps. But you have to make some changes first before you can use it in the r_tracks firmware.
 First of all, copy only the part that says
 #+begin_src c
 	LAYOUT_5x6(KC_GRV, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_EQL, KC_TAB, KC_QUOT, KC_COMM, KC_DOT, KC_P, KC_Y, KC_F, KC_G, KC_C, KC_R, KC_L, KC_SLSH, KC_ESC, KC_A, KC_O, KC_E, KC_U, KC_I, KC_D, KC_H, KC_T, KC_N, KC_S, KC_MINS, KC_NO, KC_SCLN, KC_Q, KC_J, KC_K, KC_X, KC_B, KC_M, KC_W, KC_V, KC_Z, KC_BSLS, KC_LBRC, KC_RBRC, KC_PGUP, KC_PGDN, KC_LSFT, KC_NO, KC_NO, KC_RSFT, KC_LCTL, KC_SPC, KC_BSPC, KC_RALT, KC_LALT, MO(1), KC_ENT, LGUI_T(KC_RGUI)),
 #+end_src
 
-into an existing r_track layouts ~keymap.c~. So you will not mess up the names of the layers. Then replace
+into an existing r_track layouts ~keymap.c~. So you will not mess up the names of the layers. Then you have to replace some key codes according to the table below:
 
 | replace | with       |
 |---------+------------|
@@ -309,7 +334,6 @@ into an existing r_track layouts ~keymap.c~. So you will not mess up the names o
 | MD(2)   | TD(RAI_TM) |
 |---------+------------|
 
-
 *** Compiling your firmware
 Once you are done with setting up the keymap to your liking, you can generate a .hex file with the command
 #+begin_src sh
@@ -318,20 +342,22 @@ qmk compile -kb handwired/dactyl_manuform_r_track -km <your-keymap>
 while being inside the qmk_firmware folder. If you haven't screwed up your keymap.c from before, this will generate a .hex-file in the qmk_firmware folder.
 
 ** DRAFT: Flashing the compiled .hex file.
-Flashing the firmware is the usual flashing of a QMK firmware. You either compiled it yourself on your computer, with somewhat finicky setup of the key map and compilation of the keymap.c, or with the rather comfortable [[https://config.qmk.fm/][QMK Configurator]]. Either way you are going to end up with a .hex file.
+Flashing the firmware is the usual flashing of a QMK firmware. You either compiled it yourself on your computer, with the somewhat finicky setup of the key map and compilation of the keymap.c, or with the rather comfortable [[https://config.qmk.fm/][QMK Configurator]]. Either way you are going to end up with a .hex file.
 I have never flashed a QMK firmware onto an Arduino in Windows or Mac, but I guess it's rather easy using [[https://github.com/qmk/qmk_toolbox/releases][QMK Toolbox.]]
 
 To flash a .hex in Linux you need to do the following:
 *** Install avrdude
 On Gentoo this is ~sudo emerge dev-embedded/avrdude~, on Ubuntu ~sudo apt install avrdude~ and I am confident someone nerdy enough to want to use such a keyboard knows how to install software on his/ her distro.
 *** Get your device name
-To get your device name in Linux you use the command ~dmesg | tail~. This shows you the end of the log of the kernel messages, so plug in the left side of the keyboard into your USB without the right side connected to it and run ~dmesg | tail~.
+To get your device name in Linux you use the command ~dmesg | tail~. This shows you the end of the log of the kernel messages, so plug in the left side of the keyboard into your USB without the right side connected to it, put your Arduino into flash mode by pressing the reset button and run ~dmesg | tail~.
 This will give you some output similar to
 #+begin_src sh
 ~[26768.779976] cdc_acm 1-12:1.0: ttyACM0: USB ACM device~
 #+end_src
 
-Which is telling you that ~/dev/ttyACM0~ is the device name of your Arduino. Be aware that these device names are dynamic in Linux, so it could be ~/dev/ttyACM1~ next time, because you already have another Arduino (or some other USB/Serial device) plugged in, which already occupies ~/dev/ttyACM0~. Depending on your distro this could also be called ~/dev/ttyUSB~ instead.
+Which is telling you that ~/dev/ttyACM0~ is the device name of your Arduino. Be aware that these device names are dynamic in Linux, so it could be ~/dev/ttyACM1~ next time, because you already have another Arduino (or some other USB/Serial device) plugged in, which already occupies ~/dev/ttyACM0~. Depending on your distro
+this could also be called ~/dev/ttyUSB0~ instead.
+
 If you can not find your device with ~dmesg | tail~, try finding it with
 #+begin_src sh
 find /dev -name '*ttyACM*' # or
@@ -339,15 +365,18 @@ find /dev -name '*ttyUSB*'.
 #+end_src
 
 It could be that the device is only accessible by root, so to get user access you can use ~sudo chmod 777 /dev/ttyACM0~, but this will only last until you reconnect the Arduino.
-You could also find the group of the ttyACM* file with ~ls -la /dev | grep ttyACM~, which should output something like this:
-~crw-rw-r-- 1 root dialout ... /dev/ttyACM~. Add yourself to the group dialout in this case to get read/write permissions with ~sudo adduser myUserName dialout~.
-However, the group name dialout could depend on the distro. This change will be permanent.
+To get permanent rights to access the Arduino as a user, you could also find the group of the ~/dev/ttyACM*~ file with ~ls -la /dev | grep ttyACM~, which should output something like this:
+~crw-rw-r-- 1 root dialout ... /dev/ttyACM~. Add yourself to the group dialout (in this case) to get read/write permissions with ~sudo adduser myUserName dialout~.
+However, the group name ~dialout~ could depend on the distro.
 
 *** Flashing the .hex
-Now with all that information, use the command
+Now with all that information, put your Arduino into flash mode again by pressing the reset button. Use the command
 #+begin_src sh
 avrdude -v -patmega32u4 -cavr109 -P/dev/ttyACM0 -b57600 -Uflash:w:"handwired_dactyl_manuform_5x6_yourfilenamehere.hex":i
 #+end_src
 inside the folder where your .hex file is.
 Where ~/dev/ttyACM0~ depends on the device name you obtained before and the filename of the .hex file is your own filename obviously.
-Sometimes flashing Arduinos is a bit tricky. If they already have a program flashed to them, you put them into flashing mode by pressing the reset switch. Then they are in flashing mode for a few seconds before they start running in their normal mode again. So you have to press that reset switch then run that command fast. In case you did not add yourself to the group that owns /dev/ttyACM*, it could be that you have to find the name of that device (/dev/ttyACMsomething), change its permissions and run the command. All that in a few seconds. You could chain commands together with ~&&~, but I recommend adding yourself to that group instead.
+
+Sometimes flashing Arduinos is a bit tricky. If they already have a program flashed to them, you put them into flashing mode by pressing the reset switch. Then they are in flashing mode for a few seconds before they start running in their normal mode again. So you have to press that reset switch then run that command fast. In case you did not add yourself to the group that owns ~/dev/ttyACM*~, it could be that you have to find the name of that device (/dev/ttyACMsomething), change its permissions and run the command. All that in a few seconds. You could chain commands together with ~&&~, but I recommend adding yourself to that group instead.
+
+Once you are done with flashing the left side, disconnect it. Then connect the right side and do the same procedure again. You use the same .hex file on both sides.

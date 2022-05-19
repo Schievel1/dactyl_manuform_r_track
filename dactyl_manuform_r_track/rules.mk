@@ -33,11 +33,11 @@ AUDIO_ENABLE = no           # Audio output on port C6
 FAUXCLICKY_ENABLE = no      # Use buzzer to emulate clicky switches
 HD44780_ENABLE = no         # Enable support for HD44780 based LCDs
 
-DEBOUNCE_TYPE = eager_pk
+DEBOUNCE_TYPE = sym_eager_pk
 SPLIT_KEYBOARD = yes
 TAP_DANCE_ENABLE = yes
 
 # Add trackball support
 POINTING_DEVICE_ENABLE = yes
-
-SRC += pmw3360/pmw3360.c
+POINTING_DEVICE_DRIVER = pmw3360
+COMBO_ENABLE=yes
