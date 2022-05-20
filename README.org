@@ -1,25 +1,46 @@
 #+title: Readme
 #+Author: Pascal Jaeger
-#+ATTR_ORG: :width 800
+#+ATTR_ORG: :width 600
+#+OPTIONS: toc:3
 
 This is a Dactyl Manuform with a tracking ball in its right thumb cluster, a Tractyl Manuform so to speak, but since the is a Tractyl out there already, we rather refer to this trackball dactyl as the r_track.
+Unlike some other trackball Dactyl Manuforms that utilize a [[https://www.pjrc.com/store/teensy.html][Teensy 2.0]] I managed to cramm the firmware onto a Arduino Micro. Be aware that there is couple of hundred bytes left for hacking about. So if you want to add more custom stuff into your trackball Dactyl this one is probably not the best choice for you.
 
-* TODO Things that are still to TODO in the building guide:
-- [ ] Wiring of the reset switch
-- [ ] Insert photo of the wiring of the matrix to the Arduino
-- [ ] Flashing of the right side
-
-* Table of contents :toc:
-- [[#things-that-are-still-to-todo-in-the-building-guide][Things that are still to TODO in the building guide:]]
+* Table of contents :TOC_3_gh:QUOTE:
+#+BEGIN_QUOTE
 - [[#about-this-repository][About this Repository]]
   - [[#license][License]]
 - [[#building-guide-note-wip][Building guide NOTE: WIP]]
   - [[#needed-items][Needed items]]
+    - [[#parts][Parts]]
+    - [[#consumables][Consumables]]
+    - [[#tools][Tools]]
   - [[#optional-enhance-the-3d-printed-case][(optional) Enhance the 3D printed case]]
   - [[#wiring--mounting][Wiring & Mounting]]
+    - [[#try-mounting-the-usb-c-to-micro-usb-cable-and-the-trrs-socket][Try mounting the USB-C to micro-USB cable and the TRRS socket.]]
+    - [[#wiring-diagrams][Wiring diagrams]]
+    - [[#put-the-hot-swap-sockets-in-place][Put the hot swap sockets in place.]]
+    - [[#solder-the-diodes-on][Solder the diodes on.]]
+    - [[#solder-the-horizontal-lines][Solder the horizontal lines.]]
+    - [[#solder-the-vertical-lines-in][Solder the vertical lines in.]]
+    - [[#glue-the-hot-swap-sockets][Glue the hot swap sockets]]
+    - [[#solder-the-jumper-wires-between-the-matrix-and-the-arduino-and-between-the-trrs-socket-and-the-arduino][Solder the jumper wires between the matrix and the Arduino and between the TRRS socket and the Arduino.]]
+    - [[#solder-the-pmw3360-trackball-sensor][Solder the PMW3360 trackball sensor]]
+    - [[#mounting-and-soldering-the-reset-switch][Mounting and soldering the reset switch]]
+    - [[#mount-the-ball-bearings-for-the-trackball][Mount the ball bearings for the trackball.]]
+    - [[#mount-the-m3-insert-nuts][Mount the M3 insert nuts]]
+    - [[#mount-the-m2-insert-nuts][Mount the M2 insert nuts]]
+    - [[#putting-everything-together][Putting everything together]]
 - [[#flashing-the-firmware][Flashing the firmware]]
   - [[#draft-preparing-the-qmk-firmware][DRAFT: Preparing the QMK firmware]]
+    - [[#setting-up-qmk][Setting up QMK]]
+    - [[#customizing-your-key-map][Customizing your key map]]
+    - [[#compiling-your-firmware][Compiling your firmware]]
   - [[#draft-flashing-the-compiled-hex-file][DRAFT: Flashing the compiled .hex file.]]
+    - [[#install-avrdude][Install avrdude]]
+    - [[#get-your-device-name][Get your device name]]
+    - [[#flashing-the-hex][Flashing the .hex]]
+#+END_QUOTE
 
 * About this Repository
 The idea and all the models come from Reddit user [[https://www.reddit.com/user/qqurn/][u/qqurn]]. Check out his Gitlab repository [[https://gitlab.com/keyboards1][here.]]
@@ -59,7 +80,7 @@ I apologize if most of these parts are from German ebay vendors, but this is whe
 - [[https://www.ebay.de/itm/261317712140][3 MR63ZZ ball bearings]]
 - [[https://www.ebay.de/itm/303970479238][3 3mm pins.]] I bought them in 10mm length and cut them off, because I could not find anything shorter. You need about 7mm long ones actually.
 - [[https://de.perixx.com/products/18028][1 34mm trackball.]]
-- [[https://www.aliexpress.com/item/32960657626.html?spm=a2g0o.productlist.0.0.1a0e284567qEMN&algo_pvid=23baa503-3c28-4c0c-a758-077bc9ae08db&algo_exp_id=23baa503-3c28-4c0c-a758-077bc9ae08db-2&pdp_ext_f=%7B%22sku_id%22%3A%2266505501610%22%7D&pdp_npi=2%40dis%21EUR%21%211.04%21%21%211.51%21%21%402100bdd816527763187435940eca76%2166505501610%21sea][1 6x6x4.3mm reset button.]] Anything in a different size you have lying around will probably do, too.
+- [[https://www.aliexpress.com/item/32960657626.html?spm=a2g0o.productlist.0.0.1a0e284567qEMN&algo_pvid=23baa503-3c28-4c0c-a758-077bc9ae08db&algo_exp_id=23baa503-3c28-4c0c-a758-077bc9ae08db-2&pdp_ext_f=%7B%22sku_id%22%3A%2266505501610%22%7D&pdp_npi=2%40dis%21EUR%21%211.04%21%21%211.51%21%21%402100bdd816527763187435940eca76%2166505501610%21sea][1 6x6x4.3mm reset button.]] Anything in a different size you have lying around will probably do, too. The flatter the better.
 - Some key caps you like with cherry mount. (nearly all of them have cherry mounts) I personally prefer SA sculpted key caps with dactyls although for someone who uses Dvorak a set that has everything (Dvorak and dactyl special keys) is hard to get.
 
 *** Consumables
@@ -67,9 +88,9 @@ I apologize if most of these parts are from German ebay vendors, but this is whe
 - solder, it depends on personal preference, but I used solder with 1mm diameter
 - some viscous glue
 - hot glue
+- multi meter (to check for continuity, a cheap one is enough)
 - (optional) [[https://www.ebay.de/itm/284658986388?epid=11017008009&hash=item4246ff6d94:g:J6oAAOSw9KFie1tU][filler]]
 - (optional) some paint you like
-- (optional) multi meter (to check for continuity)
 
 *** Tools
 - soldering iron
@@ -98,7 +119,8 @@ After that procedure I paint the case with normal paint from the hardware store.
 It could be that they don't fit, especially if you primed and painted the case. If they don't fit, use a round file to widen the holes a bit.
 Do this first because it could be that the file ruins your paint and you want to paint that particular part again. You don't want to paint this again when the switches and everything is mounted.
 
-*** Wiring diagrams:
+*** Wiring diagrams
+These are the wiring diagrams for the right and the left half. They will be useful in the next steps.
 [[file:images/wiring_right.png]] [[file:images/wiring_left.png]]
 
 *** Put the hot swap sockets in place.
@@ -118,16 +140,43 @@ Now solder the horizontal lines into their places. If you have bought normal (no
 [[file:images/horizontal-lines.jpg]]
 
 *** Solder the vertical lines in.
-This is basically the same thing like the horizontal lines.
+This is basically the same thing like the horizontal lines. Now you could check with the multimeter if the switch really closes the circuit. Hold it to a vertical line and a horizontal line and press the corresponding switch.
 [[file:images/vertical-lines.jpg]]
 
-*** Solder the jumper wires between the matrix and the Arduino and between the TRRS socket and the Arduino.
-TODO
+*** Glue the hot swap sockets
+Now is a good time to glue the hot swap sockets in. Notice in the photo that I soldered the wires first, which was not the best idea ever.
+Put a small amount of hot glue in the middle of every hot swap socket.
+[[file:images/hot_glue_swaps.jpg]]
 
-*** Mount the ball bearing for the trackball.
+*** Solder the jumper wires between the matrix and the Arduino and between the TRRS socket and the Arduino.
+Now use those male-female jumper wires. Cut of a bit of the male end, then solder them to the vertical and horizontal lines first.
+[[file:images/jumpers_to_mat.jpg]]
+On the TRRS socket it does not really matter which pin you use, as long as the same wire goes to the same pin on the other side.  (The color of the wiring diagram is the same on both sides, so the red line on the left side is the red line on the right side and so on.) However, use the sleeve for the ground at least, it is usually the one that is on the outside of the socket.
+I tend to use tip for the voltage and the rings for communication, but that is entirely up to you.
+When you are done, connect the wires to the Arduino.
+[[file:images/jumpers_to_arduino.jpg]]
+
+*** Solder the PMW3360 trackball sensor
+A short note about soldering electronics: Unlike the switches, the wires or the TRRS socket for example, which are quite sturdy, small electronic boards are a bit more sensitive. You can fry them with the soldering iron. Try to put as few heat as possible into the chips. You can to this by putting the solder on the soldering iron first, then touching the place you want to solder just long enough for everything to heat up enough so the solder can flow into its place.
+Solder the wires to the sensor first. You can solder the male ends in again, then cut them off on the other side. Make sure to cut them off low enough so the plastic lense thingy still fits.
+[[file:images/solder_pmw.jpg]] [[file:images/pmw_plastic_lense.jpg]]
+
+After that connect the wires to the Arduino.
+
+*** Mounting and soldering the reset switch
+I noticed that 4.3mm height for the reset switch is actually to high to mount it under that bracket and I broke it off. Nothing that a bit of glue can't fix. You probably want to get even flatter ones, I had a few of those 4.3mm high ones to spare from another project.
+[[file:images/reset_switch_in.jpg]]
+
+Solder two longer wires to the reset switch on the bottom plate.
+[[file:images/solder_reset.jpg]]
+
+Now that the PMW3360 and the TRRS socket is connected, you will notice that there is no GND pin left on the Arduino. So solder one of the wires coming from the switch to the GND pin you used on the TRRS socket. Connect the other wire to any of the two reset pins of the Arduino.
+[[file:images/reset_connect.jpg]]
+
+*** Mount the ball bearings for the trackball.
 If you bought pins for the bearings that are too long, put the bearing on the pin *before* sawing it off. Otherwise you could have problems putting the pins in when they are serrated from the vice or saw. Those small bearings are a very sensible part, don't make loud noises and let them sniff your hand before touching them.
 Just kidding, just don't put them in the vice and don't put a force on the inner ring without putting the same force on the outer ring.
-Once you have the pins in the right length, just press them into the recesses. PLA is rather soft, so they stick in there, make some room with the soldering iron in case they don't go in.
+Once you have the pins in the right length, just press them into the recesses. PLA is rather soft, so they stick in there, make some room with the soldering iron in case they don't go in. Once they are in you can correct their position, which determines the height of the ball and the distance between the PMW3360 and the Ball by heating them up with the soldering iron.
 [[file:images/bearings-in.jpg]]
 
 *** Mount the M3 insert nuts
@@ -141,11 +190,15 @@ Then put some glue on the insert nuts. Then mount the bottom plate into place, w
 The M2 inserts and screws are for the PMW3360 sensor. Here you can mount them again to the PMW3360: [[file:images/pmw_prepare.jpg]]
 
 Then you can glue them in. Note that the PMW must be mounted with the terminal holes up. (Down in this picture since the keyboard is upside down)
+Make sure that the plastic lense that comes with the PMW lies on that surface as flat as it can get, otherwise the ball will be too far away from it.
 [[file:images/pmw_in.jpg]]
 Again, let the glue dry and then remove the screws and the sensor again.
 
-*** Mounting the Arduino
+*** Putting everything together
+Before putting everything together, test the setup first. Connection problems are way easier to fix when the parts are not mounted yet. So continue with the firmware guide below before mounting everything.
 The Arduino Micro has some pins on the top, which are in the way when mounting it. We do not need them, cut them off.
+Here is the thing in all its glory:
+[[file:images/done.jpg]]
 
 * Flashing the firmware
 
@@ -193,10 +246,8 @@ This probably works well for Windows and Mac, too. I do not know as I haven't tr
 
 #+begin_src sh
 # clone and prepare the QMK-Firmware repo
-git clone https://github.com/qmk/qmk_firmware.git
-cd qmk_firmware/
-# the custom trackball firmware probably works with many other commits, but checkout this particular one, because I am sure it works with this one
-git checkout 89e0fba75db52ee37bfae98fbae3e038496b75df
+git clone https://github.com/Schievel1/qmk_firmware_dm_r_track.git
+cd qmk_firmware_dm_r_track/
 make git-submodule
 # to test if your toolchain works, compile something:
 qmk compile -kb handwired/dactyl_manuform/5x6 -km default
@@ -215,9 +266,6 @@ And you will now have the file ~handwired_dactyl_manuform_5x6_default.hex~ in th
 rm handwired_dactyl_manuform_5x6_default.hex
 #+end_src
 
-*** Install the keyboard into QMK
-Put the [[file:dactyl_manuform_r_track/][dactyl_manuform_r_track]] folder from this repository into qmk_firmware/keyboards/handwired/
-
 *** Customizing your key map
 You can use the standard layouts, currently there is Colemak, Dvorak and Qwerty for the r_track.
 For Dvorak and Qwerty the base layer is very similar to the standard US layout of the alphanumeric keys.
@@ -227,10 +275,10 @@ Here is the Dvorak base layer, the positions for the non-alphanumeric keys is th
 The Layer 1 and Layer 2 for Dvorak and Qwerty are the same. The MO(2) key will activate the second layer, when the MO(1) key from the base layer is pressed simultaneously.
 [[file:images/layer1.jpg]] [[file:images/layer2.jpg]]
 
-Inside your qmk_firmware folder there is a folder with the key maps for the r_track under ~keymaps/handwired/dactyl_manuform_r_track/keymaps~.
+Inside your qmk_firmware_dm_r_track folder there is a folder with the key maps for the r_track under ~keymaps/handwired/dactyl_manuform/5x6_r_track/keymaps~.
 This folder contains sub folders with custom sets of key maps. Now you have two choices:
 - Edit one of the existing key maps
-- Make your own key map. Copy one of the folders in ~keymaps/handwired/dactyl_manuform_r_track/keymaps~ in place and rename it to your liking. Copy the folder with a key map that is closest to what you want to make. (If you want to make a Dvorak layout, it is easier to start with Dvorak as draft)
+- Make your own key map. Copy one of the folders in ~keymaps/handwired/dactyl_manuform/5x6_r_track/keymaps~ in place and rename it to your liking. Copy the folder with a key map that is closest to what you want to make. (If you want to make a Dvorak layout, it is easier to start with Dvorak as draft)
 
 **** OPTION 1: the hardcore way with a text editor
 ***** Key layout
@@ -274,7 +322,7 @@ KC_TILD, KC_EXLM , KC_AT   , KC_HASH , KC_DLR  ,KC_PERC,                 KC_CIRC
 #+end_src
 
 This represents the layout of the keys. In order to change a key, you have to exchange the keycode of that key with the one you want. Say you want to have escape on the first key in the second row. Then you would exchange ~KC_TAB~ there with ~KC_ESC~. If you do not know the keycode of a key, you could use [[https://config.qmk.fm/#/handwired/dactyl_manuform/5x6/LAYOUT_5x6][QMK Configurator]]. When you hover your mouse over a key in the keyboard image on the bottom of a page, it shows you the keys keycode in a bar a the bottom.
-To get special key funtions like ~RALT(KC_Y)~ you can see them in the same way on the bottom in the "Quantum" tab.
+To get special key functions like ~RALT(KC_Y)~ you can see them in the same way on the bottom in the "Quantum" tab.
 Here is also a reference for the [[https://github.com/qmk/qmk_firmware/blob/master/docs/keycodes.md][keycodes used by QMK.]] There are a few.
 
 The keys ~TD(SFT_TM), TD(CTL_M) ...~ are special functions of the firmware for this r_tracks dactyl. They modify the behavior of the trackball, when only hold. When they are hold and a key is pressed, they behave like the normal key would. E.g. TD(SFT_TM) together with 'g' behaves like the normal shift-key together with 'g' and prints a G.
@@ -286,15 +334,15 @@ In the above example [_COLEMAKDHM], [_LOWER] and [_RAISE] are the names of the l
 #define _COLEMAKDHM 0
 #+end_src
 You better leave the RAISE and LOWER name like they are. You could change them, but you would have to change them everywhere in the file.
-To add another layer, copy and past one of the existing layers, rename it to whatever you like, e.g. _MYLAYER. Then add a new ~#define _MYLAYER 3~ to the befinning of the file. Count the number up with every layer you add.
-You bind your layer to a key with the keycode ~MO(_MYLAYER)~. MO switches a layer on like the shift, ctrl etc. keys. So when you hold that key down, the layer is active. When you let go, the layer is not active. Again there are several other layer functions like ~TG()~ which toggles a layer. Look them up in QMK Configurator.
+To add another layer, copy and past one of the existing layers, rename it to whatever you like, e.g. _MYLAYER. Then add a new ~#define _MYLAYER 3~ to the beginning of the file. Count the number up with every layer you add.
+You bind your layer to a key with the keycode ~MO(_MYLAYER)~. MO switches a layer on like the shift, CTRL etc. keys. So when you hold that key down, the layer is active. When you let go, the layer is not active. Again there are several other layer functions like ~TG()~ which toggles a layer. Look them up in QMK Configurator.
 
 
 **** OPTION 2: Using QMK Configurator for similar keyboard
 Because editing the keycodes is somewhat tedious, I came up with a way to utilize QMK Configurator a bit for it.
 Go to [[https://config.qmk.fm/#/handwired/dactyl_manuform/5x6/LAYOUT_5x6][QMK Configurator]] and select the handwired/dactyl_manuform/5x6 keyboard. Rename the keyboard to whatever you like and edit your keyboard to your liking.
 You can also put functions on the keys that do not really exist because of the trackball, they just wont work.
-When you are done, export the key map as JSON and put it into the qmk_firmware folder. Then run the command
+When you are done, export the key map as JSON and put it into the qmk_firmware_dm_r_track folder. Then run the command
 #+begin_src sh
 qmk json-keymap handwired-dactyl_manuform-5x6-yourfilename.json >> mykeymap.c
 #+end_src
@@ -337,9 +385,9 @@ into an existing r_track layouts ~keymap.c~. So you will not mess up the names o
 *** Compiling your firmware
 Once you are done with setting up the keymap to your liking, you can generate a .hex file with the command
 #+begin_src sh
-qmk compile -kb handwired/dactyl_manuform_r_track -km <your-keymap>
+qmk compile -kb handwired/dactyl_manuform/5x6_r_track -km <name_of_your_keymap>
 #+end_src
-while being inside the qmk_firmware folder. If you haven't screwed up your keymap.c from before, this will generate a .hex-file in the qmk_firmware folder.
+while being inside the qmk_firmware_dm_r_track folder. If you haven't screwed up your keymap.c from before, this will generate a .hex-file in the qmk_firmware folder.
 
 ** DRAFT: Flashing the compiled .hex file.
 Flashing the firmware is the usual flashing of a QMK firmware. You either compiled it yourself on your computer, with the somewhat finicky setup of the key map and compilation of the keymap.c, or with the rather comfortable [[https://config.qmk.fm/][QMK Configurator]]. Either way you are going to end up with a .hex file.
@@ -366,17 +414,19 @@ find /dev -name '*ttyUSB*'.
 
 It could be that the device is only accessible by root, so to get user access you can use ~sudo chmod 777 /dev/ttyACM0~, but this will only last until you reconnect the Arduino.
 To get permanent rights to access the Arduino as a user, you could also find the group of the ~/dev/ttyACM*~ file with ~ls -la /dev | grep ttyACM~, which should output something like this:
-~crw-rw-r-- 1 root dialout ... /dev/ttyACM~. Add yourself to the group dialout (in this case) to get read/write permissions with ~sudo adduser myUserName dialout~.
+~crw-rw-r-- 1 root dialout ... /dev/ttyACM~. Add yourself to the group dialout (in this case) to get read/write permissions with ~sudo usermod -a -G dialout myUserName~.
 However, the group name ~dialout~ could depend on the distro.
 
 *** Flashing the .hex
 Now with all that information, put your Arduino into flash mode again by pressing the reset button. Use the command
 #+begin_src sh
-avrdude -v -patmega32u4 -cavr109 -P/dev/ttyACM0 -b57600 -Uflash:w:"handwired_dactyl_manuform_5x6_yourfilenamehere.hex":i
+avrdude -v -patmega32u4 -cavr109 -P/dev/ttyACM0 -b57600 -Uflash:w:"handwired_dactyl_manuform_5x6_r_track_yourfilenamehere.hex":i
 #+end_src
 inside the folder where your .hex file is.
 Where ~/dev/ttyACM0~ depends on the device name you obtained before and the filename of the .hex file is your own filename obviously.
 
 Sometimes flashing Arduinos is a bit tricky. If they already have a program flashed to them, you put them into flashing mode by pressing the reset switch. Then they are in flashing mode for a few seconds before they start running in their normal mode again. So you have to press that reset switch then run that command fast. In case you did not add yourself to the group that owns ~/dev/ttyACM*~, it could be that you have to find the name of that device (/dev/ttyACMsomething), change its permissions and run the command. All that in a few seconds. You could chain commands together with ~&&~, but I recommend adding yourself to that group instead.
+Other times you get things like ~avrdude: butterfly_recv(): programmer is not responding~. Then it helps to tap the reset button right after pressing enter on the upload command.
+So do not panic if uploading does not work at the first try. It could certainly be, that your have so problem with avrdude, but most of the times it is just that you got the timing wrong.
 
 Once you are done with flashing the left side, disconnect it. Then connect the right side and do the same procedure again. You use the same .hex file on both sides.
