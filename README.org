@@ -4,7 +4,7 @@
 #+OPTIONS: toc:3
 
 This is a Dactyl Manuform with a tracking ball in its right thumb cluster, a Tractyl Manuform so to speak, but since the is a Tractyl out there already, we rather refer to this trackball dactyl as the r_track.
-Unlike some other trackball Dactyl Manuforms that utilize a [[https://www.pjrc.com/store/teensy.html][Teensy 2.0]] I managed to cramm the firmware onto a Arduino Micro. Be aware that there is couple of hundred bytes left for hacking about. So if you want to add more custom stuff into your trackball Dactyl this one is probably not the best choice for you.
+Unlike some other trackball Dactyl Manuforms that utilize a [[https://www.pjrc.com/store/teensy.html][Teensy 2.0]] I managed to cram the firmware onto a Arduino Micro. Be aware that there is couple of hundred bytes left for hacking about. So if you want to add more custom stuff into your trackball Dactyl this one is probably not the best choice for you.
 
 * Table of contents :TOC_3_gh:QUOTE:
 #+BEGIN_QUOTE
@@ -17,14 +17,14 @@ Unlike some other trackball Dactyl Manuforms that utilize a [[https://www.pjrc.c
     - [[#tools][Tools]]
   - [[#optional-enhance-the-3d-printed-case][(optional) Enhance the 3D printed case]]
   - [[#wiring--mounting][Wiring & Mounting]]
-    - [[#try-mounting-the-usb-c-to-micro-usb-cable-and-the-trrs-socket][Try mounting the USB-C to micro-USB cable and the TRRS socket.]]
+    - [[#try-mounting-the-usb-c-to-micro-usb-cable-and-the-trs-socket][Try mounting the USB-C to micro-USB cable and the TRS socket.]]
     - [[#wiring-diagrams][Wiring diagrams]]
     - [[#put-the-hot-swap-sockets-in-place][Put the hot swap sockets in place.]]
     - [[#solder-the-diodes-on][Solder the diodes on.]]
     - [[#solder-the-horizontal-lines][Solder the horizontal lines.]]
     - [[#solder-the-vertical-lines-in][Solder the vertical lines in.]]
     - [[#glue-the-hot-swap-sockets][Glue the hot swap sockets]]
-    - [[#solder-the-jumper-wires-between-the-matrix-and-the-arduino-and-between-the-trrs-socket-and-the-arduino][Solder the jumper wires between the matrix and the Arduino and between the TRRS socket and the Arduino.]]
+    - [[#solder-the-jumper-wires-between-the-matrix-and-the-arduino-and-between-the-trs-socket-and-the-arduino][Solder the jumper wires between the matrix and the Arduino and between the TRS socket and the Arduino.]]
     - [[#solder-the-pmw3360-trackball-sensor][Solder the PMW3360 trackball sensor]]
     - [[#mounting-and-soldering-the-reset-switch][Mounting and soldering the reset switch]]
     - [[#mount-the-ball-bearings-for-the-trackball][Mount the ball bearings for the trackball.]]
@@ -35,6 +35,7 @@ Unlike some other trackball Dactyl Manuforms that utilize a [[https://www.pjrc.c
   - [[#draft-preparing-the-qmk-firmware][DRAFT: Preparing the QMK firmware]]
     - [[#setting-up-qmk][Setting up QMK]]
     - [[#customizing-your-key-map][Customizing your key map]]
+    - [[#other-things-to-set-in-the-firmware][Other things to set in the firmware]]
     - [[#compiling-your-firmware][Compiling your firmware]]
   - [[#draft-flashing-the-compiled-hex-file][DRAFT: Flashing the compiled .hex file.]]
     - [[#install-avrdude][Install avrdude]]
@@ -44,7 +45,7 @@ Unlike some other trackball Dactyl Manuforms that utilize a [[https://www.pjrc.c
 
 * About this Repository
 The idea and all the models come from Reddit user [[https://www.reddit.com/user/qqurn/][u/qqurn]]. Check out his Gitlab repository [[https://gitlab.com/keyboards1][here.]]
-I only changed his models in Openscad to use a different USB-C to micro-USB adapter cable and a TRRS socket instead of RJ9.
+I only changed his models in Openscad to use a different USB-C to micro-USB adapter cable and a TRS socket and single serial communication between the halfs instead of a RJ9 socket and I2C communication.
 
 The folder [[file:STLs/][STLs]] contains the .stl files ready to print. The folder [[file:models/][models]] contains the [[https://openscad.org/][OpenSCAD]] and [[https://www.freecadweb.org/][FreeCAD]] files to change the models to your liking in those programs.
 I added some more images that are not included in the build guide into the folder [[file:images/more_images/][more_images]].
@@ -68,13 +69,13 @@ I apologize if most of these parts are from German ebay vendors, but this is whe
 - 1 USB-C to USB-A cable. Or USB-C to USB-C. Or however you want to connect the keyboard to your computer.
 - [[https://store.arduino.cc/products/arduino-micro][1 Arduino Micro]] with Micro-USB.
 - [[https://www.aliexpress.com/item/32768308647.html?spm=a2g0o.order_list.0.0.7cfc5c5f0jf1KF][1 Arduino Pro Micro]] with Micro-USB.
-- [[https://www.aliexpress.com/item/1005003415667083.html?spm=a2g0o.order_list.0.0.7cfc5c5f0jf1KF][1 TRRS 3.5mm cable.]]
-- [[https://www.reichelt.de/klinkeneinbaubuchse-3-5-mm-stereo-4-pol-lum-1502-02-p116189.html?PROVID=2788&r=1][2 TRRS 3.5mm sockets.]] This fourth pin is important. TRS wont do.
+- [[https://www.ebay.de/itm/323789560343?epid=2099768346&hash=item4b635c9a17:g:HkgAAOSwFPFh~a9D][1 TRS 3,5mm cable.]]
+- [[https://www.ebay.de/itm/275315539359?hash=item401a15bd9f:g:r7EAAOSwJIZhYdp6][2 TRS 3.5mm sockets.]] (I used a TRRS socket in the photos, because I was trying I2C out. Don't let that throw you off.)
 - [[https://www.ebay.de/itm/125233269308?var=426269832926][46 Jumper wires.]] Female-Male. In most cases 10cm is sufficient, but buy some 20cm, too.
-- [[https://www.ebay.de/itm/173779404364?var=472450338468][10 M3x4 insert nuts.]]
+- [[https://www.ebay.de/itm/173779404364?var=472450338468][12 M3x4 insert nuts.]]
 - [[https://www.ebay.de/itm/173779404364?var=473397195689][2 M2x3 insert nuts.]]
-- [[https://www.ebay.de/itm/165427883523?var=464984918399][10 screws M3x6]]
-- [[https://www.ebay.de/itm/261298209327?var=560230293992][2 screws M2x6]]
+- [[https://www.ebay.de/itm/165427883523?var=464984918399][12 screws M3x6.]]
+- [[https://www.ebay.de/itm/261298209327?var=560230293992][2 screws M2x8.]] These are for mounting the PMW3360 sensor. Make sure you buy some with a small head, like the ones in the link.
 - [[https://www.ebay.de/itm/160834871787?var=460084672768][Some bumper pads to prevent the keyboard from slipping all over the place.]]
 - [[https://www.tindie.com/products/jkicklighter/pmw3360-motion-sensor/][1 PMW3360 Motion Sensor.]]
 - [[https://www.ebay.de/itm/261317712140][3 MR63ZZ ball bearings]]
@@ -97,9 +98,12 @@ I apologize if most of these parts are from German ebay vendors, but this is whe
 - hot glue gun
 - maybe 3D printer if you print yourself
 - small screwdriver
+- small hex keys for the screws
 - nose pliers
 - wire cutters
 - metal saw
+- electric drill
+- 3mm drill bit
 - (maybe) a round file
 
 ** (optional) Enhance the 3D printed case
@@ -115,7 +119,7 @@ After that procedure I paint the case with normal paint from the hardware store.
 
 ** Wiring & Mounting
 
-*** Try mounting the USB-C to micro-USB cable and the TRRS socket.
+*** Try mounting the USB-C to micro-USB cable and the TRS socket.
 It could be that they don't fit, especially if you primed and painted the case. If they don't fit, use a round file to widen the holes a bit.
 Do this first because it could be that the file ruins your paint and you want to paint that particular part again. You don't want to paint this again when the switches and everything is mounted.
 
@@ -148,29 +152,30 @@ Now is a good time to glue the hot swap sockets in. Notice in the photo that I s
 Put a small amount of hot glue in the middle of every hot swap socket.
 [[file:images/hot_glue_swaps.jpg]]
 
-*** Solder the jumper wires between the matrix and the Arduino and between the TRRS socket and the Arduino.
+*** Solder the jumper wires between the matrix and the Arduino and between the TRS socket and the Arduino.
 Now use those male-female jumper wires. Cut of a bit of the male end, then solder them to the vertical and horizontal lines first.
 [[file:images/jumpers_to_mat.jpg]]
-On the TRRS socket it does not really matter which pin you use, as long as the same wire goes to the same pin on the other side.  (The color of the wiring diagram is the same on both sides, so the red line on the left side is the red line on the right side and so on.) However, use the sleeve for the ground at least, it is usually the one that is on the outside of the socket.
+On the TRS socket it does not really matter which pin you use, as long as the same wire goes to the same pin on the other side.  (The color of the wiring diagram is the same on both sides, so the red line on the left side is the red line on the right side and so on.) However, use the sleeve for the ground at least, it is usually the one that is on the outside of the socket.
 I tend to use tip for the voltage and the rings for communication, but that is entirely up to you.
 When you are done, connect the wires to the Arduino.
 [[file:images/jumpers_to_arduino.jpg]]
 
 *** Solder the PMW3360 trackball sensor
-A short note about soldering electronics: Unlike the switches, the wires or the TRRS socket for example, which are quite sturdy, small electronic boards are a bit more sensitive. You can fry them with the soldering iron. Try to put as few heat as possible into the chips. You can to this by putting the solder on the soldering iron first, then touching the place you want to solder just long enough for everything to heat up enough so the solder can flow into its place.
+A short note about soldering electronics: Unlike the switches, the wires or the TRS socket for example, which are quite sturdy, small electronic boards are a bit more sensitive. You can fry them with the soldering iron. Try to put as few heat as possible into the chips. You can to this by putting the solder on the soldering iron first, then touching the place you want to solder just long enough for everything to heat up enough so the solder can flow into its place.
 Solder the wires to the sensor first. You can solder the male ends in again, then cut them off on the other side. Make sure to cut them off low enough so the plastic lense thingy still fits.
 [[file:images/solder_pmw.jpg]] [[file:images/pmw_plastic_lense.jpg]]
 
 After that connect the wires to the Arduino.
 
 *** Mounting and soldering the reset switch
+If you want to have the reset switch in the bottom plate, drill a 3mm hole at the spot where it should go.
 I noticed that 4.3mm height for the reset switch is actually to high to mount it under that bracket and I broke it off. Nothing that a bit of glue can't fix. You probably want to get even flatter ones, I had a few of those 4.3mm high ones to spare from another project.
 [[file:images/reset_switch_in.jpg]]
 
 Solder two longer wires to the reset switch on the bottom plate.
 [[file:images/solder_reset.jpg]]
 
-Now that the PMW3360 and the TRRS socket is connected, you will notice that there is no GND pin left on the Arduino. So solder one of the wires coming from the switch to the GND pin you used on the TRRS socket. Connect the other wire to any of the two reset pins of the Arduino.
+Now that the PMW3360 and the TRS socket is connected, you will notice that there is no GND pin left on the Arduino. So solder one of the wires coming from the switch to the GND pin you used on the TRS socket. Connect the other wire to any of the two reset pins of the Arduino.
 [[file:images/reset_connect.jpg]]
 
 *** Mount the ball bearings for the trackball.
@@ -325,6 +330,19 @@ This represents the layout of the keys. In order to change a key, you have to ex
 To get special key functions like ~RALT(KC_Y)~ you can see them in the same way on the bottom in the "Quantum" tab.
 Here is also a reference for the [[https://github.com/qmk/qmk_firmware/blob/master/docs/keycodes.md][keycodes used by QMK.]] There are a few.
 
+****** Special key codes in this firmware
+The firmware also has some additional keycodes which you can use in the matrix above like any other keycode.
+| Keycode     | Function                                                                                      |
+|-------------+-----------------------------------------------------------------------------------------------|
+| KC_SCLN_INV | Like KC_SCLN but gives you a : normally and ; when shift is pressed                           |
+| KC_QUOT_MY  | Types " and immitiatly space afterwards to mitigate dead keys on some international keyboards |
+| KC_TILD_MY  | Types " and immitiatly space afterwards to mitigate dead keys on some international keyboards |
+| KC_CPI_DOWN | Decrease the CPI one step, increase sensitivity of the trackball                              |
+| KC_CPI_UP   | Increase the CPI one step, decrease sensitivity of the trackball                              |
+| KC_CPI_STD  | Set the CPI value back to the value of [[PMW3360_CPI]] from config.h                          |
+| KC_SMO_SC   | Enable smooth scrolling with the trackball                                                    |
+|-------------+-----------------------------------------------------------------------------------------------|
+
 The keys ~TD(SFT_TM), TD(CTL_M) ...~ are special functions of the firmware for this r_tracks dactyl. They modify the behavior of the trackball, when only hold. When they are hold and a key is pressed, they behave like the normal key would. E.g. TD(SFT_TM) together with 'g' behaves like the normal shift-key together with 'g' and prints a G.
 Be aware that ~TD(RAI_TM)~ and ~TD(LOW_TM)~ are modifier keys to activate the _RAISE and _LOWER layer.
 
@@ -382,6 +400,15 @@ into an existing r_track layouts ~keymap.c~. So you will not mess up the names o
 | MD(2)   | TD(RAI_TM) |
 |---------+------------|
 
+*** Other things to set in the firmware
+On the bottom of the file ~keyboards/handwired/dactyl_manuform/5x6_r_track/config.h~ there are two settings that you might want play around with:
+
+**** #define <<PMW3360_CPI>> 700
+Let you set the initial CPI of the trackball. The sensitivity so to speak. Higher value means slower mouse pointer.
+
+**** #define ROTATIONAL_TRANSFORM_ANGLE -30
+This setting changes the direction where the mouse pointer goes, when you move the ball. I set it up so the mouse pointer moves horizontal for me when I move my extended thump from left to right. But you probably want a different setting.
+
 *** Compiling your firmware
 Once you are done with setting up the keymap to your liking, you can generate a .hex file with the command
 #+begin_src sh
@@ -427,6 +454,8 @@ Where ~/dev/ttyACM0~ depends on the device name you obtained before and the file
 
 Sometimes flashing Arduinos is a bit tricky. If they already have a program flashed to them, you put them into flashing mode by pressing the reset switch. Then they are in flashing mode for a few seconds before they start running in their normal mode again. So you have to press that reset switch then run that command fast. In case you did not add yourself to the group that owns ~/dev/ttyACM*~, it could be that you have to find the name of that device (/dev/ttyACMsomething), change its permissions and run the command. All that in a few seconds. You could chain commands together with ~&&~, but I recommend adding yourself to that group instead.
 Other times you get things like ~avrdude: butterfly_recv(): programmer is not responding~. Then it helps to tap the reset button right after pressing enter on the upload command.
+Then I have had it with several Arduino Pro Micros, that I had to hold the reset button for a short time, then let it go, then tap it. I guess there are just too many Arduino manufacturers out there, and each of them has its own quirks.
 So do not panic if uploading does not work at the first try. It could certainly be, that your have so problem with avrdude, but most of the times it is just that you got the timing wrong.
 
 Once you are done with flashing the left side, disconnect it. Then connect the right side and do the same procedure again. You use the same .hex file on both sides.
+When you are done, connect the USB cable to the right side and use your new keyboard!
