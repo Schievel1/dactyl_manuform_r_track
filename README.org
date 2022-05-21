@@ -32,6 +32,12 @@ Unlike some other trackball Dactyl Manuforms that utilize a [[https://www.pjrc.c
     - [[#mount-the-m2-insert-nuts][Mount the M2 insert nuts]]
     - [[#putting-everything-together][Putting everything together]]
 - [[#flashing-the-firmware][Flashing the firmware]]
+  - [[#a-word-about-trackball-modes][A word about trackball modes]]
+    - [[#cursor-mode][Cursor mode]]
+    - [[#carret-mode][Carret mode]]
+    - [[#scroll-mode][Scroll mode]]
+    - [[#sound-and-brightness-mode][Sound and brightness mode]]
+    - [[#integration-mode][Integration mode]]
   - [[#draft-preparing-the-qmk-firmware][DRAFT: Preparing the QMK firmware]]
     - [[#setting-up-qmk][Setting up QMK]]
     - [[#customizing-your-key-map][Customizing your key map]]
@@ -206,6 +212,25 @@ Here is the thing in all its glory:
 [[file:images/done.jpg]]
 
 * Flashing the firmware
+** A word about trackball modes
+What makes this firmware very special is how it handles the trackball. You can not only move the mouse pointer with it, no, you can have different modes for it and all that without using additional keys! How great is that?
+What key activates what is set in ~config.h~, see [[#other-things-to-set-in-the-firmware][Other things to set in the firmware]].
+The different modes are:
+*** Cursor mode
+Moves the mouse cursor as you would expect from a trackball.
+
+*** Carret mode
+Moves the cursor like you would be pressing the arrow keys.
+Whats great about this is, that it will not go all over the place and up and down. It has as activation threshold, so if you roll the ball up and slightly to the side, it will only go up and not go to the side.
+
+*** Scroll mode
+Scrolls up and down and like and right like a mouse wheel from outer space.
+
+*** Sound and brightness mode
+Increases/ decreases volume when the trackball is rotated vertically and brightness when its rotated horizontally.
+
+*** Integration mode
+Integration mode is a special mode that sits on top of cursor, carret and scroll mode. It is activated when you hold the key for the RAISE layer. Integration mode tries to mitigate the problem with trackball that you have to re-grab the trackball after a short distance. It does this by using by keeping the velocity of the movement regardless if you still move the trackball. Say you want to scroll up on a web page. You can activate scroll mode and with it integration mode. Then you give the trackball a little tap and it will keep scrolling. Another tap in the same direction will make it scroll faster, a tap in the other direction will make it scroll slower.
 
 ** DRAFT: Preparing the QMK firmware
 
@@ -242,7 +267,7 @@ python3.x -m pip install --user qmk
 sudo crossdev --stable --g '=8.5' --portage --target avr
 #+end_src
 
-Don't bother to run ~qmk setup~. It would complain because our install is missing some toolchains for other microcontrollers, but we only need the avr-tools for the Atmega32U.
+Don't bother to run ~qmk setup~. It would complain because our install is missing some tool chains for other micro controllers, but we only need the avr-tools for the Atmega32U.
 If you are done with crossdev, you can check with ~avr-gcc -v~ if you really have version 8.5.0 installed.
 Continue with the guide with topic Linux below.
 
@@ -332,16 +357,22 @@ Here is also a reference for the [[https://github.com/qmk/qmk_firmware/blob/mast
 
 ****** Special key codes in this firmware
 The firmware also has some additional keycodes which you can use in the matrix above like any other keycode.
-| Keycode     | Function                                                                                      |
-|-------------+-----------------------------------------------------------------------------------------------|
-| KC_SCLN_INV | Like KC_SCLN but gives you a : normally and ; when shift is pressed                           |
-| KC_QUOT_MY  | Types " and immitiatly space afterwards to mitigate dead keys on some international keyboards |
-| KC_TILD_MY  | Types " and immitiatly space afterwards to mitigate dead keys on some international keyboards |
-| KC_CPI_DOWN | Decrease the CPI one step, increase sensitivity of the trackball                              |
-| KC_CPI_UP   | Increase the CPI one step, decrease sensitivity of the trackball                              |
-| KC_CPI_STD  | Set the CPI value back to the value of [[PMW3360_CPI]] from config.h                          |
-| KC_SMO_SC   | Enable smooth scrolling with the trackball                                                    |
-|-------------+-----------------------------------------------------------------------------------------------|
+| Keycode     | Function                                                                                                      |
+|-------------+---------------------------------------------------------------------------------------------------------------|
+| KC_SCLN_INV | Like KC_SCLN but gives you a : normally and ; when shift is pressed                                           |
+| KC_QUOT_MY  | Types " and immitiatly space afterwards to mitigate dead keys on some international keyboards                 |
+| KC_TILD_MY  | Types " and immitiatly space afterwards to mitigate dead keys on some international keyboards                 |
+| KC_CPI_DOWN | Decrease the CPI one step, increase sensitivity of the trackball                                              |
+| KC_CPI_UP   | Increase the CPI one step, decrease sensitivity of the trackball                                              |
+| KC_CPI_STD  | Set the CPI value back to the value of [[PMW3360_CPI]] from config.h                                              |
+| KC_SMO_SC   | Enable smooth scrolling with the trackball                                                                    |
+| TD(SFT_TM)  | The normal left shift key, unless you only tab it, then it activates what you set as [[TRACK_MODE_][TRACK_MODE_SHIFT]]         |
+| TD(GUI_TM)  | The normal left super/ GUI/ WIN key, unless you only tab it, then it activates what you set as [[TRACK_MODE_GUI]] |
+| TD(ALT_TM)  | The normal left alt key, unless you only tab it, then it activates what you set as [[TRACK_MODE_ALT]]             |
+| TD(CTL_TM)  | The normal left control key, unless you only tab it, then it activates what you set as [[TRACK_MODE_ALT][TRACK_MODE_CTRL]]        |
+| TD(RAI_TM)  | activate the _RAISE layer                                                                                     |
+| TD(LOW_TM)  | activate the _LOWER layer                                                                                     |
+|-------------+---------------------------------------------------------------------------------------------------------------|
 
 The keys ~TD(SFT_TM), TD(CTL_M) ...~ are special functions of the firmware for this r_tracks dactyl. They modify the behavior of the trackball, when only hold. When they are hold and a key is pressed, they behave like the normal key would. E.g. TD(SFT_TM) together with 'g' behaves like the normal shift-key together with 'g' and prints a G.
 Be aware that ~TD(RAI_TM)~ and ~TD(LOW_TM)~ are modifier keys to activate the _RAISE and _LOWER layer.
@@ -404,10 +435,41 @@ into an existing r_track layouts ~keymap.c~. So you will not mess up the names o
 On the bottom of the file ~keyboards/handwired/dactyl_manuform/5x6_r_track/config.h~ there are two settings that you might want play around with:
 
 **** #define <<PMW3360_CPI>> 700
-Let you set the initial CPI of the trackball. The sensitivity so to speak. Higher value means slower mouse pointer.
+Lets you set the initial CPI of the trackball. The general sensitivity so to speak. Higher value means slower mouse pointer.
+
+**** #define CPI_STEP_SENS 20
+Let you set how much the sensitivity changes with one press off KC_CPI_UP/ KC_CPI_DOWN.
 
 **** #define ROTATIONAL_TRANSFORM_ANGLE -30
 This setting changes the direction where the mouse pointer goes, when you move the ball. I set it up so the mouse pointer moves horizontal for me when I move my extended thump from left to right. But you probably want a different setting.
+
+**** #define CURSOR_MODE_SENS 500
+Lets you set the sensitivity in cursor mode. Higher value means faster mouse pointer.
+
+**** #define SCROLL_MODE_SENS 50
+Lets you set the sensitivity in scroll mode. Higher value means slower scrolling.
+
+**** #define CARRET_MODE_SENS 500
+Lets you set the sensitivity in carret mode. Higher value means slower cursor.
+
+**** #define CURSOR_INTE_SENS 5
+Sets the sensitivity in cursor mode during integration mode. Higher value means faster pointer.
+
+**** #define SCROLL_INTE_SENS 10000
+Sets the sensitivity in scroll mode during integration mode. Higher value means slower scrolling.
+
+**** #define CARRET_INTE_SENS 2000
+Sets the sensitivity in carret mode during integration mode. Higher value means slower cursor.
+
+**** #define <<TRACK_MODE_ALT>> SCROLL_MODE
+Set which trackball mode should me activated when the key that is bound with TD(ALT_TM) is pressed. Values are:
+- SCROLL_MODE
+- CURSOR_MODE
+- CARRET_MODE
+- SND_BRIGHT_MODE
+
+**** #define TRACK_MODE_(CTRL/ SHIFT/ GUI)
+Same like ~#define TRACK_MODE_ALT~ for the CTRL/ SHIFT/ GUI key.
 
 *** Compiling your firmware
 Once you are done with setting up the keymap to your liking, you can generate a .hex file with the command
