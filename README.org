@@ -38,6 +38,7 @@ Unlike some other trackball Dactyl Manuforms that utilize a [[https://www.pjrc.c
     - [[#scroll-mode][Scroll mode]]
     - [[#sound-and-brightness-mode][Sound and brightness mode]]
     - [[#integration-mode][Integration mode]]
+    - [[#for-the-vim-lovers][For the vim lovers]]
   - [[#draft-preparing-the-qmk-firmware][DRAFT: Preparing the QMK firmware]]
     - [[#setting-up-qmk][Setting up QMK]]
     - [[#customizing-your-key-map][Customizing your key map]]
@@ -232,6 +233,10 @@ Increases/ decreases volume when the trackball is rotated vertically and brightn
 *** Integration mode
 Integration mode is a special mode that sits on top of cursor, carret and scroll mode. It is activated when you hold the key for the RAISE layer. Integration mode tries to mitigate the problem with trackball that you have to re-grab the trackball after a short distance. It does this by using by keeping the velocity of the movement regardless if you still move the trackball. Say you want to scroll up on a web page. You can activate scroll mode and with it integration mode. Then you give the trackball a little tap and it will keep scrolling. Another tap in the same direction will make it scroll faster, a tap in the other direction will make it scroll slower.
 
+*** For the vim lovers
+I have found myself pressing on ESC often, when trying to get to cursor mode. Seems like Vims modes really are in my blood by now. So I made a little function to accommodate this.
+To switch between modes you can either just tap the corresponding key, but you could also use the ESC key (with the keycode ~TD(ESC_TM)~) to get back to cursor mode (which is like Vims normal mode so to speak). Be aware that this still acts like a normal press on ESC, so you end up pressing ESC in the program that has mouse focus.
+
 ** DRAFT: Preparing the QMK firmware
 
 *** Setting up QMK
@@ -372,6 +377,7 @@ The firmware also has some additional keycodes which you can use in the matrix a
 | TD(CTL_TM)  | The normal left control key, unless you only tab it, then it activates what you set as [[TRACK_MODE_ALT][TRACK_MODE_CTRL]]        |
 | TD(RAI_TM)  | activate the _RAISE layer                                                                                     |
 | TD(LOW_TM)  | activate the _LOWER layer                                                                                     |
+| TD(ESC_TM)  | activate cursor mode                                                                                          |
 |-------------+---------------------------------------------------------------------------------------------------------------|
 
 The keys ~TD(SFT_TM), TD(CTL_M) ...~ are special functions of the firmware for this r_tracks dactyl. They modify the behavior of the trackball, when only hold. When they are hold and a key is pressed, they behave like the normal key would. E.g. TD(SFT_TM) together with 'g' behaves like the normal shift-key together with 'g' and prints a G.
@@ -421,15 +427,16 @@ First of all, copy only the part that says
 
 into an existing r_track layouts ~keymap.c~. So you will not mess up the names of the layers. Then you have to replace some key codes according to the table below:
 
-| replace | with       |
-|---------+------------|
-| KC_LSFT | TD(SFT_TM) |
-| KC_LGUI | TD(GUI_TM) |
-| KC_LCTL | TD(CTL_TM) |
-| KC_LALT | TD(ALT_TM) |
-| MD(1)   | TD(LOW_TM) |
-| MD(2)   | TD(RAI_TM) |
-|---------+------------|
+| replace | with                                                                           |
+|---------+--------------------------------------------------------------------------------|
+| KC_LSFT | TD(SFT_TM)                                                                     |
+| KC_LGUI | TD(GUI_TM)                                                                     |
+| KC_LCTL | TD(CTL_TM)                                                                     |
+| KC_LALT | TD(ALT_TM)                                                                     |
+| MD(1)   | TD(LOW_TM)                                                                     |
+| MD(2)   | TD(RAI_TM)                                                                     |
+| KC_ESC  | TD(ESC_TM) (if you want to go back to cursor mode every time you press escape) |
+|---------+--------------------------------------------------------------------------------|
 
 *** Other things to set in the firmware
 On the bottom of the file ~keyboards/handwired/dactyl_manuform/5x6_r_track/config.h~ there are two settings that you might want play around with:
