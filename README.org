@@ -52,7 +52,12 @@ Unlike some other trackball Dactyl Manuforms that utilize a [[https://www.pjrc.c
 
 * About this Repository
 The idea and all the models come from Reddit user [[https://www.reddit.com/user/qqurn/][u/qqurn]]. Check out his Gitlab repository [[https://gitlab.com/keyboards1][here.]]
-I only changed his models in Openscad to use a different USB-C to micro-USB adapter cable and a TRS socket and single serial communication between the halfs instead of a RJ9 socket and I2C communication.
+I only changed qqurns models in Openscad to use a different USB-C to micro-USB adapter cable and a TRS socket and single serial communication between the halfs instead of a RJ9 socket and I2C communication. I also corrected the base plate of the left half.
+
+I noticed trackball Dactyl Manuforms lack a decent idiot proof guide like [[https://medium.com/swlh/complete-idiot-guide-for-building-a-dactyl-manuform-keyboard-53454845b065][the one]] for the Dactyl Manuform without trackball. There is also [[https://github.com/noahprince22/tractyl-manuform-keyboard][this one]]  for a trackball model but it uses a Raspberry Pi and is a whole different model.
+The trackball Dactyl in this guide is intentionally made easy. You do not need to know how to code nor do you need to know much about electronics. You do not even need to open a text editor if you do not want to (although you should if you want to do some configuration) and will still end up with a good configuration with sane defaults.
+Just follow this guide step by step and you should have a decent trackball Dactyl Manuform in the end.
+This model also uses a Arduino Micro on the trackball side and a Arduino Pro Micro on the left side. This means you do not need to flash them with separate files because you need to change the bootloader in between and recompile like it is with different micro controllers in the left than in the right half. Using the same firmware file for both make things simpler.
 
 The folder [[file:STLs/][STLs]] contains the .stl files ready to print. The folder [[file:models/][models]] contains the [[https://openscad.org/][OpenSCAD]] and [[https://www.freecadweb.org/][FreeCAD]] files to change the models to your liking in those programs.
 I added some more images that are not included in the build guide into the folder [[file:images/more_images/][more_images]].
