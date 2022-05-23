@@ -3,14 +3,15 @@
 #+ATTR_ORG: :width 600
 #+OPTIONS: toc:3
 
-This is a Dactyl Manuform with a tracking ball in its right thumb cluster, a Tractyl Manuform so to speak, but since the is a Tractyl out there already, we rather refer to this trackball dactyl as the r_track.
-Unlike some other trackball Dactyl Manuforms that utilize a [[https://www.pjrc.com/store/teensy.html][Teensy 2.0]] I managed to cram the firmware onto a Arduino Micro. Be aware that there is couple of hundred bytes left for hacking about. So if you want to add more custom stuff into your trackball Dactyl this one is probably not the best choice for you.
+This is a Dactyl Manuform with a tracking ball in its right thumb cluster, a Tractyl Manuform so to speak.
+Unlike some other trackball Dactyl Manuforms that utilize a [[https://www.pjrc.com/store/teensy.html][Teensy 2.0]] I managed to cram the firmware onto a Arduino Micro even with some extra functions added in the firmware. Be aware that there is couple of hundred bytes left for hacking about. So if you want to add more custom stuff into your trackball Dactyl this one is probably not the best choice for you.
+
 
 * Table of contents :TOC_3_gh:QUOTE:
 #+BEGIN_QUOTE
 - [[#about-this-repository][About this Repository]]
   - [[#license][License]]
-- [[#building-guide-note-wip][Building guide NOTE: WIP]]
+- [[#building-guide][Building guide]]
   - [[#needed-items][Needed items]]
     - [[#parts][Parts]]
     - [[#consumables][Consumables]]
@@ -34,27 +35,25 @@ Unlike some other trackball Dactyl Manuforms that utilize a [[https://www.pjrc.c
 - [[#flashing-the-firmware][Flashing the firmware]]
   - [[#a-word-about-trackball-modes][A word about trackball modes]]
     - [[#cursor-mode][Cursor mode]]
-    - [[#carret-mode][Carret mode]]
-    - [[#scroll-mode][Scroll mode]]
-    - [[#sound-and-brightness-mode][Sound and brightness mode]]
-    - [[#integration-mode][Integration mode]]
-    - [[#for-the-vim-lovers][For the vim lovers]]
-  - [[#draft-preparing-the-qmk-firmware][DRAFT: Preparing the QMK firmware]]
+    - [[#dragscroll-mode][Dragscroll mode]]
+    - [[#sniping-mode][Sniping mode]]
+  - [[#preparing-the-qmk-firmware][Preparing the QMK firmware]]
     - [[#setting-up-qmk][Setting up QMK]]
     - [[#customizing-your-key-map][Customizing your key map]]
     - [[#other-things-to-set-in-the-firmware][Other things to set in the firmware]]
     - [[#compiling-your-firmware][Compiling your firmware]]
-  - [[#draft-flashing-the-compiled-hex-file][DRAFT: Flashing the compiled .hex file.]]
+  - [[#flashing-the-compiled-hex-file][Flashing the compiled .hex file.]]
     - [[#install-avrdude][Install avrdude]]
     - [[#get-your-device-name][Get your device name]]
     - [[#flashing-the-hex][Flashing the .hex]]
+- [[#the-part-about-my-own-special-firmware][The part about my own special firmware]]
 #+END_QUOTE
 
 * About this Repository
 The idea and all the models come from Reddit user [[https://www.reddit.com/user/qqurn/][u/qqurn]]. Check out his Gitlab repository [[https://gitlab.com/keyboards1][here.]]
 I only changed qqurns models in Openscad to use a different USB-C to micro-USB adapter cable and a TRS socket and single serial communication between the halfs instead of a RJ9 socket and I2C communication. I also corrected the base plate of the left half.
 
-I noticed trackball Dactyl Manuforms lack a decent idiot proof guide like [[https://medium.com/swlh/complete-idiot-guide-for-building-a-dactyl-manuform-keyboard-53454845b065][the one]] for the Dactyl Manuform without trackball. There is also [[https://github.com/noahprince22/tractyl-manuform-keyboard][this one]]  for a trackball model but it uses a Raspberry Pi and is a whole different model.
+I noticed trackball Dactyl Manuforms lack a decent idiot proof guide like [[https://medium.com/swlh/complete-idiot-guide-for-building-a-dactyl-manuform-keyboard-53454845b065][the one]] for the Dactyl Manuform without trackball. There is also [[https://github.com/noahprince22/tractyl-manuform-keyboard][this one]] for a trackball model but it uses a Raspberry Pi and is a whole different model.
 The trackball Dactyl in this guide is intentionally made easy. You do not need to know how to code nor do you need to know much about electronics. You do not even need to open a text editor if you do not want to (although you should if you want to do some configuration) and will still end up with a good configuration with sane defaults.
 Just follow this guide step by step and you should have a decent trackball Dactyl Manuform in the end.
 This model also uses a Arduino Micro on the trackball side and a Arduino Pro Micro on the left side. This means you do not need to flash them with separate files because you need to change the bootloader in between and recompile like it is with different micro controllers in the left than in the right half. Using the same firmware file for both make things simpler.
@@ -66,7 +65,7 @@ I added some more images that are not included in the build guide into the folde
 Please note that the [[file:images/more_images/Pinout-Micro_latest.png][Arduino Micro pinout image]] and the part that is used in the image of the [[file:images/wiring_right.png][right sides wiring diagram]] is [[https://creativecommons.org/licenses/by-sa/4.0/][CC-BY-SA]] licensed. The image is work of [[https://www.arduino.cc/][Arduino]].
 All other images are [[https://creativecommons.org/licenses/by-sa/4.0/][CC-BY-SA]] licensed as well.
 
-* Building guide NOTE: WIP
+* Building guide
 
 ** Needed items
 
@@ -223,26 +222,15 @@ What makes this firmware very special is how it handles the trackball. You can n
 What key activates what is set in ~config.h~, see [[#other-things-to-set-in-the-firmware][Other things to set in the firmware]].
 The different modes are:
 *** Cursor mode
-Moves the mouse cursor as you would expect from a trackball.
+Moves the mouse cursor as you would expect from a trackball. This is the mode that is activated when no other mode is activated.
 
-*** Carret mode
-Moves the cursor like you would be pressing the arrow keys.
-Whats great about this is, that it will not go all over the place and up and down. It has as activation threshold, so if you roll the ball up and slightly to the side, it will only go up and not go to the side.
-
-*** Scroll mode
+*** Dragscroll mode
 Scrolls up and down and like and right like a mouse wheel from outer space.
 
-*** Sound and brightness mode
-Increases/ decreases volume when the trackball is rotated vertically and brightness when its rotated horizontally.
+*** Sniping mode
+Decreases the cursors sensitivity during cursor mode, allowing you to click on something way easier.
 
-*** Integration mode
-Integration mode is a special mode that sits on top of cursor, carret and scroll mode. It is activated when you hold the key for the RAISE layer. Integration mode tries to mitigate the problem with trackball that you have to re-grab the trackball after a short distance. It does this by using by keeping the velocity of the movement regardless if you still move the trackball. Say you want to scroll up on a web page. You can activate scroll mode and with it integration mode. Then you give the trackball a little tap and it will keep scrolling. Another tap in the same direction will make it scroll faster, a tap in the other direction will make it scroll slower.
-
-*** For the vim lovers
-I have found myself pressing on ESC often, when trying to get to cursor mode. Seems like Vims modes really are in my blood by now. So I made a little function to accommodate this.
-To switch between modes you can either just tap the corresponding key, but you could also use the ESC key (with the keycode ~TD(ESC_TM)~) to get back to cursor mode (which is like Vims normal mode so to speak). Be aware that this still acts like a normal press on ESC, so you end up pressing ESC in the program that has mouse focus.
-
-** DRAFT: Preparing the QMK firmware
+** Preparing the QMK firmware
 
 *** Setting up QMK
 Set up QMK for your operating system. Here is the [[https://docs.qmk.fm/#/getting_started_build_tools][offical instructions]].
@@ -286,8 +274,8 @@ This probably works well for Windows and Mac, too. I do not know as I haven't tr
 
 #+begin_src sh
 # clone and prepare the QMK-Firmware repo
-git clone https://github.com/Schievel1/qmk_firmware_dm_r_track.git
-cd qmk_firmware_dm_r_track/
+git clone https://github.com/qmk/qmk_firmware.git
+cd qmk_firmware/
 make git-submodule
 # to test if your toolchain works, compile something:
 qmk compile -kb handwired/dactyl_manuform/5x6 -km default
@@ -307,18 +295,11 @@ rm handwired_dactyl_manuform_5x6_default.hex
 #+end_src
 
 *** Customizing your key map
-You can use the standard layouts, currently there is Colemak, Dvorak and Qwerty for the r_track.
-For Dvorak and Qwerty the base layer is very similar to the standard US layout of the alphanumeric keys.
-Here is the Dvorak base layer, the positions for the non-alphanumeric keys is the same for the Qwerty base layer:
-[[file:images/layer0.jpg]]
-
-The Layer 1 and Layer 2 for Dvorak and Qwerty are the same. The MO(2) key will activate the second layer, when the MO(1) key from the base layer is pressed simultaneously.
-[[file:images/layer1.jpg]] [[file:images/layer2.jpg]]
-
-Inside your qmk_firmware_dm_r_track folder there is a folder with the key maps for the r_track under ~keymaps/handwired/dactyl_manuform/5x6_r_track/keymaps~.
+You can use the standard layout as a base.
+Inside your qmk_firmware folder there is a folder with the key maps for the Tractyl under ~keymaps/handwired/tractyl_manuform/5x6_right/keymaps~.
 This folder contains sub folders with custom sets of key maps. Now you have two choices:
 - Edit one of the existing key maps
-- Make your own key map. Copy one of the folders in ~keymaps/handwired/dactyl_manuform/5x6_r_track/keymaps~ in place and rename it to your liking. Copy the folder with a key map that is closest to what you want to make. (If you want to make a Dvorak layout, it is easier to start with Dvorak as draft)
+- Make your own key map. Copy one of the folders in ~keymaps/handwired/tractyl_manuform/5x6_right/keymaps~ in place and rename it to your liking.
 
 **** OPTION 1: the hardcore way with a text editor
 ***** Key layout
@@ -367,26 +348,17 @@ Here is also a reference for the [[https://github.com/qmk/qmk_firmware/blob/mast
 
 ****** Special key codes in this firmware
 The firmware also has some additional keycodes which you can use in the matrix above like any other keycode.
-| Keycode     | Function                                                                                                      |
-|-------------+---------------------------------------------------------------------------------------------------------------|
-| KC_SCLN_INV | Like KC_SCLN but gives you a : normally and ; when shift is pressed                                           |
-| KC_QUOT_MY  | Types " and immitiatly space afterwards to mitigate dead keys on some international keyboards                 |
-| KC_TILD_MY  | Types " and immitiatly space afterwards to mitigate dead keys on some international keyboards                 |
-| KC_CPI_DOWN | Decrease the CPI one step, increase sensitivity of the trackball                                              |
-| KC_CPI_UP   | Increase the CPI one step, decrease sensitivity of the trackball                                              |
-| KC_CPI_STD  | Set the CPI value back to the value of [[PMW3360_CPI]] from config.h                                              |
-| KC_SMO_SC   | Enable smooth scrolling with the trackball                                                                    |
-| TD(SFT_TM)  | The normal left shift key, unless you only tab it, then it activates what you set as [[TRACK_MODE_][TRACK_MODE_SHIFT]]         |
-| TD(GUI_TM)  | The normal left super/ GUI/ WIN key, unless you only tab it, then it activates what you set as [[TRACK_MODE_GUI]] |
-| TD(ALT_TM)  | The normal left alt key, unless you only tab it, then it activates what you set as [[TRACK_MODE_ALT]]             |
-| TD(CTL_TM)  | The normal left control key, unless you only tab it, then it activates what you set as [[TRACK_MODE_ALT][TRACK_MODE_CTRL]]        |
-| TD(RAI_TM)  | activate the _RAISE layer                                                                                     |
-| TD(LOW_TM)  | activate the _LOWER layer                                                                                     |
-| TD(ESC_TM)  | activate cursor mode                                                                                          |
-|-------------+---------------------------------------------------------------------------------------------------------------|
-
-The keys ~TD(SFT_TM), TD(CTL_M) ...~ are special functions of the firmware for this r_tracks dactyl. They modify the behavior of the trackball, when only hold. When they are hold and a key is pressed, they behave like the normal key would. E.g. TD(SFT_TM) together with 'g' behaves like the normal shift-key together with 'g' and prints a G.
-Be aware that ~TD(RAI_TM)~ and ~TD(LOW_TM)~ are modifier keys to activate the _RAISE and _LOWER layer.
+| Keycode                     | Function                                                                     |
+|-----------------------------+------------------------------------------------------------------------------|
+| POINTER_DEFAULT_DPI_FORWARD | Increase the sensitivity in cursor mode / decrease it when shift is pressed  |
+| POINTER_DEFAULT_DPI_REVERSE | Decrease the sensitivity in cursor mode / increase it when shift is pressed  |
+| POINTER_SNIPING_DPI_FORWARD | Increase the sensitivity in sniping mode / decrease it when shift is pressed |
+| POINTER_SNIPING_DPI_REVERSE | Decrease the sensitivity in sniping mode / increase it when shift is pressed |
+| SNIPING_MODE                | Activates sniping mode while key is pressed                                  |
+| SNIPING_MODE_TOGGLE         | Toggles sniping mode                                                         |
+| DRAGSCROLL_MODE             | Activates dragscroll mode while key is pressed                               |
+| DRAGSCROLL_MODE_TOGGLE      | Toggles dragscroll mode                                                      |
+|-----------------------------+------------------------------------------------------------------------------|
 
 ***** Layers
 In the above example [_COLEMAKDHM], [_LOWER] and [_RAISE] are the names of the layers. You can put in any name for the _COLEMAKDHM layer, but you have to change the ~#define~ lines at the beginning of the file accordingly.
@@ -398,13 +370,15 @@ To add another layer, copy and past one of the existing layers, rename it to wha
 You bind your layer to a key with the keycode ~MO(_MYLAYER)~. MO switches a layer on like the shift, CTRL etc. keys. So when you hold that key down, the layer is active. When you let go, the layer is not active. Again there are several other layer functions like ~TG()~ which toggles a layer. Look them up in QMK Configurator.
 
 
-**** OPTION 2: Using QMK Configurator for similar keyboard
+**** Using QMK Configurator for similar keyboard
 Because editing the keycodes is somewhat tedious, I came up with a way to utilize QMK Configurator a bit for it.
-Go to [[https://config.qmk.fm/#/handwired/dactyl_manuform/5x6/LAYOUT_5x6][QMK Configurator]] and select the handwired/dactyl_manuform/5x6 keyboard. Rename the keyboard to whatever you like and edit your keyboard to your liking.
-You can also put functions on the keys that do not really exist because of the trackball, they just wont work.
-When you are done, export the key map as JSON and put it into the qmk_firmware_dm_r_track folder. Then run the command
+Go to [[https://config.qmk.fm/#/handwired/dactyl_manuform/5x6/LAYOUT_5x6][QMK Configurator]] and select the handwired/tractyl_manuform/5x6_right/arduinomicro keyboard. Rename the keyboard to whatever you like and edit your keyboard to your liking. Be aware that you can not put in the custom keycodes to modify the modes of the trackball. For now give the key that should have modify the trackball function later some special keycodes so you can easily distinguish them from the others.
+
+When you are done, export the key map as JSON and put it into the qmk_firmware folder. Then run the command
 #+begin_src sh
 qmk json-keymap handwired-dactyl_manuform-5x6-yourfilename.json >> mykeymap.c
+#or
+qmk json2c handwired-dactyl_manuform-5x6-yourfilename.json >> mykeymap.c # depending on qmk version.
 #+end_src
 With "yourfilename" changed to your actual filename of course. This will generate a C source file out of the JSON file. It will look something like this:
 #+begin_src c
@@ -417,80 +391,43 @@ With "yourfilename" changed to your actual filename of course. This will generat
  */
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-	[0] = LAYOUT_5x6(KC_GRV, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_EQL, KC_TAB, KC_QUOT, KC_COMM, KC_DOT, KC_P, KC_Y, KC_F, KC_G, KC_C, KC_R, KC_L, KC_SLSH, KC_ESC, KC_A, KC_O, KC_E, KC_U, KC_I, KC_D, KC_H, KC_T, KC_N, KC_S, KC_MINS, KC_NO, KC_SCLN, KC_Q, KC_J, KC_K, KC_X, KC_B, KC_M, KC_W, KC_V, KC_Z, KC_BSLS, KC_LBRC, KC_RBRC, KC_PGUP, KC_PGDN, KC_LSFT, KC_NO, KC_NO, KC_RSFT, KC_LCTL, KC_SPC, KC_BSPC, KC_RALT, KC_LALT, MO(1), KC_ENT, LGUI_T(KC_RGUI)),
-	[1] = LAYOUT_5x6(KC_TILD, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_DEL, RCS(KC_2), KC_F9, KC_F10, LSFT(KC_F7), LCTL(KC_R), KC_LCBR, KC_RCBR, KC_HOME, KC_INS, KC_F11, KC_F12, KC_PLUS, KC_TRNS, RCS(KC_3), RCS(KC_4), MO(2), KC_DEL, KC_LPRN, KC_RPRN, KC_LEFT, KC_UP, KC_DOWN, KC_RGHT, KC_PIPE, KC_CAPS, LSFT(KC_F8), LSFT(KC_F9), LCTL(KC_X), LCTL(KC_C), LCTL(KC_V), KC_EQL, RCS(KC_3), RCS(KC_4), LSFT(KC_F8), LSFT(KC_F9), RCS(KC_2), LCTL(KC_F2), LCTL(KC_F3), KC_PSCR, KC_END, KC_LSFT, KC_TRNS, KC_TRNS, KC_RSFT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS),
-	[2] = LAYOUT_5x6(KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NLCK, KC_PSLS, KC_PAST, KC_PMNS, KC_CALC, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_LBRC, KC_RBRC, KC_P7, KC_P8, KC_P9, KC_PPLS, KC_MUTE, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_LPRN, KC_RPRN, KC_P4, KC_P5, KC_P6, KC_TRNS, KC_VOLU, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_P0, KC_P1, KC_P2, KC_P3, KC_PEQL, KC_VOLD, KC_TRNS, KC_TRNS, KC_PDOT, KC_COMM, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS)
+	[0] = LAYOUT_5x6(KC_GRV, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_EQL, KC_TAB, KC_QUOT, KC_COMM, KC_DOT, KC_P, KC_Y, KC_F, KC_G, KC_C, KC_R, KC_L, KC_SLSH, KC_ESC, KC_A, KC_O, KC_E, KC_U, KC_I, KC_D, KC_H, KC_T, KC_N, KC_S, KC_MINS, KC_NO, KC_SCLN, KC_Q, KC_J, KC_K, KC_X, KC_B, KC_M, KC_W, KC_V, KC_Z, KC_BSLS, KC_LBRC, KC_RBRC, KC_PGUP, KC_PGDN, KC_LSFT, KC_NO, KC_NO, KC_RSFT, KC_LCTL, KC_SPC, KC_RALT, KC_LALT, MO(1), KC_ENT, LGUI_T(KC_RGUI)),
+	[1] = LAYOUT_5x6(KC_TILD, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_DEL, RCS(KC_2), KC_F9, KC_F10, LSFT(KC_F7), LCTL(KC_R), KC_LCBR, KC_RCBR, KC_HOME, KC_INS, KC_F11, KC_F12, KC_PLUS, KC_TRNS, RCS(KC_3), RCS(KC_4), MO(2), KC_DEL, KC_LPRN, KC_RPRN, KC_LEFT, KC_UP, KC_DOWN, KC_RGHT, KC_PIPE, KC_CAPS, LSFT(KC_F8), LSFT(KC_F9), LCTL(KC_X), LCTL(KC_C), LCTL(KC_V), KC_EQL, RCS(KC_3), RCS(KC_4), LSFT(KC_F8), LSFT(KC_F9), RCS(KC_2), LCTL(KC_F2), LCTL(KC_F3), KC_PSCR, KC_END, KC_LSFT, KC_TRNS, KC_TRNS, KC_RSFT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS),
+	[2] = LAYOUT_5x6(KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NLCK, KC_PSLS, KC_PAST, KC_PMNS, KC_CALC, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_LBRC, KC_RBRC, KC_P7, KC_P8, KC_P9, KC_PPLS, KC_MUTE, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_LPRN, KC_RPRN, KC_P4, KC_P5, KC_P6, KC_TRNS, KC_VOLU, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_P0, KC_P1, KC_P2, KC_P3, KC_PEQL, KC_VOLD, KC_TRNS, KC_PDOT, KC_COMM, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS)
 };
 #+end_src
 
 Where 0, 1 and 2 are the different layers.
-While this is horrible to read of course, these layers are perfectly valid key maps. But you have to make some changes first before you can use it in the r_tracks firmware.
+While this is horrible to read of course, these layers are perfectly valid key maps. But you have to make some changes first before you can use it in the Tractyls firmware.
 First of all, copy only the part that says
 #+begin_src c
-	LAYOUT_5x6(KC_GRV, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_EQL, KC_TAB, KC_QUOT, KC_COMM, KC_DOT, KC_P, KC_Y, KC_F, KC_G, KC_C, KC_R, KC_L, KC_SLSH, KC_ESC, KC_A, KC_O, KC_E, KC_U, KC_I, KC_D, KC_H, KC_T, KC_N, KC_S, KC_MINS, KC_NO, KC_SCLN, KC_Q, KC_J, KC_K, KC_X, KC_B, KC_M, KC_W, KC_V, KC_Z, KC_BSLS, KC_LBRC, KC_RBRC, KC_PGUP, KC_PGDN, KC_LSFT, KC_NO, KC_NO, KC_RSFT, KC_LCTL, KC_SPC, KC_BSPC, KC_RALT, KC_LALT, MO(1), KC_ENT, LGUI_T(KC_RGUI)),
+	LAYOUT_5x6(KC_GRV, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_EQL, KC_TAB, KC_QUOT, KC_COMM, KC_DOT, KC_P, KC_Y, KC_F, KC_G, KC_C, KC_R, KC_L, KC_SLSH, KC_ESC, KC_A, KC_O, KC_E, KC_U, KC_I, KC_D, KC_H, KC_T, KC_N, KC_S, KC_MINS, KC_NO, KC_SCLN, KC_Q, KC_J, KC_K, KC_X, KC_B, KC_M, KC_W, KC_V, KC_Z, KC_BSLS, KC_LBRC, KC_RBRC, KC_PGUP, KC_PGDN, KC_LSFT, KC_NO, KC_NO, KC_RSFT, KC_LCTL, KC_SPC, KC_RALT, KC_LALT, MO(1), KC_ENT, LGUI_T(KC_RGUI)),
 #+end_src
 
-into an existing r_track layouts ~keymap.c~. So you will not mess up the names of the layers. Then you have to replace some key codes according to the table below:
-
-| replace | with                                                                           |
-|---------+--------------------------------------------------------------------------------|
-| KC_LSFT | TD(SFT_TM)                                                                     |
-| KC_LGUI | TD(GUI_TM)                                                                     |
-| KC_LCTL | TD(CTL_TM)                                                                     |
-| KC_LALT | TD(ALT_TM)                                                                     |
-| MD(1)   | TD(LOW_TM)                                                                     |
-| MD(2)   | TD(RAI_TM)                                                                     |
-| KC_ESC  | TD(ESC_TM) (if you want to go back to cursor mode every time you press escape) |
-|---------+--------------------------------------------------------------------------------|
+into an existing Tractyl layouts ~keymap.c~. So you will not mess up the names of the layers.
+Now exchange the keycodes that shoud modify the trackball modes with the custom keycodes from above.
 
 *** Other things to set in the firmware
-On the bottom of the file ~keyboards/handwired/dactyl_manuform/5x6_r_track/config.h~ there are two settings that you might want play around with:
+On the bottom of the file ~keyboards/handwired/tractyl_manuform/5x6_right/config.h~ there are some settings that you might want play around with:
 
-**** #define <<PMW3360_CPI>> 700
-Lets you set the initial CPI of the trackball. The general sensitivity so to speak. Higher value means slower mouse pointer.
+**** #define CHARYBDIS_MINIMUM_DEFAULT_DPI 1200
+The sensitivity in default mode.
 
-**** #define CPI_STEP_SENS 20
-Let you set how much the sensitivity changes with one press off KC_CPI_UP/ KC_CPI_DOWN.
-
-**** #define ROTATIONAL_TRANSFORM_ANGLE -30
-This setting changes the direction where the mouse pointer goes, when you move the ball. I set it up so the mouse pointer moves horizontal for me when I move my extended thump from left to right. But you probably want a different setting.
-
-**** #define CURSOR_MODE_SENS 500
-Lets you set the sensitivity in cursor mode. Higher value means faster mouse pointer.
-
-**** #define SCROLL_MODE_SENS 50
-Lets you set the sensitivity in scroll mode. Higher value means slower scrolling.
-
-**** #define CARRET_MODE_SENS 500
-Lets you set the sensitivity in carret mode. Higher value means slower cursor.
-
-**** #define CURSOR_INTE_SENS 5
-Sets the sensitivity in cursor mode during integration mode. Higher value means faster pointer.
-
-**** #define SCROLL_INTE_SENS 10000
-Sets the sensitivity in scroll mode during integration mode. Higher value means slower scrolling.
-
-**** #define CARRET_INTE_SENS 2000
-Sets the sensitivity in carret mode during integration mode. Higher value means slower cursor.
-
-**** #define <<TRACK_MODE_ALT>> SCROLL_MODE
-Set which trackball mode should me activated when the key that is bound with TD(ALT_TM) is pressed. Values are:
-- SCROLL_MODE
-- CURSOR_MODE
-- CARRET_MODE
-- SND_BRIGHT_MODE
-
-**** #define TRACK_MODE_(CTRL/ SHIFT/ GUI)
-Same like ~#define TRACK_MODE_ALT~ for the CTRL/ SHIFT/ GUI key.
+**** #define CHARYBDIS_DEFAULT_DPI_CONFIG_STEP 200
+ Change of the sensitivity in cursor mode each time POINTER_DEFAULT_DPI_FORWARD/ REVERSE is pressed.
+**** #define CHARYBDIS_MINIMUM_SNIPING_DPI 400
+The sensitivity in sniping mode.
+#define CHARYBDIS_SNIPING_DPI_CONFIG_STEP 200
+ Change of the sensitivity in sniping mode each time POINTER_SNIPING_DPI_FORWARD/ REVERSE is pressed.
 
 *** Compiling your firmware
 Once you are done with setting up the keymap to your liking, you can generate a .hex file with the command
 #+begin_src sh
-qmk compile -kb handwired/dactyl_manuform/5x6_r_track -km <name_of_your_keymap>
+qmk compile -kb handwired/Tractyl_manuform/5x6_right/arduinomicro -km <name_of_your_keymap>
 #+end_src
-while being inside the qmk_firmware_dm_r_track folder. If you haven't screwed up your keymap.c from before, this will generate a .hex-file in the qmk_firmware folder.
+while being inside the qmk_firmware folder. If you haven't screwed up your keymap.c from before, this will generate a .hex-file in the qmk_firmware folder.
 
-** DRAFT: Flashing the compiled .hex file.
+** Flashing the compiled .hex file.
 Flashing the firmware is the usual flashing of a QMK firmware. You either compiled it yourself on your computer, with the somewhat finicky setup of the key map and compilation of the keymap.c, or with the rather comfortable [[https://config.qmk.fm/][QMK Configurator]]. Either way you are going to end up with a .hex file.
 I have never flashed a QMK firmware onto an Arduino in Windows or Mac, but I guess it's rather easy using [[https://github.com/qmk/qmk_toolbox/releases][QMK Toolbox.]]
 
@@ -521,7 +458,7 @@ However, the group name ~dialout~ could depend on the distro.
 *** Flashing the .hex
 Now with all that information, put your Arduino into flash mode again by pressing the reset button. Use the command
 #+begin_src sh
-avrdude -v -patmega32u4 -cavr109 -P/dev/ttyACM0 -b57600 -Uflash:w:"handwired_dactyl_manuform_5x6_r_track_yourfilenamehere.hex":i
+avrdude -v -patmega32u4 -cavr109 -P/dev/ttyACM0 -b57600 -Uflash:w:"handwired_tractyl_manuform_5x6_right_arduinomicro_yourfilenamehere.hex":i
 #+end_src
 inside the folder where your .hex file is.
 Where ~/dev/ttyACM0~ depends on the device name you obtained before and the filename of the .hex file is your own filename obviously.
@@ -533,3 +470,5 @@ So do not panic if uploading does not work at the first try. It could certainly 
 
 Once you are done with flashing the left side, disconnect it. Then connect the right side and do the same procedure again. You use the same .hex file on both sides.
 When you are done, connect the USB cable to the right side and use your new keyboard!
+
+* TODO The part about my own special firmware
