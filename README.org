@@ -34,8 +34,8 @@ Unlike some other trackball Dactyl Manuforms that utilize a [[https://www.pjrc.c
     - [[#putting-everything-together][Putting everything together]]
 - [[#flashing-the-firmware][Flashing the firmware]]
   - [[#a-word-about-trackball-modes][A word about trackball modes]]
-    - [[#non-stacking-modes][Non-Stacking modes:]]
-    - [[#stacking-modes][Stacking modes:]]
+    - [[#non-stacking-modes][Non-Stacking modes]]
+    - [[#stacking-modes][Stacking modes]]
   - [[#preparing-the-qmk-firmware][Preparing the QMK firmware]]
     - [[#setting-up-qmk][Setting up QMK]]
     - [[#customizing-your-key-map][Customizing your key map]]
@@ -45,7 +45,8 @@ Unlike some other trackball Dactyl Manuforms that utilize a [[https://www.pjrc.c
     - [[#install-avrdude][Install avrdude]]
     - [[#get-your-device-name][Get your device name]]
     - [[#flashing-the-hex][Flashing the .hex]]
-- [[#the-part-about-my-own-special-firmware][The part about my own special firmware]]
+- [[#tap-dance-keymap][Tap-dance keymap]]
+  - [[#changing-tap-dance-functions][Changing tap-dance functions]]
 #+END_QUOTE
 
 * About this Repository
@@ -101,7 +102,7 @@ I apologize if most of these parts are from German ebay vendors, but this is whe
 - hot glue
 - multi meter (to check for continuity, a cheap one is enough)
 - (optional) [[https://www.ebay.de/itm/284658986388?epid=11017008009&hash=item4246ff6d94:g:J6oAAOSw9KFie1tU][filler]]
-- (optional) some paint you like
+- (optional) some spray paint you like
 
 *** Tools
 - soldering iron
@@ -215,20 +216,21 @@ The Arduino Micro has some pins on the top, which are in the way when mounting i
 Here is the thing in all its glory:
 [[file:images/done.jpg]]
 
-* TODO Flashing the firmware
+* Flashing the firmware
 ** A word about trackball modes
 What makes this firmware very special is how it handles the trackball. You can not only move the mouse pointer with it, no, you can have different modes for it and all that without using additional keys! How great is that?
-For further configuration see [[#other-things-to-set-in-the-firmware][Other things to set in the firmware]].
+For further configuration see [[#other-things-to-set-in-the-firmware][Other things to set in the firmware]]
 There are stacking and non-stacking modes. Non-stacking modes are the major modes of the trackball, only one non-stacking mode can be activated at a given time and activating one mode will deactivate the last mode.
 Stacking modes on the other hand can be activated on top of another mode.
+To active a mode you usethe special keycodes that this firmware provides. You can find them below.
 
-*** Non-Stacking modes:
+*** Non-Stacking modes
 
 **** Cursor mode
 Moves the mouse cursor as you would expect from a trackball. This is the mode that is activated when no other mode is activated.
 
 **** Dragscroll mode
-Scrolls up and down and like and right like a mouse wheel from outer space.
+Scrolls up and down and left and right like a mouse wheel from outer space.
 
 **** Carret mode
 Moves the carret (the little pointer in text documents) when the trackball is rotated.
@@ -239,7 +241,7 @@ In this mode you can define four keycodes that get executed when you rotate the 
 **** Mode-Mode
 One mode to rule them all! This mode activates the other modes. When the mode is active, rotate the trackball up for cursor mode, right for dragscroll mode, left for carret mode and down for integration mode.
 
-*** Stacking modes:
+*** Stacking modes
 
 **** Sniping mode
 Decreases the cursors sensitivity during cursor mode and dragscroll mode, allowing you to aim for something way easier.
@@ -364,6 +366,9 @@ To get special key functions like ~RALT(KC_Y)~ you can see them in the same way 
 Here is also a reference for the [[https://github.com/qmk/qmk_firmware/blob/master/docs/keycodes.md][keycodes used by QMK.]] There are a few.
 
 ****** Special key codes in this firmware
+:PROPERTIES:
+:ID:       22ae2959-f1a1-4221-b71f-e5f25fb75928
+:END:
 The firmware also has some additional keycodes which you can use in the matrix above like any other keycode.
 | Keycode                     | Short alias | Function                                                                     |
 |-----------------------------+-------------+------------------------------------------------------------------------------|
@@ -433,7 +438,7 @@ into an existing Tractyl layouts ~keymap.c~. So you will not mess up the names o
 Now exchange the keycodes that shoud modify the trackball modes with the custom keycodes from above.
 
 *** Other things to set in the firmware
-On the bottom of the file ~keyboards/handwired/tractyl_manuform/5x6_right/config.h~ there are some settings that you might want play around with:
+If you haven't yet, you can create the file ~keyboards/handwired/tractyl_manuform/5x6_right/keymaps/yourkeymap/config.h~. In it you can put the following lines to change the behavior of your keyboard.
 
 **** #define CHARYBDIS_MINIMUM_DEFAULT_DPI 1200
 The sensitivity in default mode.
@@ -519,4 +524,37 @@ So do not panic if uploading does not work at the first try. It could certainly 
 Once you are done with flashing the left side, disconnect it. Then connect the right side and do the same procedure again. You use the same .hex file on both sides.
 When you are done, connect the USB cable to the right side and use your new keyboard!
 
-* TODO The part about my own special firmware
+* Tap-dance keymap
+QMK has a feature called [[https://github.com/qmk/qmk_firmware/blob/master/docs/feature_tap_dance.md][Tap Dance]], which is really useful for the trackball modes we have in this keyboards. With Tap Dance you can give a key different functions depending on how often you tap it. Although Tap Dance supports way more, I only copied some basic functionality over from Qurns first Tap Dance software to change between the different trackball modes.
+By default, CTRL switches on cursor mode, Shift carret mode and Alt dragscroll mode. Tapping the key once will activate the corresponding mode, holding it will activate its actual modifier behavior. I also put in something for the vim lovers. I found myself pressing escape when I wanted to go back to cursor mode, because for my vim-brain this is like vims normal mode. So I put this functionality on the escape key.
+You can flash the Tap Dance firmware using this command:
+#+begin_src sh
+qmk compile -kb handwired/Tractyl_manuform/5x6_right/arduinomicro -km tapdance
+#+end_src
+
+The keymap I put in is the keymap I use, which is dvorak. So keep in mind you might want to change that.
+The tap-dance functions are the key codes that start with ~TD(~ like ~TD(SFT_TM)~ for the shift tap dance functions.
+
+** Changing tap-dance functions
+To change what a tap dance function does, e.g. if you want to activate dragscroll with a tap of the shift key instead of the alt key, you can edit ~keyboards/handwired/tractyl_manuform/5x6_right/keymaps/tapdance/tapance.c~.
+In there you have several functions like this one:
+#+begin_src c
+void sfttm_finished(qk_tap_dance_state_t *state, void *user_data) {
+  td_state = cur_dance(state);
+  sticky_timer = timer_read32();
+  activate_sft = true;
+  sticky_key = true;
+  switch (td_state) {
+  case SINGLE_TAP:
+    charybdis_set_pointer_carret_enabled(true);
+    break;
+  case SINGLE_HOLD:
+    activate_stkeys();
+    sticky_key = false;
+  }
+}
+#+end_src
+This is the tap dance function for activating the shift modfier and for activating the carret mode.
+To activate dragscroll mode instead for example, you would change the line that says ~charybdis_set_pointer_carret_enabled(true);~ into ~charybdis_set_pointer_dragscroll_enabled(true);~.
+That's all.
+The different functions to activate the modes are in ~keyboards/handwired/tractyl_manuform/tractyl_manuform.h~
