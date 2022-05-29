@@ -34,9 +34,8 @@ Unlike some other trackball Dactyl Manuforms that utilize a [[https://www.pjrc.c
     - [[#putting-everything-together][Putting everything together]]
 - [[#flashing-the-firmware][Flashing the firmware]]
   - [[#a-word-about-trackball-modes][A word about trackball modes]]
-    - [[#cursor-mode][Cursor mode]]
-    - [[#dragscroll-mode][Dragscroll mode]]
-    - [[#sniping-mode][Sniping mode]]
+    - [[#non-stacking-modes][Non-Stacking modes:]]
+    - [[#stacking-modes][Stacking modes:]]
   - [[#preparing-the-qmk-firmware][Preparing the QMK firmware]]
     - [[#setting-up-qmk][Setting up QMK]]
     - [[#customizing-your-key-map][Customizing your key map]]
@@ -216,19 +215,37 @@ The Arduino Micro has some pins on the top, which are in the way when mounting i
 Here is the thing in all its glory:
 [[file:images/done.jpg]]
 
-* Flashing the firmware
+* TODO Flashing the firmware
 ** A word about trackball modes
 What makes this firmware very special is how it handles the trackball. You can not only move the mouse pointer with it, no, you can have different modes for it and all that without using additional keys! How great is that?
-What key activates what is set in ~config.h~, see [[#other-things-to-set-in-the-firmware][Other things to set in the firmware]].
-The different modes are:
-*** Cursor mode
+For further configuration see [[#other-things-to-set-in-the-firmware][Other things to set in the firmware]].
+There are stacking and non-stacking modes. Non-stacking modes are the major modes of the trackball, only one non-stacking mode can be activated at a given time and activating one mode will deactivate the last mode.
+Stacking modes on the other hand can be activated on top of another mode.
+
+*** Non-Stacking modes:
+
+**** Cursor mode
 Moves the mouse cursor as you would expect from a trackball. This is the mode that is activated when no other mode is activated.
 
-*** Dragscroll mode
+**** Dragscroll mode
 Scrolls up and down and like and right like a mouse wheel from outer space.
 
-*** Sniping mode
-Decreases the cursors sensitivity during cursor mode, allowing you to click on something way easier.
+**** Carret mode
+Moves the carret (the little pointer in text documents) when the trackball is rotated.
+
+**** Custom mode
+In this mode you can define four keycodes that get executed when you rotate the trackball.
+
+**** Mode-Mode
+One mode to rule them all! This mode activates the other modes. When the mode is active, rotate the trackball up for cursor mode, right for dragscroll mode, left for carret mode and down for integration mode.
+
+*** Stacking modes:
+
+**** Sniping mode
+Decreases the cursors sensitivity during cursor mode and dragscroll mode, allowing you to aim for something way easier.
+
+**** Integration mode
+This mode keeps the movement once it is going. This mode is only available in dragscroll and carret mode. E.g. when you have integration mode activated in dragscroll mode you give the trackball a litte notch and it keeps scrolling. A nudge in the other direction slows scrolling down, a nudge direction in the same makes it faster.
 
 ** Preparing the QMK firmware
 
@@ -274,8 +291,8 @@ This probably works well for Windows and Mac, too. I do not know as I haven't tr
 
 #+begin_src sh
 # clone and prepare the QMK-Firmware repo
-git clone https://github.com/qmk/qmk_firmware.git
-cd qmk_firmware/
+git clone https://github.com/Schievel1/qmk_firmware_dm_r_track.git
+cd qmk_firmware_dm_r_track/
 make git-submodule
 # to test if your toolchain works, compile something:
 qmk compile -kb handwired/dactyl_manuform/5x6 -km default
@@ -348,17 +365,25 @@ Here is also a reference for the [[https://github.com/qmk/qmk_firmware/blob/mast
 
 ****** Special key codes in this firmware
 The firmware also has some additional keycodes which you can use in the matrix above like any other keycode.
-| Keycode                     | Function                                                                     |
-|-----------------------------+------------------------------------------------------------------------------|
-| POINTER_DEFAULT_DPI_FORWARD | Increase the sensitivity in cursor mode / decrease it when shift is pressed  |
-| POINTER_DEFAULT_DPI_REVERSE | Decrease the sensitivity in cursor mode / increase it when shift is pressed  |
-| POINTER_SNIPING_DPI_FORWARD | Increase the sensitivity in sniping mode / decrease it when shift is pressed |
-| POINTER_SNIPING_DPI_REVERSE | Decrease the sensitivity in sniping mode / increase it when shift is pressed |
-| SNIPING_MODE                | Activates sniping mode while key is pressed                                  |
-| SNIPING_MODE_TOGGLE         | Toggles sniping mode                                                         |
-| DRAGSCROLL_MODE             | Activates dragscroll mode while key is pressed                               |
-| DRAGSCROLL_MODE_TOGGLE      | Toggles dragscroll mode                                                      |
-|-----------------------------+------------------------------------------------------------------------------|
+| Keycode                     | Short alias | Function                                                                     |
+|-----------------------------+-------------+------------------------------------------------------------------------------|
+| POINTER_DEFAULT_DPI_FORWARD | DPI_MOD     | Increase the sensitivity in cursor mode / decrease it when shift is pressed  |
+| POINTER_DEFAULT_DPI_REVERSE | DPI_RMOD    | Decrease the sensitivity in cursor mode / increase it when shift is pressed  |
+| POINTER_SNIPING_DPI_FORWARD | S_D_MOD     | Increase the sensitivity in sniping mode / decrease it when shift is pressed |
+| POINTER_SNIPING_DPI_REVERSE | S_D_RMOD    | Decrease the sensitivity in sniping mode / increase it when shift is pressed |
+| SNIPING_MODE                | SNIPING     | Activates sniping mode while key is pressed                                  |
+| SNIPING_MODE_TOGGLE         | SNP_TOG     | Toggles sniping mode                                                         |
+| DRAGSCROLL_MODE             | DRGSCRL     | Activates dragscroll mode while key is pressed                               |
+| DRAGSCROLL_MODE_TOGGLE      | DRG_TOG     | Toggles dragscroll mode                                                      |
+| CARRET_MODE                 | CARRETM     | Activates carret mode while key is pressed                                   |
+| CARRET_MODE_TOGGLE          | CRT_TOG     | Toggles carret mode                                                          |
+| CUSTOM_MODE                 | CUSTOMM     | Activates custom mode while key is pressed                                   |
+| CUSTOM_MODE_TOGGLE          | CST_TOG     | Toggles custom mode                                                          |
+| MODE_MODE                   | MOMO        | Activates mode-mode while key is pressed                                     |
+| MODE_MODE_TOGGLE            | MOMO_TOG    | Toggles mode-mode                                                            |
+| INTEG_MODE                  | INTEGM      | Activates integration mode while key is pressed                              |
+| INTEG_MODE_TOGGLE           | ITG_TOG     | Toggles integration mode                                                     |
+|-----------------------------+-------------+------------------------------------------------------------------------------|
 
 ***** Layers
 In the above example [_COLEMAKDHM], [_LOWER] and [_RAISE] are the names of the layers. You can put in any name for the _COLEMAKDHM layer, but you have to change the ~#define~ lines at the beginning of the file accordingly.
@@ -415,17 +440,40 @@ The sensitivity in default mode.
 
 **** #define CHARYBDIS_DEFAULT_DPI_CONFIG_STEP 200
  Change of the sensitivity in cursor mode each time POINTER_DEFAULT_DPI_FORWARD/ REVERSE is pressed.
+
 **** #define CHARYBDIS_MINIMUM_SNIPING_DPI 400
 The sensitivity in sniping mode.
-#define CHARYBDIS_SNIPING_DPI_CONFIG_STEP 200
+
+**** #define CHARYBDIS_SNIPING_DPI_CONFIG_STEP 200
  Change of the sensitivity in sniping mode each time POINTER_SNIPING_DPI_FORWARD/ REVERSE is pressed.
+
+**** #define CHARYBDIS_DRAGSCROLL_DPI 100
+The sensitivity in dragscroll mode.
+
+**** #define CHARYBDIS_DRAGSCROLL_REVERSE_X / _Y
+Reverse the scroll direction in dragscroll mode for the x / y axis.
+
+**** #define CHARYBDIS_CARRET_BUFFER 40
+The sensitivity in carret mode. Higher number means less sensitive.
+
+**** #define CHARYBDIS_CARRET_REVERSE_X / _Y
+Reverse the direction in carret mode for the x / y axis.
+
+**** #define CHARYBDIS_POINTER_ACCELERATION_ENABLE
+Enable pointer acceleration.
+
+**** #define CHARYBDIS_POINTER_ACCELERATION_FACTOR 24
+Amount of pointer acceleration.
+
+**** #define CUSTOM_FN_RIGHT / CUSTOM_FN_LEFT / _UP / _DOWN
+Here you can define the keycode that gets executed in custom mode when the dragball is rotated to the right / left / up / down
 
 *** Compiling your firmware
 Once you are done with setting up the keymap to your liking, you can generate a .hex file with the command
 #+begin_src sh
 qmk compile -kb handwired/Tractyl_manuform/5x6_right/arduinomicro -km <name_of_your_keymap>
 #+end_src
-while being inside the qmk_firmware folder. If you haven't screwed up your keymap.c from before, this will generate a .hex-file in the qmk_firmware folder.
+while being inside the qmk_firmware_dm_r_track folder. If you haven't screwed up your keymap.c from before, this will generate a .hex-file in the qmk_firmware folder.
 
 ** Flashing the compiled .hex file.
 Flashing the firmware is the usual flashing of a QMK firmware. You either compiled it yourself on your computer, with the somewhat finicky setup of the key map and compilation of the keymap.c, or with the rather comfortable [[https://config.qmk.fm/][QMK Configurator]]. Either way you are going to end up with a .hex file.
