@@ -76,11 +76,12 @@ I apologize if most of these parts are from German ebay vendors, but this is whe
 - 62 keyboard switches. Any of the usual Cherry style switches will work. Cherry, Kailh, Gateron, you name it.
 - 62 1N4148 Diodes, if you buy some that are neatly packaged [[https://www.aliexpress.com/item/1934432186.html?spm=a2g0o.order_list.0.0.7cfc5c5f0jf1KF&gatewayAdapt=glo2deu][like this]] you can bend their pins in the shape you need easier.
 - [[https://kprepublic.com/products/kailh-hot-swapping-pcb-sockets-for-mx-cherry-gateron-outemu-kailh-switches-for-xd75-series-smd-socket][62 Kailh hot swap sockets]]
-- [[https://www.aliexpress.com/item/1005001486831290.html?spm=a2g0o.order_list.0.0.7cfc5c5f0jf1KF][2 USB-C-female to USB-C-male cable adapter.]] I edited the holes in the cases to fit these adapters, change the [[file:models/][models]] if you are using a different one. Note that you can also change the .stl files using OpenSCAD, which is sometimes easier if you only change a minor thing.
+- [[https://www.aliexpress.com/item/1005001486831290.html?spm=a2g0o.order_list.0.0.7cfc5c5f0jf1KF][2 USB-C to Micro-USB cable adapter.]] I edited the holes in the cases to fit these adapters, change the [[file:models/][models]] if you are using a different one. Not that you can also change the .stl files is OpenSCAD, which is sometimes easier if you only change a minor thing.
 - 1 USB-C to USB-A cable. Or USB-C to USB-C. Or however you want to connect the keyboard to your computer.
-- [[https://www.st.com/en/microcontrollers-microprocessors/stm32f411.html][2 F411 Blackpill]]  with Micro-USB.
-- [[https://www.ebay.de/itm/323789560343?epid=2099768346&hash=item4b635c9a17:g:HkgAAOSwFPFh~a9D][1 TRRS 3,5mm cable.]]
-- [[https://www.ebay.de/itm/275315539359?hash=item401a15bd9f:g:r7EAAOSwJIZhYdp6][2 TRRS 3.5mm sockets.]] (TRRS neccesary for I2C)
+- [[https://store.arduino.cc/products/arduino-micro][1 Arduino Micro]] with Micro-USB.
+- [[https://www.aliexpress.com/item/32768308647.html?spm=a2g0o.order_list.0.0.7cfc5c5f0jf1KF][1 Arduino Pro Micro]] with Micro-USB.
+- [[https://www.ebay.de/itm/323789560343?epid=2099768346&hash=item4b635c9a17:g:HkgAAOSwFPFh~a9D][1 TRS 3,5mm cable.]]
+- [[https://www.ebay.de/itm/275315539359?hash=item401a15bd9f:g:r7EAAOSwJIZhYdp6][2 TRS 3.5mm sockets.]] (I used a TRRS socket in the photos, because I was trying I2C out. Don't let that throw you off.)
 - [[https://www.ebay.de/itm/125233269308?var=426269832926][46 Jumper wires.]] Female-Male. In most cases 10cm is sufficient, but buy some 20cm, too.
 - [[https://www.ebay.de/itm/173779404364?var=472450338468][12 M3x4 insert nuts.]]
 - [[https://www.ebay.de/itm/173779404364?var=473397195689][2 M2x3 insert nuts.]]
@@ -89,19 +90,10 @@ I apologize if most of these parts are from German ebay vendors, but this is whe
 - [[https://www.ebay.de/itm/160834871787?var=460084672768][Some bumper pads to prevent the keyboard from slipping all over the place.]]
 - [[https://www.tindie.com/products/jkicklighter/pmw3360-motion-sensor/][1 PMW3360 Motion Sensor.]]
 - [[https://www.ebay.de/itm/261317712140][3 MR63ZZ ball bearings]]
-- [[https://www.ebay.de/itm/303970479238][3 3mm (diameter) pins.]] I bought them in 10mm length and cut them off, because I could not find anything shorter. You need about 7mm long ones actually.
+- [[https://www.ebay.de/itm/303970479238][3 3mm pins.]] I bought them in 10mm length and cut them off, because I could not find anything shorter. You need about 7mm long ones actually.
 - [[https://de.perixx.com/products/18028][1 34mm trackball.]]
 - [[https://www.aliexpress.com/item/32960657626.html?spm=a2g0o.productlist.0.0.1a0e284567qEMN&algo_pvid=23baa503-3c28-4c0c-a758-077bc9ae08db&algo_exp_id=23baa503-3c28-4c0c-a758-077bc9ae08db-2&pdp_ext_f=%7B%22sku_id%22%3A%2266505501610%22%7D&pdp_npi=2%40dis%21EUR%21%211.04%21%21%211.51%21%21%402100bdd816527763187435940eca76%2166505501610%21sea][1 6x6x4.3mm reset button.]] Anything in a different size you have lying around will probably do, too. The flatter the better.
 - Some key caps you like with cherry mount. (nearly all of them have cherry mounts) I personally prefer SA sculpted key caps with dactyls although for someone who uses Dvorak a set that has everything (Dvorak and dactyl special keys) is hard to get.
-
-**** LCD
-- [[https://www.androegg.de/shop/0-91-oled-lcd-display-128x32-ssd1306-i2c-iic-weiss-33-5v/][2x SD1306 128x32 OLED Display]] Connected via I2C to the F411.
-
-**** USB-HUB
-- e.g.[[https://www.aliexpress.com/item/1005004168286895.html?spm=a2g0o.productlist.0.0.525ce5b6twZOgC&algo_pvid=57275b42-755b-4811-9073-58c82e6c27a7&algo_exp_id=57275b42-755b-4811-9073-58c82e6c27a7-5&pdp_ext_f=%7B%22sku_id%22%3A%2212000028258904106%22%7D&pdp_npi=2%40dis%21EUR%21%213.14%21%21%21%21%21%402100bb5116540967357105478eba86%2112000028258904106%21sea][A hub board]] and [[https://www.aliexpress.com/item/1005004261539017.html?spm=a2g0o.productlist.0.0.6452248fMwn3qP&algo_pvid=7dbcf495-5e9a-4371-b3f8-6b5ff4fbe4ea&algo_exp_id=7dbcf495-5e9a-4371-b3f8-6b5ff4fbe4ea-48&pdp_ext_f=%7B%22sku_id%22%3A%2212000028557022284%22%7D&pdp_npi=2%40dis%21EUR%21%210.74%21%21%211.79%21%21%402100bb4c16540967716903823effe0%2112000028557022284%21sea][USB-C sockets]] + [[https://www.aliexpress.com/item/4000806581109.html?spm=a2g0o.productlist.0.0.226f3803qcQztS&algo_pvid=7ea892d9-a561-4239-b828-cd432428d9db&algo_exp_id=7ea892d9-a561-4239-b828-cd432428d9db-0&pdp_ext_f=%7B%22sku_id%22%3A%2210000008096938788%22%7D&pdp_npi=2%40dis%21EUR%21%210.85%21%21%211.59%21%21%400b0a119a16540968420727015eda21%2110000008096938788%21sea][USB-A sockets]]
-
-**** RGB LCD Matrix
-- [[https://www.amazon.com/-/de/dp/B07BKBN1DQ/ref=sr_1_7?keywords=ws2812+led+strip&qid=1654096494&sr=8-7][WS2812]] Can this be controlled by 2 seperate MCUs in QMK? otherwise we would have to use 1 more wire that go from one side to the other.
 
 *** Consumables
 - wire, you can wire this however you like. I use insulated wire with 0.5mm diameter, but I have another Dactyl which I wired with 1mm thick uninsulated wire bent into shape so the wires do not touch. (like they wired old radios in the 50s.) It is very reliable.
