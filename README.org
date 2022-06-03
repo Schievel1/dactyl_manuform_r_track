@@ -51,12 +51,12 @@ Unlike some other trackball Dactyl Manuforms that utilize a [[https://www.pjrc.c
 
 * About this Repository
 The idea and all the models come from Reddit user [[https://www.reddit.com/user/qqurn/][u/qqurn]]. Check out his Gitlab repository [[https://gitlab.com/keyboards1][here.]]
-I only changed qqurns models in Openscad to use a different USB-C to micro-USB adapter cable and a TRS socket and single serial communication between the halfs instead of a RJ9 socket and I2C communication. I also corrected the base plate of the left half.
+I only changed qqurns models in Openscad to use a different USB-C to micro-USB adapter cable and a TRS socket and single serial communication between the halfs instead of a RJ9 socket and I2C communication. I also corrected the base plate of the left half to align with the screw holes of the top.
 
 I noticed trackball Dactyl Manuforms lack a decent idiot proof guide like [[https://medium.com/swlh/complete-idiot-guide-for-building-a-dactyl-manuform-keyboard-53454845b065][the one]] for the Dactyl Manuform without trackball. There is also [[https://github.com/noahprince22/tractyl-manuform-keyboard][this one]] for a trackball model but it uses a Raspberry Pi and is a whole different model.
 The trackball Dactyl in this guide is intentionally made easy. You do not need to know how to code nor do you need to know much about electronics. You do not even need to open a text editor if you do not want to (although you should if you want to do some configuration) and will still end up with a good configuration with sane defaults.
 Just follow this guide step by step and you should have a decent trackball Dactyl Manuform in the end.
-This model also uses a Arduino Micro on the trackball side and a Arduino Pro Micro on the left side. This means you do not need to flash them with separate files because you need to change the bootloader in between and recompile like it is with different micro controllers in the left than in the right half. Using the same firmware file for both make things simpler.
+This model also uses a Arduino Micro on the trackball side and a Arduino Pro Micro on the left side. This means you do not need to flash them with separate files because you need to change the bootloader in between and recompile like it is with different micro controller in the left than in the right half. Using the same firmware file for both makes things simpler.
 
 The folder [[file:STLs/][STLs]] contains the .stl files ready to print. The folder [[file:models/][models]] contains the [[https://openscad.org/][OpenSCAD]] and [[https://www.freecadweb.org/][FreeCAD]] files to change the models to your liking in those programs.
 I added some more images that are not included in the build guide into the folder [[file:images/more_images/][more_images]].
@@ -66,22 +66,23 @@ Please note that the [[file:images/more_images/Pinout-Micro_latest.png][Arduino 
 All other images are [[https://creativecommons.org/licenses/by-sa/4.0/][CC-BY-SA]] licensed as well.
 
 * Building guide
+I wrote this guide about building the right side with the trackball. The left side is basically the same thing minus the part with the trackball.
 
 ** Needed items
 
-I apologize if most of these parts are from German ebay vendors, but this is where I got them from. I am sure you can find them from somewhere else. I list the exact amount of parts needed, for some things it makes sense to have some spare, like switches, diodes, jumper wires. Many of the parts come in packages of a 100 or so, so you have so spares anyway.
+I apologize if most of these parts are from German ebay vendors, but this is where I got them from. I am sure you can find them from somewhere else. I list the exact amount of parts needed, for some things it makes sense to have some spare, like switches, diodes, jumper wires, ball bearings, etc. Many of the parts come in packages of a 100 or so, so you have some spares anyway.
 
 *** Parts
 - 3D printed case. Because of the Kailh hot swap sockets we are using make sure that the print quality is not too bad. If they don't fit properly it gets very hard to hit the sockets with the pins from the switches.
 - 62 keyboard switches. Any of the usual Cherry style switches will work. Cherry, Kailh, Gateron, you name it.
 - 62 1N4148 Diodes, if you buy some that are neatly packaged [[https://www.aliexpress.com/item/1934432186.html?spm=a2g0o.order_list.0.0.7cfc5c5f0jf1KF&gatewayAdapt=glo2deu][like this]] you can bend their pins in the shape you need easier.
 - [[https://kprepublic.com/products/kailh-hot-swapping-pcb-sockets-for-mx-cherry-gateron-outemu-kailh-switches-for-xd75-series-smd-socket][62 Kailh hot swap sockets]]
-- [[https://www.aliexpress.com/item/1005001486831290.html?spm=a2g0o.order_list.0.0.7cfc5c5f0jf1KF][2 USB-C to Micro-USB cable adapter.]] I edited the holes in the cases to fit these adapters, change the [[file:models/][models]] if you are using a different one. Not that you can also change the .stl files is OpenSCAD, which is sometimes easier if you only change a minor thing.
+- [[https://www.aliexpress.com/item/1005001486831290.html?spm=a2g0o.order_list.0.0.7cfc5c5f0jf1KF][2 USB-C to Micro-USB cable adapter.]] I edited the holes in the cases to fit these adapters, change the [[file:models/][models]] if you are using a different one. Note that you can also change the .stl files is OpenSCAD, which is sometimes easier if you only change a minor thing.
 - 1 USB-C to USB-A cable. Or USB-C to USB-C. Or however you want to connect the keyboard to your computer.
 - [[https://store.arduino.cc/products/arduino-micro][1 Arduino Micro]] with Micro-USB.
 - [[https://www.aliexpress.com/item/32768308647.html?spm=a2g0o.order_list.0.0.7cfc5c5f0jf1KF][1 Arduino Pro Micro]] with Micro-USB.
 - [[https://www.ebay.de/itm/323789560343?epid=2099768346&hash=item4b635c9a17:g:HkgAAOSwFPFh~a9D][1 TRS 3,5mm cable.]]
-- [[https://www.ebay.de/itm/275315539359?hash=item401a15bd9f:g:r7EAAOSwJIZhYdp6][2 TRS 3.5mm sockets.]] (I used a TRRS socket in the photos, because I was trying I2C out. Don't let that throw you off.)
+- [[https://www.ebay.de/itm/275315539359?hash=item401a15bd9f:g:r7EAAOSwJIZhYdp6][2 TRS 3.5mm sockets.]] (I used a TRRS socket in the photos, because I was trying I2C out. Don't let that throw you off, TRS is enough.)
 - [[https://www.ebay.de/itm/125233269308?var=426269832926][46 Jumper wires.]] Female-Male. In most cases 10cm is sufficient, but buy some 20cm, too.
 - [[https://www.ebay.de/itm/173779404364?var=472450338468][12 M3x4 insert nuts.]]
 - [[https://www.ebay.de/itm/173779404364?var=473397195689][2 M2x3 insert nuts.]]
@@ -90,17 +91,17 @@ I apologize if most of these parts are from German ebay vendors, but this is whe
 - [[https://www.ebay.de/itm/160834871787?var=460084672768][Some bumper pads to prevent the keyboard from slipping all over the place.]]
 - [[https://www.tindie.com/products/jkicklighter/pmw3360-motion-sensor/][1 PMW3360 Motion Sensor.]]
 - [[https://www.ebay.de/itm/261317712140][3 MR63ZZ ball bearings]]
-- [[https://www.ebay.de/itm/303970479238][3 3mm pins.]] I bought them in 10mm length and cut them off, because I could not find anything shorter. You need about 7mm long ones actually.
+- [[https://www.ebay.de/itm/303970479238][3 3mm (diameter) pins.]] I bought them in 10mm length and cut them off, because I could not find anything shorter. You need about 7mm long ones actually.
 - [[https://de.perixx.com/products/18028][1 34mm trackball.]]
 - [[https://www.aliexpress.com/item/32960657626.html?spm=a2g0o.productlist.0.0.1a0e284567qEMN&algo_pvid=23baa503-3c28-4c0c-a758-077bc9ae08db&algo_exp_id=23baa503-3c28-4c0c-a758-077bc9ae08db-2&pdp_ext_f=%7B%22sku_id%22%3A%2266505501610%22%7D&pdp_npi=2%40dis%21EUR%21%211.04%21%21%211.51%21%21%402100bdd816527763187435940eca76%2166505501610%21sea][1 6x6x4.3mm reset button.]] Anything in a different size you have lying around will probably do, too. The flatter the better.
-- Some key caps you like with cherry mount. (nearly all of them have cherry mounts) I personally prefer SA sculpted key caps with dactyls although for someone who uses Dvorak a set that has everything (Dvorak and dactyl special keys) is hard to get.
+- Some key caps you like with cherry mount. (the plus shaped stem, nearly all of them have cherry mounts) I personally prefer SA sculpted key caps with Dactyls although for someone who uses Dvorak a set that has everything (Dvorak and Dactyl special keys) is hard to get.
 
 *** Consumables
 - wire, you can wire this however you like. I use insulated wire with 0.5mm diameter, but I have another Dactyl which I wired with 1mm thick uninsulated wire bent into shape so the wires do not touch. (like they wired old radios in the 50s.) It is very reliable.
 - solder, it depends on personal preference, but I used solder with 1mm diameter
 - some viscous glue
 - hot glue
-- multi meter (to check for continuity, a cheap one is enough)
+- multi meter (to check for continuity, a cheap one is enough if you don't want to use it for different things later on)
 - (optional) [[https://www.ebay.de/itm/284658986388?epid=11017008009&hash=item4246ff6d94:g:J6oAAOSw9KFie1tU][filler]]
 - (optional) some spray paint you like
 
@@ -119,11 +120,11 @@ I apologize if most of these parts are from German ebay vendors, but this is whe
 
 ** (optional) Enhance the 3D printed case
 
-This step is completely optional and there a many ways of enhancing a 3D print out there, but I wanted to share this regardless. Just in case you are not that much into 3D printing there is maybe some new stuff here for you.
-So what I found very effective to increase the surfaces of 3D prints is filler that is spray able. (not filler paint, it is even thicker than that.)
+This step is completely optional and there are many ways of enhancing a 3D print out there, but I wanted to share this regardless. Just in case you are not that much into 3D printing there is maybe some new stuff here for you.
+So what I found very effective to increase the surface quality of 3D prints is filler that is spray-able. (not filler paint, it is even thicker than that.)
 I sand the 3D print with approx. 120 grit sandpaper before, just to make the surface a little bit smoother. Then I spray the primer on for the first time. Spray it very thin. It should not be soaking wet, because then in takes ages to dry. If it is thin enough it will be dry in 5 minutes.
 Then I sand the surface with 120 grit again. I don't sand it too much but against the 'grain', so that the 'hills' are sanded off but the filler stays in the 'valleys'.
-Then I spray on some filler again, wait 5 minutes and sand again. I do this for 3-4 times, after that I spray filler again, but this time a bit thicker and then let it dry over night.
+Then I spray on some filler again, wait 5 minutes and sand again. I do this 3-4 times, after that I spray filler again, but this time a bit thicker and then let it dry over night.
 This will give you a flat surface, where you can not see the the 3D print layers anymore. To get an ever better really shiny flat surface additional steps are needed of course, but this is a plastic casing of a keyboard, not a piano after all.
 After that procedure I paint the case with normal paint from the hardware store. I think there are enough videos and tutorials on how to use spraying cans, so I won't get into that.
 [[file:images/after-prime.jpg]]  [[file:images/after-paint.jpg]]
@@ -132,14 +133,14 @@ After that procedure I paint the case with normal paint from the hardware store.
 
 *** Try mounting the USB-C to micro-USB cable and the TRS socket.
 It could be that they don't fit, especially if you primed and painted the case. If they don't fit, use a round file to widen the holes a bit.
-Do this first because it could be that the file ruins your paint and you want to paint that particular part again. You don't want to paint this again when the switches and everything is mounted.
+Do this first because it could be that the file ruins your paint and you have to paint that particular part again. You don't want to paint this again when the switches and everything is mounted that's why we do this as a first step.
 
 *** Wiring diagrams
 These are the wiring diagrams for the right and the left half. They will be useful in the next steps.
 [[file:images/wiring_right.png]] [[file:images/wiring_left.png]]
 
 *** Put the hot swap sockets in place.
-I learned that it is easier to put the switches in now instead of doing it later. When putting in the switches, make sure that the pins of the switches hit the sockets. If they don't, they will bend to the side and you won't have a connection. If you look at the hot swap sockets closely, you can see the little pins from the switches sticking out a bit on the other side.
+I learned that it is easier to put the switches in now instead of doing it later. When putting in the switches, make sure that the pins of the switches hit the sockets. If they don't, they will bend to the side and you won't have a connection. If you look at the hot swap sockets closely, you can see the little pins from the switches sticking out a bit on the other side. To make sure the connection works, you can check it with the multimeter.
 Don't be confused, the photos I have here are from before I learned that.
 [[file:images/sockets-in.jpg]]
 
@@ -147,7 +148,7 @@ Don't be confused, the photos I have here are from before I learned that.
 Now if you spend the few extra cents and bought diodes that are nicely packed in a row, this will pay off. Instead of bending and cutting the diodes one by one, you can bend them all at once using the edge of something. Then go berserk with the wire cutters. Cut only one side off, then it will be easier to hold them while soldering.
 [[file:images/diodes-in.jpg]]
 
-You can alter the position of the diodes, but not the direction. The black ring on the diode must point towards the horizontal line in the circuit. So either the diode is on the side of the switch with the horizontal line and the black ring pointing away from the switch, or it is on the side of the vertical line and the black ring pointing towards the switch. If you don't know what you are doing, just stick to the images and the wiring diagram. Luckily the 3D print has some recesses where the diodes should go, so it guides you a bit.
+You can alter the position of the diodes, but not the direction. (at least not without changing the QMK firmware) The black ring on the diode must point towards the horizontal line in the circuit. So either the diode is on the side of the switch with the horizontal line and the black ring pointing away from the switch, or it is on the side of the vertical line and the black ring pointing towards the switch. If you don't know what you are doing, just stick to the images and the wiring diagram. Luckily the 3D print has some recesses where the diodes should go, so it guides you a bit.
 Cut the other side off when you are done soldering them.
 
 *** Solder the horizontal lines.
@@ -155,7 +156,7 @@ Now solder the horizontal lines into their places. If you have bought normal (no
 [[file:images/horizontal-lines.jpg]]
 
 *** Solder the vertical lines in.
-This is basically the same thing like the horizontal lines. Now you could check with the multimeter if the switch really closes the circuit. Hold it to a vertical line and a horizontal line and press the corresponding switch.
+This is basically the same thing like the horizontal lines. Now you could check with the multimeter if the switch really closes the circuit. Hold it to a vertical line and a horizontal line and press the corresponding switch. Note that diodes are like a one-way-road for current. So it matters where you use the black wire or the red wire of your multimeter. Put the red wire on a wire on the side of the diode that does not have the black ring, and the black wire on a wire that is connected to the side with the black ring. If in doubt, just try to measure continuity though a diode and see with which configuration the multimeter goes 'beep'.
 [[file:images/vertical-lines.jpg]]
 
 *** Glue the hot swap sockets
@@ -167,20 +168,20 @@ Put a small amount of hot glue in the middle of every hot swap socket.
 Now use those male-female jumper wires. Cut of a bit of the male end, then solder them to the vertical and horizontal lines first.
 [[file:images/jumpers_to_mat.jpg]]
 On the TRS socket it does not really matter which pin you use, as long as the same wire goes to the same pin on the other side.  (The color of the wiring diagram is the same on both sides, so the red line on the left side is the red line on the right side and so on.) However, use the sleeve for the ground at least, it is usually the one that is on the outside of the socket.
-I tend to use tip for the voltage and the rings for communication, but that is entirely up to you.
+I tend to use tip for the voltage and the ring for communication, but that is entirely up to you.
 When you are done, connect the wires to the Arduino.
 [[file:images/jumpers_to_arduino.jpg]]
 
 *** Solder the PMW3360 trackball sensor
-A short note about soldering electronics: Unlike the switches, the wires or the TRS socket for example, which are quite sturdy, small electronic boards are a bit more sensitive. You can fry them with the soldering iron. Try to put as few heat as possible into the chips. You can to this by putting the solder on the soldering iron first, then touching the place you want to solder just long enough for everything to heat up enough so the solder can flow into its place.
-Solder the wires to the sensor first. You can solder the male ends in again, then cut them off on the other side. Make sure to cut them off low enough so the plastic lense thingy still fits.
+A short note about soldering electronics: Unlike the switches, the wires or the TRS socket for example, which are quite sturdy, small electronic boards are a bit more sensitive. You can fry them with the soldering iron. Try to put as few heat as possible into the chips. You can do this by putting the solder on the soldering iron first, then touching the place you want to solder just long enough for everything to heat up enough so the solder can flow into its place. The art here is to just put enough heat into this (if you don't have a soldering iron with a heat setting like me, read "touch the thing you want to solder long enough" here) so that the solder flows where it should, does not form a ball and covers the pad on the pin completely.
+Solder the wires to the sensor first. You can solder the male ends in again, then cut them off on the other side. Make sure to cut them off low enough so the plastic lens thingy still fits.
 [[file:images/solder_pmw.jpg]] [[file:images/pmw_plastic_lense.jpg]]
 
-After that connect the wires to the Arduino.
+After that connect the wires to the Arduino. Some Arduino derivatives are not delivered with pin strips soldered to the board. (but they usually come with a pin strip alongside) If so, solder the pins strips to the Arduino is a similar way you soldered the cables to the PMW3360.
 
 *** Mounting and soldering the reset switch
 If you want to have the reset switch in the bottom plate, drill a 3mm hole at the spot where it should go.
-I noticed that 4.3mm height for the reset switch is actually to high to mount it under that bracket and I broke it off. Nothing that a bit of glue can't fix. You probably want to get even flatter ones, I had a few of those 4.3mm high ones to spare from another project.
+I noticed that 4.3mm height for the reset switch is actually to high to mount it under that bracket and I broke it off. Nothing that a bit of glue can't fix. You probably want to get even flatter ones, I had a few of those 4.3mm high ones to spare from another project, that is why I used them.
 [[file:images/reset_switch_in.jpg]]
 
 Solder two longer wires to the reset switch on the bottom plate.
@@ -192,14 +193,14 @@ Now that the PMW3360 and the TRS socket is connected, you will notice that there
 *** Mount the ball bearings for the trackball.
 If you bought pins for the bearings that are too long, put the bearing on the pin *before* sawing it off. Otherwise you could have problems putting the pins in when they are serrated from the vice or saw. Those small bearings are a very sensible part, don't make loud noises and let them sniff your hand before touching them.
 Just kidding, just don't put them in the vice and don't put a force on the inner ring without putting the same force on the outer ring.
-Once you have the pins in the right length, just press them into the recesses. PLA is rather soft, so they stick in there, make some room with the soldering iron in case they don't go in. Once they are in you can correct their position, which determines the height of the ball and the distance between the PMW3360 and the Ball by heating them up with the soldering iron.
+Once you have the pins in the right length, just press them into the recesses. PLA is rather soft, so they stick in there, make some room with the soldering iron in case they don't go in. Once they are in you can correct their position, which determines the height of the ball and the distance between the PMW3360 and the ball by heating them up with the soldering iron. Try to get the ball down as far as possible without it touching the case.
 [[file:images/bearings-in.jpg]]
 
 *** Mount the M3 insert nuts
 Mounting those nuts is easy if you found nuts that are big enough for the holes. You put them on your soldering iron, heat them up, then press them into the 3D print. Just make sure your soldering iron is clean from solder, otherwise solder will block the thread and screws wont go in easily.
-If you couldn't find nuts that are big enough, glue them in. Here is a trick how to get them in the right position: Pre-mount them on the bottom plate with a screw, like this:[[file:images/insert_prepare.jpg]]
+If you could not find nuts that are big enough, glue them in. Here is a trick how to get them in the right position: Pre-mount them on the bottom plate with a screw, like this:[[file:images/insert_prepare.jpg]]
 
-Then put some glue on the insert nuts. Then mount the bottom plate into place, wait until the glue has dried and them remove the screws. Try to only put glue on the outside and use glue that is somewhat viscous so the glue wont flow into the inside from the bottom up.
+Then put some glue on the insert nuts. Then mount the bottom plate into place, wait until the glue has dried and them remove the screws. Try to only put glue on the outside and use glue that is somewhat viscous so the glue wont flow into the inside from the bottom up and block the screw.
 [[file:images/inserts.jpg]]
 
 *** Mount the M2 insert nuts
@@ -218,11 +219,11 @@ Here is the thing in all its glory:
 
 * Flashing the firmware
 ** A word about trackball modes
-What makes this firmware very special is how it handles the trackball. You can not only move the mouse pointer with it, no, you can have different modes for it and all that without using additional keys! How great is that?
+What makes this firmware very special is how it handles the trackball. You can not only move the mouse pointer with it, no, you can have different modes for it.
 For further configuration see [[#other-things-to-set-in-the-firmware][Other things to set in the firmware]]
-There are stacking and non-stacking modes. Non-stacking modes are the major modes of the trackball, only one non-stacking mode can be activated at a given time and activating one mode will deactivate the last mode.
-Stacking modes on the other hand can be activated on top of another mode.
-To active a mode you usethe special keycodes that this firmware provides. You can find them below.
+There are stacking and non-stacking modes. Non-stacking modes are the major modes (to use emacs lingo) of the trackball, only one non-stacking mode can be activated at a given time and activating one mode will deactivate the last mode.
+Stacking modes on the other hand are like minor modes and can be activated on top of another mode.
+To active a mode you use the special keycodes that this firmware provides. You can find them below.
 
 *** Non-Stacking modes
 
@@ -233,7 +234,7 @@ Moves the mouse cursor as you would expect from a trackball. This is the mode th
 Scrolls up and down and left and right like a mouse wheel from outer space.
 
 **** Carret mode
-Moves the carret (the little pointer in text documents) when the trackball is rotated.
+Moves the carret (the pointer in text documents) when the trackball is rotated.
 
 **** Custom mode
 In this mode you can define four keycodes that get executed when you rotate the trackball.
@@ -244,10 +245,10 @@ One mode to rule them all! This mode activates the other modes. When the mode is
 *** Stacking modes
 
 **** Sniping mode
-Decreases the cursors sensitivity during cursor mode and dragscroll mode, allowing you to aim for something way easier.
+Decreases the cursors sensitivity during cursor mode and carret mode, allowing you to aim for something way easier.
 
 **** Integration mode
-This mode keeps the movement once it is going. This mode is only available in dragscroll and carret mode. E.g. when you have integration mode activated in dragscroll mode you give the trackball a litte notch and it keeps scrolling. A nudge in the other direction slows scrolling down, a nudge direction in the same makes it faster.
+This mode keeps the movement once it is going. This mode is only available in dragscroll and carret mode. E.g. when you have integration mode activated in dragscroll mode you give the trackball a little notch and it keeps scrolling. A nudge in the other direction slows scrolling down, a nudge in the same direction makes scrolling faster.
 
 ** Preparing the QMK firmware
 
@@ -272,7 +273,7 @@ And put
 >cross-avr/gcc-8.5.0-r1
 #+end_src
 into ~/etc/portage/package.mask~ or ~/etc/portage/package.mask/cross-avr-gcc~ respectively.
-I do not know why this is necessary, because will will order crossdev to install GCC 8.5 later, but if I do not mask the newer version, it installs the newest version regardless.
+I do not know why this is necessary, because we will order crossdev to install GCC 8.5 later, but if I do not mask the newer version, it installs the newest version of avr-gcc regardless.
 
 Then run these commands:
 #+begin_src sh
@@ -284,7 +285,7 @@ python3.x -m pip install --user qmk
 sudo crossdev --stable --g '=8.5' --portage --target avr
 #+end_src
 
-Don't bother to run ~qmk setup~. It would complain because our install is missing some tool chains for other micro controllers, but we only need the avr-tools for the Atmega32U.
+Don't bother to run ~qmk setup~ like the official guide tells you to. It would complain because our install is missing some tool chains for other micro controllers, but we only need the avr-tools for the Atmega32U.
 If you are done with crossdev, you can check with ~avr-gcc -v~ if you really have version 8.5.0 installed.
 Continue with the guide with topic Linux below.
 
@@ -308,14 +309,14 @@ Copying handwired_dactyl_manuform_5x6_default.hex to qmk_firmware folder        
 Checking file size of handwired_dactyl_manuform_5x6_default.hex                                     [OK]
  * The firmware size is fine - 19456/28672 (67%, 9216 bytes free)
 #+end_src
-And you will now have the file ~handwired_dactyl_manuform_5x6_default.hex~ in the qmk_firmware folder. Delete it.
+And you will now have the file ~handwired_dactyl_manuform_5x6_default.hex~ in the qmk_firmware_dm_r_track folder. Delete it.
 #+begin_src sh
 rm handwired_dactyl_manuform_5x6_default.hex
 #+end_src
 
 *** Customizing your key map
 You can use the standard layout as a base.
-Inside your qmk_firmware folder there is a folder with the key maps for the Tractyl under ~keymaps/handwired/tractyl_manuform/5x6_right/keymaps~.
+Inside your qmk_firmware_dm_r_track folder there is a folder with the key maps for the Tractyl under ~keymaps/handwired/tractyl_manuform/5x6_right/keymaps~.
 This folder contains sub folders with custom sets of key maps. Now you have two choices:
 - Edit one of the existing key maps
 - Make your own key map. Copy one of the folders in ~keymaps/handwired/tractyl_manuform/5x6_right/keymaps~ in place and rename it to your liking.
@@ -325,7 +326,7 @@ This folder contains sub folders with custom sets of key maps. Now you have two 
 Either way you will find a ~keymap.c~ file inside of those folders. This file is compiled into the actual part of the firmware that determines the keymap. Inside there is a part that looks something like this:
 #+begin_src c
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-[_COLEMAKDHM] = LAYOUT_5x6(
+[_COLEMAKDHM] = LAYOUT_5x6_right(
 DM_REC1,    DM_REC1, DM_PLY1, DM_REC2 , DM_PLY2 , DM_RSTP,               KC_CPI_DOWN, KC_CPI_STD , KC_CPI_UP , KC_SMO_SC , KC_0        ,KC_QUOT_MY,
 KC_TAB,     KC_Q ,   KC_W   , KC_F    , KC_P    , KC_B   ,               KC_J    ,    KC_L       , KC_U      , KC_Y      , KC_SCLN_INV ,KC_QUOT_MY,
 KC_ESC,     KC_A ,   KC_R   , KC_S    , KC_T    , KC_G   ,               KC_M    ,    KC_N       , KC_E      , KC_I      , KC_O        ,KC_MINS,
@@ -336,7 +337,7 @@ KC_TILD_MY, KC_Z ,   KC_X   , KC_C    , KC_D    , KC_V   ,               KC_K   
                                        TD(ALT_TM),    TD(LOW_TM),          KC_BSPC, KC_DEL
 ),
 
-[_LOWER] = LAYOUT_5x6(
+[_LOWER] = LAYOUT_5x6_right(
 
 KC_TILD, KC_EXLM     , KC_AT   , KC_HASH   , KC_DLR  ,KC_PERC,           KC_CIRC, KC_AMPR , KC_ASTR    , KC_LPRN  , KC_RPRN   ,           _______,
 _______, KC_PGDN     , KC_HOME , KC_END    , KC_PGUP ,_______,           _______, _______ , RALT(KC_Y) , _______  , RALT(LSFT(KC_SCLN)) , _______,
@@ -348,7 +349,7 @@ KC_F12 , KC_F1       , KC_F2   , KC_F3     , KC_F4   , KC_F5 ,           KC_F6  
                                         _______,_______,             _______,_______
 ),
 
-[_RAISE] = LAYOUT_5x6(
+[_RAISE] = LAYOUT_5x6_right(
 _______, _______ , _______ , _______ , _______ ,_______,                 _______, _______      , _______      , _______     , _______     , _______,
 _______,  KC_1   , KC_2    , KC_3    , KC_4    , KC_5  ,                 KC_6   , KC_7         , KC_8         , KC_9        , KC_0        , KC_QUOT,
 _______, KC_LPRN , KC_RPRN , KC_LBRC , KC_RBRC ,KC_LBRC,                 KC_RBRC, LSFT(KC_LBRC),LSFT(KC_RBRC) ,LSFT(KC_COMM),LSFT(KC_DOT) ,KC_MS_BTN3,
@@ -364,6 +365,7 @@ KC_TILD, KC_EXLM , KC_AT   , KC_HASH , KC_DLR  ,KC_PERC,                 KC_CIRC
 This represents the layout of the keys. In order to change a key, you have to exchange the keycode of that key with the one you want. Say you want to have escape on the first key in the second row. Then you would exchange ~KC_TAB~ there with ~KC_ESC~. If you do not know the keycode of a key, you could use [[https://config.qmk.fm/#/handwired/dactyl_manuform/5x6/LAYOUT_5x6][QMK Configurator]]. When you hover your mouse over a key in the keyboard image on the bottom of a page, it shows you the keys keycode in a bar a the bottom.
 To get special key functions like ~RALT(KC_Y)~ you can see them in the same way on the bottom in the "Quantum" tab.
 Here is also a reference for the [[https://github.com/qmk/qmk_firmware/blob/master/docs/keycodes.md][keycodes used by QMK.]] There are a few.
+Please note that you can not change the amount of different keycodes or the firmware will not compile. You should also not alter the overall layout. (do not remove commas etc.)
 
 ****** Special key codes in this firmware
 :PROPERTIES:
@@ -402,7 +404,7 @@ You bind your layer to a key with the keycode ~MO(_MYLAYER)~. MO switches a laye
 
 **** Using QMK Configurator for similar keyboard
 Because editing the keycodes is somewhat tedious, I came up with a way to utilize QMK Configurator a bit for it.
-Go to [[https://config.qmk.fm/#/handwired/dactyl_manuform/5x6/LAYOUT_5x6][QMK Configurator]] and select the handwired/tractyl_manuform/5x6_right/arduinomicro keyboard. Rename the keyboard to whatever you like and edit your keyboard to your liking. Be aware that you can not put in the custom keycodes to modify the modes of the trackball. For now give the key that should have modify the trackball function later some special keycodes so you can easily distinguish them from the others.
+Go to [[https://config.qmk.fm/#/handwired/dactyl_manuform/5x6/LAYOUT_5x6][QMK Configurator]] and select the handwired/tractyl_manuform/5x6_right/teensy2pp keyboard. Rename the keyboard to whatever you like and edit your keyboard to your liking. Be aware that you can not put in the custom keycodes to modify the modes of the trackball. For now give the key that should activate a trackball mode later some special keycodes so you can easily distinguish them from the others.
 
 When you are done, export the key map as JSON and put it into the qmk_firmware folder. Then run the command
 #+begin_src sh
@@ -410,7 +412,7 @@ qmk json-keymap handwired-dactyl_manuform-5x6-yourfilename.json >> mykeymap.c
 #or
 qmk json2c handwired-dactyl_manuform-5x6-yourfilename.json >> mykeymap.c # depending on qmk version.
 #+end_src
-With "yourfilename" changed to your actual filename of course. This will generate a C source file out of the JSON file. It will look something like this:
+With "yourfilename" changed to your actual filename of course. This will generate a C source file with the name mykeymap.c out of the JSON file. It will look something like this:
 #+begin_src c
 #include QMK_KEYBOARD_H
 
@@ -421,9 +423,9 @@ With "yourfilename" changed to your actual filename of course. This will generat
  */
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-	[0] = LAYOUT_5x6(KC_GRV, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_EQL, KC_TAB, KC_QUOT, KC_COMM, KC_DOT, KC_P, KC_Y, KC_F, KC_G, KC_C, KC_R, KC_L, KC_SLSH, KC_ESC, KC_A, KC_O, KC_E, KC_U, KC_I, KC_D, KC_H, KC_T, KC_N, KC_S, KC_MINS, KC_NO, KC_SCLN, KC_Q, KC_J, KC_K, KC_X, KC_B, KC_M, KC_W, KC_V, KC_Z, KC_BSLS, KC_LBRC, KC_RBRC, KC_PGUP, KC_PGDN, KC_LSFT, KC_NO, KC_NO, KC_RSFT, KC_LCTL, KC_SPC, KC_RALT, KC_LALT, MO(1), KC_ENT, LGUI_T(KC_RGUI)),
-	[1] = LAYOUT_5x6(KC_TILD, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_DEL, RCS(KC_2), KC_F9, KC_F10, LSFT(KC_F7), LCTL(KC_R), KC_LCBR, KC_RCBR, KC_HOME, KC_INS, KC_F11, KC_F12, KC_PLUS, KC_TRNS, RCS(KC_3), RCS(KC_4), MO(2), KC_DEL, KC_LPRN, KC_RPRN, KC_LEFT, KC_UP, KC_DOWN, KC_RGHT, KC_PIPE, KC_CAPS, LSFT(KC_F8), LSFT(KC_F9), LCTL(KC_X), LCTL(KC_C), LCTL(KC_V), KC_EQL, RCS(KC_3), RCS(KC_4), LSFT(KC_F8), LSFT(KC_F9), RCS(KC_2), LCTL(KC_F2), LCTL(KC_F3), KC_PSCR, KC_END, KC_LSFT, KC_TRNS, KC_TRNS, KC_RSFT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS),
-	[2] = LAYOUT_5x6(KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NLCK, KC_PSLS, KC_PAST, KC_PMNS, KC_CALC, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_LBRC, KC_RBRC, KC_P7, KC_P8, KC_P9, KC_PPLS, KC_MUTE, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_LPRN, KC_RPRN, KC_P4, KC_P5, KC_P6, KC_TRNS, KC_VOLU, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_P0, KC_P1, KC_P2, KC_P3, KC_PEQL, KC_VOLD, KC_TRNS, KC_PDOT, KC_COMM, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS)
+	[0] = LAYOUT_5x6_right(KC_GRV, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_EQL, KC_TAB, KC_QUOT, KC_COMM, KC_DOT, KC_P, KC_Y, KC_F, KC_G, KC_C, KC_R, KC_L, KC_SLSH, KC_ESC, KC_A, KC_O, KC_E, KC_U, KC_I, KC_D, KC_H, KC_T, KC_N, KC_S, KC_MINS, KC_NO, KC_SCLN, KC_Q, KC_J, KC_K, KC_X, KC_B, KC_M, KC_W, KC_V, KC_Z, KC_BSLS, KC_LBRC, KC_RBRC, KC_PGUP, KC_PGDN, KC_LSFT, KC_NO, KC_NO, KC_RSFT, KC_LCTL, KC_SPC, KC_RALT, KC_LALT, MO(1), KC_ENT, LGUI_T(KC_RGUI)),
+	[1] = LAYOUT_5x6_right(KC_TILD, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_DEL, RCS(KC_2), KC_F9, KC_F10, LSFT(KC_F7), LCTL(KC_R), KC_LCBR, KC_RCBR, KC_HOME, KC_INS, KC_F11, KC_F12, KC_PLUS, KC_TRNS, RCS(KC_3), RCS(KC_4), MO(2), KC_DEL, KC_LPRN, KC_RPRN, KC_LEFT, KC_UP, KC_DOWN, KC_RGHT, KC_PIPE, KC_CAPS, LSFT(KC_F8), LSFT(KC_F9), LCTL(KC_X), LCTL(KC_C), LCTL(KC_V), KC_EQL, RCS(KC_3), RCS(KC_4), LSFT(KC_F8), LSFT(KC_F9), RCS(KC_2), LCTL(KC_F2), LCTL(KC_F3), KC_PSCR, KC_END, KC_LSFT, KC_TRNS, KC_TRNS, KC_RSFT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS),
+	[2] = LAYOUT_5x6_right(KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NLCK, KC_PSLS, KC_PAST, KC_PMNS, KC_CALC, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_LBRC, KC_RBRC, KC_P7, KC_P8, KC_P9, KC_PPLS, KC_MUTE, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_LPRN, KC_RPRN, KC_P4, KC_P5, KC_P6, KC_TRNS, KC_VOLU, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_P0, KC_P1, KC_P2, KC_P3, KC_PEQL, KC_VOLD, KC_TRNS, KC_PDOT, KC_COMM, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS)
 };
 #+end_src
 
@@ -431,17 +433,19 @@ Where 0, 1 and 2 are the different layers.
 While this is horrible to read of course, these layers are perfectly valid key maps. But you have to make some changes first before you can use it in the Tractyls firmware.
 First of all, copy only the part that says
 #+begin_src c
-	LAYOUT_5x6(KC_GRV, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_EQL, KC_TAB, KC_QUOT, KC_COMM, KC_DOT, KC_P, KC_Y, KC_F, KC_G, KC_C, KC_R, KC_L, KC_SLSH, KC_ESC, KC_A, KC_O, KC_E, KC_U, KC_I, KC_D, KC_H, KC_T, KC_N, KC_S, KC_MINS, KC_NO, KC_SCLN, KC_Q, KC_J, KC_K, KC_X, KC_B, KC_M, KC_W, KC_V, KC_Z, KC_BSLS, KC_LBRC, KC_RBRC, KC_PGUP, KC_PGDN, KC_LSFT, KC_NO, KC_NO, KC_RSFT, KC_LCTL, KC_SPC, KC_RALT, KC_LALT, MO(1), KC_ENT, LGUI_T(KC_RGUI)),
+	LAYOUT_5x6_right(KC_GRV, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_EQL, KC_TAB, KC_QUOT, KC_COMM, KC_DOT, KC_P, KC_Y, KC_F, KC_G, KC_C, KC_R, KC_L, KC_SLSH, KC_ESC, KC_A, KC_O, KC_E, KC_U, KC_I, KC_D, KC_H, KC_T, KC_N, KC_S, KC_MINS, KC_NO, KC_SCLN, KC_Q, KC_J, KC_K, KC_X, KC_B, KC_M, KC_W, KC_V, KC_Z, KC_BSLS, KC_LBRC, KC_RBRC, KC_PGUP, KC_PGDN, KC_LSFT, KC_NO, KC_NO, KC_RSFT, KC_LCTL, KC_SPC, KC_RALT, KC_LALT, MO(1), KC_ENT, LGUI_T(KC_RGUI)),
 #+end_src
 
 into an existing Tractyl layouts ~keymap.c~. So you will not mess up the names of the layers.
-Now exchange the keycodes that shoud modify the trackball modes with the custom keycodes from above.
+Now exchange the keycodes that should modify the trackball modes with the custom keycodes from above.
+
+**** TODO
 
 *** Other things to set in the firmware
 If you haven't yet, you can create the file ~keyboards/handwired/tractyl_manuform/5x6_right/keymaps/yourkeymap/config.h~. In it you can put the following lines to change the behavior of your keyboard.
 
 **** #define CHARYBDIS_MINIMUM_DEFAULT_DPI 1200
-The sensitivity in default mode.
+The minimum sensitivity in default mode.
 
 **** #define CHARYBDIS_DEFAULT_DPI_CONFIG_STEP 200
  Change of the sensitivity in cursor mode each time POINTER_DEFAULT_DPI_FORWARD/ REVERSE is pressed.
@@ -450,7 +454,7 @@ The sensitivity in default mode.
 The sensitivity in sniping mode.
 
 **** #define CHARYBDIS_SNIPING_DPI_CONFIG_STEP 200
- Change of the sensitivity in sniping mode each time POINTER_SNIPING_DPI_FORWARD/ REVERSE is pressed.
+ Change of the pointers sensitivity in sniping mode each time POINTER_SNIPING_DPI_FORWARD/ REVERSE is pressed.
 
 **** #define CHARYBDIS_DRAGSCROLL_DPI 100
 The sensitivity in dragscroll mode.
@@ -471,7 +475,7 @@ Enable pointer acceleration.
 Amount of pointer acceleration.
 
 **** #define CUSTOM_FN_RIGHT / CUSTOM_FN_LEFT / _UP / _DOWN
-Here you can define the keycode that gets executed in custom mode when the dragball is rotated to the right / left / up / down
+Here you can define the keycode that gets executed in custom mode when the trackball is rotated to the right / left / up / down.
 
 *** Compiling your firmware
 Once you are done with setting up the keymap to your liking, you can generate a .hex file with the command
@@ -494,8 +498,7 @@ This will give you some output similar to
 ~[26768.779976] cdc_acm 1-12:1.0: ttyACM0: USB ACM device~
 #+end_src
 
-Which is telling you that ~/dev/ttyACM0~ is the device name of your Arduino. Be aware that these device names are dynamic in Linux, so it could be ~/dev/ttyACM1~ next time, because you already have another Arduino (or some other USB/Serial device) plugged in, which already occupies ~/dev/ttyACM0~. Depending on your distro
-this could also be called ~/dev/ttyUSB0~ instead.
+Which is telling you that ~/dev/ttyACM0~ is the device name of your Arduino. Be aware that these device names are dynamic in Linux, so it could be ~/dev/ttyACM1~ next time, because you already have another Arduino (or some other USB/Serial device) plugged in, which already occupies ~/dev/ttyACM0~. Depending on your distro this could also be called ~/dev/ttyUSB0~ instead.
 
 If you can not find your device with ~dmesg | tail~, try finding it with
 #+begin_src sh
@@ -506,7 +509,7 @@ find /dev -name '*ttyUSB*'.
 It could be that the device is only accessible by root, so to get user access you can use ~sudo chmod 777 /dev/ttyACM0~, but this will only last until you reconnect the Arduino.
 To get permanent rights to access the Arduino as a user, you could also find the group of the ~/dev/ttyACM*~ file with ~ls -la /dev | grep ttyACM~, which should output something like this:
 ~crw-rw-r-- 1 root dialout ... /dev/ttyACM~. Add yourself to the group dialout (in this case) to get read/write permissions with ~sudo usermod -a -G dialout myUserName~.
-However, the group name ~dialout~ could depend on the distro.
+However, the group name ~dialout~ could again depend on the distro.
 
 *** Flashing the .hex
 Now with all that information, put your Arduino into flash mode again by pressing the reset button. Use the command
@@ -516,23 +519,22 @@ avrdude -v -patmega32u4 -cavr109 -P/dev/ttyACM0 -b57600 -Uflash:w:"handwired_tra
 inside the folder where your .hex file is.
 Where ~/dev/ttyACM0~ depends on the device name you obtained before and the filename of the .hex file is your own filename obviously.
 
-Sometimes flashing Arduinos is a bit tricky. If they already have a program flashed to them, you put them into flashing mode by pressing the reset switch. Then they are in flashing mode for a few seconds before they start running in their normal mode again. So you have to press that reset switch then run that command fast. In case you did not add yourself to the group that owns ~/dev/ttyACM*~, it could be that you have to find the name of that device (/dev/ttyACMsomething), change its permissions and run the command. All that in a few seconds. You could chain commands together with ~&&~, but I recommend adding yourself to that group instead.
+Sometimes flashing Arduinos is a bit tricky. If they already have a program flashed to them, you put them into flashing mode by pressing the reset switch or connecting a reset pin with ground. (Either the one on the board if present or the one you wired.) Then they are in flashing mode for a few seconds before they start running in their normal mode again. So you have to press that reset switch then run that command fast. In case you did not add yourself to the group that owns ~/dev/ttyACM*~, it could be that you have to find the name of that device (/dev/ttyACMsomething), change its permissions and run the command. All that in a few seconds. You could chain commands together with ~&&~, but I recommend adding yourself to that group instead.
 Other times you get things like ~avrdude: butterfly_recv(): programmer is not responding~. Then it helps to tap the reset button right after pressing enter on the upload command.
-Then I have had it with several Arduino Pro Micros, that I had to hold the reset button for a short time, then let it go, then tap it. I guess there are just too many Arduino manufacturers out there, and each of them has its own quirks.
-So do not panic if uploading does not work at the first try. It could certainly be, that your have so problem with avrdude, but most of the times it is just that you got the timing wrong.
-
-Once you are done with flashing the left side, disconnect it. Then connect the right side and do the same procedure again. You use the same .hex file on both sides.
+Then I have had it with several Arduino Pro Micros, that I had to hold the reset button for two seconds or so, then let it go, then tap it. I guess there are just too many Arduino manufacturers out there, and each of them has its own quirks.
+So do not panic if uploading does not work at the first try. It could certainly be that your have some problem with avrdude, but most of the times it is just that you got the timing wrong and the Arduino is not in flashing mode.
+Once you are done with flashing the one side, disconnect it. Then connect the other side and do the same procedure again. You use the same .hex file on both sides.
 When you are done, connect the USB cable to the right side and use your new keyboard!
 
 * Tap-dance keymap
-QMK has a feature called [[https://github.com/qmk/qmk_firmware/blob/master/docs/feature_tap_dance.md][Tap Dance]], which is really useful for the trackball modes we have in this keyboards. With Tap Dance you can give a key different functions depending on how often you tap it. Although Tap Dance supports way more, I only copied some basic functionality over from Qurns first Tap Dance software to change between the different trackball modes.
-By default, CTRL switches on cursor mode, Shift carret mode and Alt dragscroll mode. Tapping the key once will activate the corresponding mode, holding it will activate its actual modifier behavior. I also put in something for the vim lovers. I found myself pressing escape when I wanted to go back to cursor mode, because for my vim-brain this is like vims normal mode. So I put this functionality on the escape key.
+QMK has a feature called [[https://github.com/qmk/qmk_firmware/blob/master/docs/feature_tap_dance.md][Tap Dance]], which is really useful for the trackball modes we have in this keyboard. With Tap Dance you can give a key different functions depending on how often you tap it. Although Tap Dance supports way more, I only copied some basic functionality over from Qurns first Tap Dance software to change between the different trackball modes.
+By default, CTRL switches on cursor mode, Shift carret mode and Alt dragscroll mode. Tapping the key once will activate the corresponding mode, holding it will activate its actual modifier behavior. I also put in something for the vim lovers: I found myself pressing escape when I wanted to go back to cursor mode, because for my vim-brain this is like vims normal mode. So I put this functionality on the escape key.
 You can flash the Tap Dance firmware using this command:
 #+begin_src sh
 qmk compile -kb handwired/Tractyl_manuform/5x6_right/arduinomicro -km tapdance
 #+end_src
 
-The keymap I put in is the keymap I use, which is dvorak. So keep in mind you might want to change that.
+The keymap I put in is the keymap I use, which is Dvorak. So keep in mind you might want to change that.
 The tap-dance functions are the key codes that start with ~TD(~ like ~TD(SFT_TM)~ for the shift tap dance functions.
 
 ** Changing tap-dance functions
@@ -554,7 +556,7 @@ void sfttm_finished(qk_tap_dance_state_t *state, void *user_data) {
   }
 }
 #+end_src
-This is the tap dance function for activating the shift modfier and for activating the carret mode.
+This is the tap dance function for activating the shift modifier and for activating the carret mode.
 To activate dragscroll mode instead for example, you would change the line that says ~charybdis_set_pointer_carret_enabled(true);~ into ~charybdis_set_pointer_dragscroll_enabled(true);~.
 That's all.
 The different functions to activate the modes are in ~keyboards/handwired/tractyl_manuform/tractyl_manuform.h~
