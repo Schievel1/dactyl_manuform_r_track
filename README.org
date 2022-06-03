@@ -296,6 +296,7 @@ This probably works well for Windows and Mac, too. I do not know as I haven't tr
 # clone and prepare the QMK-Firmware repo
 git clone https://github.com/Schievel1/qmk_firmware_dm_r_track.git
 cd qmk_firmware_dm_r_track/
+git checkout tractyl_manuform_enhance
 make git-submodule
 # to test if your toolchain works, compile something:
 qmk compile -kb handwired/dactyl_manuform/5x6 -km default
