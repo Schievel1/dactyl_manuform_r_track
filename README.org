@@ -282,7 +282,7 @@ sudo emerge dev-vcs/git dev-python/pip
 # on gentoo the python command depends on which python version has pip installed (your $PYTHON_TARGET). Run the command like this: python3.9 -m ... if your PYTHON_TARGET is 3.9
 python3.x -m pip install --user qmk
 # to build the toolchain for compiling for the Arduino (Micro). Anything higher than GCC 8.x is not recommended by qmk. (And you WILL have errors)
-sudo crossdev --stable --g '=8.5' --portage --target avr
+sudo crossdev --stable --g '=8.5' --target avr
 #+end_src
 
 Don't bother to run ~qmk setup~ like the official guide tells you to. It would complain because our install is missing some tool chains for other micro controllers, but we only need the avr-tools for the Atmega32U.
