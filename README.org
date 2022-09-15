@@ -504,7 +504,7 @@ Which is telling you that ~/dev/ttyACM0~ is the device name of your Arduino. Be 
 If you can not find your device with ~dmesg | tail~, try finding it with
 #+begin_src sh
 find /dev -name '*ttyACM*' # or
-find /dev -name '*ttyUSB*'.
+find /dev -name '*ttyUSB*'
 #+end_src
 
 It could be that the device is only accessible by root, so to get user access you can use ~sudo chmod 777 /dev/ttyACM0~, but this will only last until you reconnect the Arduino.
