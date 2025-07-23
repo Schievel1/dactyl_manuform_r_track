@@ -58,7 +58,7 @@ The trackball Dactyl in this guide is intentionally made easy. You do not need t
 Just follow this guide step by step and you should have a decent trackball Dactyl Manuform in the end.
 This model also uses a Arduino Micro on the trackball side and a Arduino Pro Micro on the left side. This means you do not need to flash them with separate files because you need to change the bootloader in between and recompile like it is with different micro controller in the left than in the right half. Using the same firmware file for both makes things simpler.
 
-The folder [[file:STLs/][STLs]] contains the .stl files ready to print. The folder [[file:models/][models]] contains the [[https://openscad.org/][OpenSCAD]] and [[https://www.freecadweb.org/][FreeCAD]] files to change the models to your liking in those programs.
+The folder [[file:STLs/][STLs]] contains the .stl files ready to print. The folder [[file:models/][models]] contains the [[https://openscad.org/][OpenSCAD]] and [[https://freecad.org][FreeCAD]] files to change the models to your liking in those programs.
 I added some more images that are not included in the build guide into the folder [[file:images/more_images/][more_images]].
 
 ** License
